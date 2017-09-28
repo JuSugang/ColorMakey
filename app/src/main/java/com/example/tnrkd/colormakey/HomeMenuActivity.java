@@ -21,11 +21,11 @@ public class HomeMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_menu);
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        toolbar.setTitleTextColor(Color.BLUE);
+//        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+//        toolbar.setTitleTextColor(Color.BLUE);
 
-        GoogleSignInResult result = Global.result;
-        GoogleSignInAccount acct = result.getSignInAccount();
-        Log.d("HomeMenuActivity", acct.getDisplayName());
+//        GoogleSignInResult result = Global.result;
+//        GoogleSignInAccount acct = result.getSignInAccount();
+//        Log.d("HomeMenuActivity", acct.getDisplayName());
     }
 }
