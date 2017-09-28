@@ -3,9 +3,9 @@ package com.example.tnrkd.colormakey;
 public class GradientDescent {
 
 	public static float[][] X_data= {
-			{0,255,255,255,1},
-			{255,0,255,255,1},
-			{255,255,0,255,1}};
+			{0,255,255,255,3},
+			{255,0,255,255,3},
+			{255,255,0,255,3}};
 	public static float[][] Y_data= {
 			{65},
 			{172},
