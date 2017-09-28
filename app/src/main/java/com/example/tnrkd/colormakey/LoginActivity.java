@@ -70,10 +70,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (result.isSuccess()) {
             // 로그인 성공
             GoogleSignInAccount acct = result.getSignInAccount();
-            Log.d("handleSignInResult", acct.getDisplayName());
+            Log.d("로그인성공! : ", acct.getDisplayName());
             updateUI(true);
         } else {
             // 로그인 실패
+            Log.d("로그인실패! : ","실패");
             updateUI(false);
         }
     }

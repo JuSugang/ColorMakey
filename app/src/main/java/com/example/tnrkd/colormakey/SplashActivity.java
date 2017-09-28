@@ -34,17 +34,17 @@ public class SplashActivity extends Activity {
     }
 
     private void StartAnimations() {
-        Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
-        anim.reset();
-        LinearLayout l=(LinearLayout) findViewById(R.id.lin_lay);
-        l.clearAnimation();
-        l.startAnimation(anim);
-
-        anim = AnimationUtils.loadAnimation(this, R.anim.translate);
-        anim.reset();
-        ImageView iv = (ImageView) findViewById(R.id.splash);
-        iv.clearAnimation();
-        iv.startAnimation(anim);
+//        Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
+//        anim.reset();
+//        LinearLayout l=(LinearLayout) findViewById(R.id.lin_lay);
+//        l.clearAnimation();
+//        l.startAnimation(anim);
+//
+//        anim = AnimationUtils.loadAnimation(this, R.anim.translate);
+//        anim.reset();
+//        ImageView iv = (ImageView) findViewById(R.id.splash);
+//        iv.clearAnimation();
+//        iv.startAnimation(anim);
 
         splashTread = new Thread() {
             @Override
@@ -52,12 +52,14 @@ public class SplashActivity extends Activity {
                 try {
                     int waited = 0;
                     // Splash screen pause time
-                    while (waited < 3500) {
+                    while (waited < 2000) {
                         sleep(100);
                         waited += 100;
                     }
                     Intent intent = new Intent(SplashActivity.this,
                             LoginActivity.class);
+//                    Intent intent = new Intent(SplashActivity.this,
+//                            HomeMenuActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     SplashActivity.this.finish();
