@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "616317794241",
+    "firebase_url": "https://colormakey.firebaseio.com",
+    "project_id": "colormakey",
+    "storage_bucket": "colormakey.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616317794241:android:fd32d1c5bdf2d414",
+        "android_client_info": {
+          "package_name": "com.example.tnrkd.colormakey"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "616317794241-b3stqvjpsuc9jmfb8r4ntu0bniaeaaqj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tnrkd.colormakey",
+            "certificate_hash": "982818164794b20151e4ad2702543e0316a332db"
+          }
+        },
+        {
+          "client_id": "616317794241-v1aq0qmjooevrtbm6uub8h2fa34umu61.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCc-ZX8QOXoG4fQizrFTasV_19d1e4Acjc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "616317794241-v1aq0qmjooevrtbm6uub8h2fa34umu61.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
