@@ -3,34 +3,47 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<android.support.v7.widget.Toolbar-->
-        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-        <!--app:titleTextColor="#fff"-->
-        <!--android:id="@+id/toolbar"-->
-        <!--android:background="@color/colorPrimary"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="?attr/actionBarSize">-->
-    <!--</android.support.v7.widget.Toolbar>-->
-
-    <android.support.v4.widget.DrawerLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/drawer_layout"
+    <android.support.v7.widget.Toolbar
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:titleTextColor="#fff"
+        android:id="@+id/toolbar"
+        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <!-- The main content view -->
-        <FrameLayout
-            android:id="@+id/content_frame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-        <!-- The navigation drawer -->
-        <ListView android:id="@+id/left_drawer"
-            android:layout_width="240dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:choiceMode="singleChoice"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="0dp"
-            android:background="#111"/>
-    </android.support.v4.widget.DrawerLayout>
+        android:layout_height="?attr/actionBarSize">
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/remixer"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:text="색 배합 찾기"
+        android:textColor="@color/orange"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/mixer"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:text="색 섞어보기"
+        android:textColor="@color/orange"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/palette"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:text="나만의 팔레트"
+        android:textColor="@color/orange"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:textStyle="bold" />
+
 
 </LinearLayout>
