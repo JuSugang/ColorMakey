@@ -44,7 +44,7 @@ public class SplashActivity extends Activity {
 //        anim.reset();
 //        ImageView iv = (ImageView) findViewById(R.id.splash);
 //        iv.clearAnimation();
-//        iv.startAnimation(anim);
+//        iv.startAnimation(anim); //애니메이션 구동방식 기록
 
         splashTread = new Thread() {
             @Override
@@ -56,10 +56,10 @@ public class SplashActivity extends Activity {
                         sleep(100);
                         waited += 100;
                     }
-                    Intent intent = new Intent(SplashActivity.this,
-                            LoginActivity.class);
 //                    Intent intent = new Intent(SplashActivity.this,
-//                            HomeMenuActivity.class);
+//                            LoginActivity.class);
+                    Intent intent = new Intent(SplashActivity.this,
+                            HomeMenuActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     SplashActivity.this.finish();

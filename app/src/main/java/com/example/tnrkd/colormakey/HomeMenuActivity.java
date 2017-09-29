@@ -35,7 +35,6 @@ public class HomeMenuActivity extends AppCompatActivity {
         remixer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("hi","remixer");
                 Intent intent = new Intent(HomeMenuActivity.this,
                         RemixerActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -45,7 +44,6 @@ public class HomeMenuActivity extends AppCompatActivity {
         mixer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("hi","mixer");
                 Intent intent = new Intent(HomeMenuActivity.this,
                         MixerActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -55,7 +53,6 @@ public class HomeMenuActivity extends AppCompatActivity {
         palette.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("hi","palette");
                 Intent intent = new Intent(HomeMenuActivity.this,
                         PaletteActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
