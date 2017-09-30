@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
-    android:layout_height="500dp"
+    android:layout_height="550dp"
     android:orientation="vertical">
 
     <TabHost
@@ -26,8 +26,7 @@
                     android:id="@android:id/tabs"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FF383838"
-                    android:minWidth="600px"/>
+                    android:background="#FF383838" />
             </HorizontalScrollView>
 
             <FrameLayout
@@ -38,19 +37,48 @@
 
                 <!--0.basic-->
                 <LinearLayout
-                    android:padding="20dp"
                     android:id="@+id/tab0"
                     android:background="#FFFFFF"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/colpal0"
+                    <GridView
+                        android:paddingTop="3dp"
+                        android:paddingBottom="3dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="basic"
-                        android:textSize="24dp" />
+                        android:layout_height="380dp"
+                        android:background="#ffffff"
+                        android:id="@+id/grid0"
+                        android:numColumns="4">
+                    </GridView>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#dddddd" />
+                    <LinearLayout
+                        android:padding="20dp"
+                        android:id="@+id/preview0"
+                        android:background="#ffffff"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:orientation="vertical"
+                        android:gravity="bottom">
+                        <TextView
+                            android:id="@+id/colpal0"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="basic"
+                            android:textSize="24dp" />
+                    </LinearLayout>
+                    <LinearLayout
+                    android:padding="20dp"
+                    android:id="@+id/dialogue0"
+                    android:background="#eff322"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="vertical"
+                    android:gravity="bottom"/>
+
                 </LinearLayout>
                 <!--1.red-->
                 <LinearLayout

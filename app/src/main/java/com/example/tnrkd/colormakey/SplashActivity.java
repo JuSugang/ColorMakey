@@ -56,10 +56,10 @@ public class SplashActivity extends Activity {
                         sleep(100);
                         waited += 100;
                     }
-//                    Intent intent = new Intent(SplashActivity.this,
-//                            LoginActivity.class);
                     Intent intent = new Intent(SplashActivity.this,
-                            HomeMenuActivity.class);
+                            LoginActivity.class);
+//                    Intent intent = new Intent(SplashActivity.this,
+//                            HomeMenuActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     SplashActivity.this.finish();

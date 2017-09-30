@@ -1,13 +1,17 @@
 package com.example.tnrkd.colormakey;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -43,6 +47,52 @@ class colorInfo{
         return  colorname;
     }
 }
+
+class colorGridAdapter extends BaseAdapter {
+    Context context;
+    int layout;
+    int img;
+    LayoutInflater inf;
+    ArrayList<colorInfo> colorIDs = null;
+
+    public colorGridAdapter(Context context, int layout, ArrayList<colorInfo> colorIDs) {
+        this.context = context;
+        this.layout = layout;
+        this.colorIDs = colorIDs;
+        inf = (LayoutInflater) context.getSystemService
+                (Context.LAYOUT_INFLATER_SERVICE);
+    }
+    @Override
+    public int getCount() {
+        return colorIDs.size();
+    }
+    @Override
+    public Object getItem(int position) {
+        return colorIDs.get(position);
+    }
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView==null) {
+            convertView = inf.inflate(layout, null);
+        }
+        ImageView colorView = (ImageView)convertView.findViewById(R.id.imageView1);
+        TextView colortext = (TextView) convertView.findViewById(R.id.colorName);
+        colortext.setText(colorIDs.get(position).getColorname());
+        int R=colorIDs.get(position).getRGBarray()[0];
+        int G=colorIDs.get(position).getRGBarray()[1];
+        int B=colorIDs.get(position).getRGBarray()[2];
+        colorView.setImageResource(com.example.tnrkd.colormakey.R.drawable.mask);
+        colorView.setBackgroundColor(Color.rgb(R,G,B));
+//            colorView.setOnClickListener(new ImageClickListener(context, colorIDs[position]));
+
+        return convertView;
+    }
+}
+
 public class MixerPopupActivity extends Activity {
     ArrayList<colorInfo> basicColor= new ArrayList<colorInfo>();
 
@@ -82,28 +132,14 @@ public class MixerPopupActivity extends Activity {
         for (int i=0;i<10;i++){
             tabHost.addTab(tabHost.newTabSpec(tabkey[i]).setContent(tabID[i]).setIndicator(tabName[i]));  //tabSpec을 tabHost에 추가해준다.
         }
-//-------------------------컬러 버튼 특성-------------------------------------------------
-        LinearLayout.LayoutParams pm = new LinearLayout.LayoutParams(0,0); //레이아웃파라미터 생성
-        pm.width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        pm.height = LinearLayout.LayoutParams.WRAP_CONTENT;
-//-------------------------컬러 버튼 특성-------------------------------------------------
+//-------------------------컬러 이미지 생성-------------------------------------------------
 
-        LinearLayout tabArea= (LinearLayout)findViewById(R.id.tab0);
-        Button mButton = new Button(this); //버튼을 선언
-        mButton.setText("button"); //버튼에 들어갈 텍스트를 지정(String)
-//        mButton.setBackgroundResource(R.drawable.button_selector); //버튼 이미지를 지정(int)
-        mButton.setLayoutParams(pm); //앞서 설정한 레이아웃파라미터를 버튼에 적용
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        GridView tabArea = (GridView)findViewById(R.id.grid0);
+        colorGridAdapter colorAdapter = new colorGridAdapter(getApplicationContext(),R.layout.row, basicColor);
 
-            }
-        });
-
-        tabArea.addView(mButton); //지정된 뷰에 셋팅완료된 mButton을 추가
+        tabArea.setAdapter(colorAdapter);
 
         TextView tv0 = (TextView) findViewById(R.id.colpal0);
-
         tv0.setText(basicColor.get(0).getColorname());
     }
 }
