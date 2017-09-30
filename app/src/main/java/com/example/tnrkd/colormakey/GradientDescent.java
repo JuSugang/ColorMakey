@@ -89,6 +89,7 @@ public class GradientDescent {
 			for (int j = 0; j < H[0].length; j++) {
 				result+=(float)Math.pow(H[i][j]-Y_data[i][j], 2)/(float)(row*col);
 			}
+
 		}
 		return result/2;
 	}

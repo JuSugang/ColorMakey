@@ -13,19 +13,46 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <HorizontalScrollView
+                android:id="@+id/imageViewHorizontalScroll"
+                android:background="#00FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollbars="horizontal"
+                android:scrollbarAlwaysDrawHorizontalTrack="true"
+                android:addStatesFromChildren="true">
 
-            <TabWidget
-                android:id="@android:id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <TabWidget
+                    android:id="@android:id/tabs"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FF383838"
+                    android:minWidth="600px"/>
+            </HorizontalScrollView>
 
             <FrameLayout
-                android:id="@android:id/tabcontent"                android:layout_width="match_parent"
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_orange_light"
-                android:padding="32dp">
+                android:background="@android:color/holo_orange_light">
 
+                <!--0.basic-->
+                <LinearLayout
+                    android:padding="20dp"
+                    android:id="@+id/tab0"
+                    android:background="#FFFFFF"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/colpal0"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="basic"
+                        android:textSize="24dp" />
+                </LinearLayout>
+                <!--1.red-->
                 <LinearLayout
                     android:id="@+id/tab1"
                     android:layout_width="match_parent"
@@ -35,12 +62,13 @@
                     android:padding="16dp">
 
                     <TextView
-                        android:id="@+id/colpal"
+                        android:id="@+id/colpal1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="test11."
+                        android:text="red"
                         android:textSize="15dp" />
                 </LinearLayout>
+                <!--2.green-->
                 <LinearLayout
                     android:padding="20dp"
                     android:id="@+id/tab2"
@@ -53,9 +81,122 @@
                         android:id="@+id/colpal2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="green"
+                        android:textSize="24dp" />
+                </LinearLayout>
+                <!--3.blue-->
+                <LinearLayout
+                    android:padding="20dp"
+                    android:id="@+id/tab3"
+                    android:background="#FFFFFF"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/colpal3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="blue"
+                        android:textSize="24dp" />
+                </LinearLayout>
+                <!--4.yellow-->
+                <LinearLayout
+                    android:padding="20dp"
+                    android:id="@+id/tab4"
+                    android:background="#FFFFFF"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/colpal4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="yellow"
+                        android:textSize="24dp" />
+                </LinearLayout>
+                <!--5.brown-->
+                <LinearLayout
+                    android:padding="20dp"
+                    android:id="@+id/tab5"
+                    android:background="#FFFFFF"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/colpal5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="brown"
+                        android:textSize="24dp" />
+                </LinearLayout>
+                <!--6.grey-->
+                <LinearLayout
+                    android:padding="20dp"
+                    android:id="@+id/tab6"
+                    android:background="#FFFFFF"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/colpal6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="grey"
+                        android:textSize="24dp" />
+                </LinearLayout>
+                <!--7.orange-->
+                <LinearLayout
+                    android:padding="20dp"
+                    android:id="@+id/tab7"
+                    android:background="#FFFFFF"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/colpal7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="orange"
+                        android:textSize="24dp" />
+                </LinearLayout>
+                <!--8.violet-->
+                <LinearLayout
+                    android:padding="20dp"
+                    android:id="@+id/tab8"
+                    android:background="#FFFFFF"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/colpal8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="violet"
+                        android:textSize="24dp" />
+                </LinearLayout>
+                <!--9.picker-->
+                <LinearLayout
+                    android:padding="20dp"
+                    android:id="@+id/tab9"
+                    android:background="#FFFFFF"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/colpal9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="test22"
                         android:textSize="24dp" />
                 </LinearLayout>
+
             </FrameLayout>
         </LinearLayout>
     </TabHost>

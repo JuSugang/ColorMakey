@@ -2,7 +2,12 @@ package com.example.tnrkd.colormakey;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -47,19 +52,8 @@ public class MixerPopupActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_mixer_popup);
 
-        TabHost tabHost = (TabHost) findViewById(R.id.tabhost1);
-        tabHost.setup();
-
-        TabHost.TabSpec tab1 = tabHost.newTabSpec("1").setContent(R.id.tab1).setIndicator("basic");
-
-        TabHost.TabSpec tab2 = tabHost.newTabSpec("2").setContent(R.id.tab2).setIndicator("red");
-
-        tabHost.addTab(tab1);
-        tabHost.addTab(tab2);
-
-        TextView tv = (TextView) findViewById(R.id.colpal);
-        TextView tv2 = (TextView) findViewById(R.id.colpal2);
-        try{    //res/raw/txt파일에서 색 hexcode,rgbcode,name 을 불러와 Arraylist에 담는다.
+//-------------------------color text 읽기-------------------------------------------------
+        try{                //res/raw/txt파일에서 색 hexcode,rgbcode,name 을 불러와 Arraylist에 담는다.
             // txt 파일을 InpuStream에 넣는다. (open 한다)
             InputStream in = getResources().openRawResource(R.raw.color_basic);
             if(in != null){
@@ -79,7 +73,37 @@ public class MixerPopupActivity extends Activity {
             e.printStackTrace();
         }
 
-        tv.setText(basicColor.get(0).getColorname());
-        tv2.setText(basicColor.get(4).getColorname());
+//-------------------------tabHost 구성-------------------------------------------------
+        TabHost tabHost = (TabHost) findViewById(R.id.tabhost1);    //tabhost 생성
+        tabHost.setup();
+        String[] tabName = {"Basic","Red","Green","Blue","Yellow","Brown","Grey","Orange","Violet","직접선택"};
+        int[] tabID = {R.id.tab0,R.id.tab1,R.id.tab2,R.id.tab3,R.id.tab4,R.id.tab5,R.id.tab6,R.id.tab7,R.id.tab8,R.id.tab9};
+        String[] tabkey =  {"0","1","2","3","4","5","6","7","8","9"};
+        for (int i=0;i<10;i++){
+            tabHost.addTab(tabHost.newTabSpec(tabkey[i]).setContent(tabID[i]).setIndicator(tabName[i]));  //tabSpec을 tabHost에 추가해준다.
+        }
+//-------------------------컬러 버튼 특성-------------------------------------------------
+        LinearLayout.LayoutParams pm = new LinearLayout.LayoutParams(0,0); //레이아웃파라미터 생성
+        pm.width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        pm.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+//-------------------------컬러 버튼 특성-------------------------------------------------
+
+        LinearLayout tabArea= (LinearLayout)findViewById(R.id.tab0);
+        Button mButton = new Button(this); //버튼을 선언
+        mButton.setText("button"); //버튼에 들어갈 텍스트를 지정(String)
+//        mButton.setBackgroundResource(R.drawable.button_selector); //버튼 이미지를 지정(int)
+        mButton.setLayoutParams(pm); //앞서 설정한 레이아웃파라미터를 버튼에 적용
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        tabArea.addView(mButton); //지정된 뷰에 셋팅완료된 mButton을 추가
+
+        TextView tv0 = (TextView) findViewById(R.id.colpal0);
+
+        tv0.setText(basicColor.get(0).getColorname());
     }
 }
