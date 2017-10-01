@@ -47,11 +47,9 @@ class colorInfo{
         return  colorname;
     }
 }
-
 class colorGridAdapter extends BaseAdapter {
     Context context;
     int layout;
-    int img;
     LayoutInflater inf;
     ArrayList<colorInfo> colorIDs = null;
 
@@ -122,33 +120,40 @@ class colorClickListener implements AdapterView.OnItemClickListener {
 }
 
 public class MixerPopupActivity extends Activity {
-    ArrayList<colorInfo> basicColor= new ArrayList<colorInfo>();
-
+    ArrayList<colorInfo>[] basicColor= new ArrayList[9];
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_mixer_popup);
 
+        int[] txtarr={R.raw.color_basic,R.raw.color_red,R.raw.color_green,R.raw.color_blue,
+        R.raw.color_yellow,R.raw.color_brown,R.raw.color_grey,R.raw.color_orange,R.raw.color_violet};
+        for (int i=0; i<9 ; i++){
+            basicColor[i]=new ArrayList<colorInfo>();
+        }
+
 //-------------------------color text 읽기-------------------------------------------------
-        try{                //res/raw/txt파일에서 색 hexcode,rgbcode,name 을 불러와 Arraylist에 담는다.
-            // txt 파일을 InpuStream에 넣는다. (open 한다)
-            InputStream in = getResources().openRawResource(R.raw.color_basic);
-            if(in != null){
-                InputStreamReader stream = new InputStreamReader(in, "utf-8");
-                BufferedReader buffer = new BufferedReader(stream);
+        for(int i=0;i<9;i++) {
+            try {                //res/raw/txt파일에서 색 hexcode,rgbcode,name 을 불러와 Arraylist에 담는다.
+                // txt 파일을 InpuStream에 넣는다. (open 한다)
+                InputStream in = getResources().openRawResource(txtarr[i]);
+                if (in != null) {
+                    InputStreamReader stream = new InputStreamReader(in, "utf-8");
+                    BufferedReader buffer = new BufferedReader(stream);
 
-                String read;
-                while((read=buffer.readLine())!=null){
-                    String[] colorInfoArr=read.split(",");
-                    colorInfo node=new colorInfo(colorInfoArr[0],colorInfoArr[1],colorInfoArr[2]);
-                    basicColor.add(node);   //basic 색 만 테스트
+                    String read;
+                    while ((read = buffer.readLine()) != null) {
+                        String[] colorInfoArr = read.split(",");
+                        colorInfo node = new colorInfo(colorInfoArr[0], colorInfoArr[1], colorInfoArr[2]);
+                        basicColor[i].add(node);   //basic 색 만 테스트
+                    }
+                    in.close();
+
                 }
-                in.close();
-
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }catch(Exception e) {
-            e.printStackTrace();
         }
 
 //-------------------------tabHost 구성-------------------------------------------------
@@ -161,16 +166,20 @@ public class MixerPopupActivity extends Activity {
             tabHost.addTab(tabHost.newTabSpec(tabkey[i]).setContent(tabID[i]).setIndicator(tabName[i]));  //tabSpec을 tabHost에 추가해준다.
         }
 //-------------------------컬러 그리드 생성-------------------------------------------------
-
-        GridView colorArea = (GridView)findViewById(R.id.grid0);
-        colorGridAdapter colorAdapter = new colorGridAdapter(getApplicationContext(),R.layout.row, basicColor);
-        colorArea.setAdapter(colorAdapter);
         final ImageView colorPreview = (ImageView) findViewById(R.id.colorPreview);
         final TextView hexTextView = (TextView) findViewById(R.id.hexTextView);
         final TextView rgbTextView = (TextView) findViewById(R.id.rgbTextView);
         final TextView nameTextView = (TextView) findViewById(R.id.nameTextView);
-        colorClickListener itemClickListener= new colorClickListener(basicColor,colorPreview,hexTextView,rgbTextView,nameTextView);
-        colorArea.setOnItemClickListener(itemClickListener);
+
+        int[] gridarr={R.id.grid0,R.id.grid1,R.id.grid2,R.id.grid3,R.id.grid4,R.id.grid5,R.id.grid6,R.id.grid7,R.id.grid8};
+        GridView[] colorArea = new GridView[9];
+        for (int i=0;i<9;i++) {
+            colorArea[i]=(GridView) findViewById(gridarr[i]);
+//            colorGridAdapter colorAdapter = new colorGridAdapter(getApplicationContext(),R.layout.row, basicColor[i]);
+            colorArea[i].setAdapter(new colorGridAdapter(getApplicationContext(),R.layout.row, basicColor[i]));
+            colorClickListener itemClickListener= new colorClickListener(basicColor[i],colorPreview,hexTextView,rgbTextView,nameTextView);
+            colorArea[i].setOnItemClickListener(itemClickListener);
+        }
 
     }
 }
