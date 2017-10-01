@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -81,15 +81,43 @@ class colorGridAdapter extends BaseAdapter {
         }
         ImageView colorView = (ImageView)convertView.findViewById(R.id.imageView1);
         TextView colortext = (TextView) convertView.findViewById(R.id.colorName);
+
         colortext.setText(colorIDs.get(position).getColorname());
         int R=colorIDs.get(position).getRGBarray()[0];
         int G=colorIDs.get(position).getRGBarray()[1];
         int B=colorIDs.get(position).getRGBarray()[2];
         colorView.setImageResource(com.example.tnrkd.colormakey.R.drawable.mask);
         colorView.setBackgroundColor(Color.rgb(R,G,B));
-//            colorView.setOnClickListener(new ImageClickListener(context, colorIDs[position]));
 
         return convertView;
+    }
+}
+class colorClickListener implements AdapterView.OnItemClickListener {
+
+    ArrayList<colorInfo> colorIDs = null;
+    ImageView colorPreview;
+    TextView hexTextView;
+    TextView rgbTextView;
+    TextView nameTextView;
+    public colorClickListener(ArrayList<colorInfo> colorIDs,ImageView colorPreview,TextView hexTextView,TextView rgbTextView,TextView nameTextView) {
+        this.colorIDs = colorIDs;
+        this.colorPreview=colorPreview;
+        this.hexTextView=hexTextView;
+        this.rgbTextView=rgbTextView;
+        this.nameTextView=nameTextView;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view,
+                            int position, long id) {
+        int R=colorIDs.get(position).getRGBarray()[0];
+        int G=colorIDs.get(position).getRGBarray()[1];
+        int B=colorIDs.get(position).getRGBarray()[2];
+        colorPreview.setImageResource(com.example.tnrkd.colormakey.R.drawable.mask_preview);
+        colorPreview.setBackgroundColor(Color.rgb(R,G,B));
+        hexTextView.setText("#" + colorIDs.get(position).getHexcode());
+        rgbTextView.setText("("+R+","+G+","+B+")");
+        nameTextView.setText(colorIDs.get(position).getColorname());
     }
 }
 
@@ -132,14 +160,17 @@ public class MixerPopupActivity extends Activity {
         for (int i=0;i<10;i++){
             tabHost.addTab(tabHost.newTabSpec(tabkey[i]).setContent(tabID[i]).setIndicator(tabName[i]));  //tabSpec을 tabHost에 추가해준다.
         }
-//-------------------------컬러 이미지 생성-------------------------------------------------
+//-------------------------컬러 그리드 생성-------------------------------------------------
 
-        GridView tabArea = (GridView)findViewById(R.id.grid0);
+        GridView colorArea = (GridView)findViewById(R.id.grid0);
         colorGridAdapter colorAdapter = new colorGridAdapter(getApplicationContext(),R.layout.row, basicColor);
+        colorArea.setAdapter(colorAdapter);
+        final ImageView colorPreview = (ImageView) findViewById(R.id.colorPreview);
+        final TextView hexTextView = (TextView) findViewById(R.id.hexTextView);
+        final TextView rgbTextView = (TextView) findViewById(R.id.rgbTextView);
+        final TextView nameTextView = (TextView) findViewById(R.id.nameTextView);
+        colorClickListener itemClickListener= new colorClickListener(basicColor,colorPreview,hexTextView,rgbTextView,nameTextView);
+        colorArea.setOnItemClickListener(itemClickListener);
 
-        tabArea.setAdapter(colorAdapter);
-
-        TextView tv0 = (TextView) findViewById(R.id.colpal0);
-        tv0.setText(basicColor.get(0).getColorname());
     }
 }
