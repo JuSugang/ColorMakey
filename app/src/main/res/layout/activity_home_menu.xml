@@ -14,6 +14,7 @@
 
     <TextView
         android:id="@+id/remixer"
+        android:background="#FFFFFF"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
@@ -36,6 +37,7 @@
 
     <TextView
         android:id="@+id/palette"
+        android:background="#FFFFFF"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"

@@ -60,6 +60,8 @@ public class SplashActivity extends Activity {
 //                            LoginActivity.class);
                     Intent intent = new Intent(SplashActivity.this,
                             HomeMenuActivity.class);
+//                    Intent intent = new Intent(SplashActivity.this,
+//                            MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     SplashActivity.this.finish();
