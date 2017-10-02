@@ -134,8 +134,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Global.userUID = user.getUid();
 
             // Firebase DB에 사용자 정보 저장
-            mDatabase.child("user");
-            mDatabase.child(Global.userUID).child("name").setValue(Global.userName);
+            mDatabase.child("user").child(Global.userUID).child("name").setValue(Global.userName);
 
             // 사용자의 palette 정보 로딩
             mDatabase = FirebaseDatabase.getInstance().getReference().child("palette");
