@@ -31,9 +31,6 @@ public class SplashActivity extends Activity {
     private final String TAG = "SplashActivity";
 
     Thread splashTread;
-    Thread loadingThread;
-
-    private DatabaseReference mDatabase;
 
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -45,8 +42,6 @@ public class SplashActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
-        Global.colors = new ArrayList<>();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("palette");
 
         StartAnimations();
     }
@@ -89,36 +84,5 @@ public class SplashActivity extends Activity {
             }
         };
         splashTread.start();
-
-        loadingThread = new Thread() {
-            @Override
-            public void run() {
-                ValueEventListener colorListener = new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        // DB에서 모든 user 목록을 가져온다.
-                        HashMap<String, Object> list = (HashMap<String, Object>)dataSnapshot.getValue();
-                        ArrayList<HashMap<String, Object>> colorList = (ArrayList<HashMap<String, Object>>)list.get(Global.userEmail.replace('.', '_'));
-
-                        if(colorList != null) {
-                            for(HashMap<String, Object> hashMap : colorList) {
-                                Color color = new Color();
-                                color.setRgbcode((String)hashMap.get("rgbcode"));
-                                color.setHexcode((String)hashMap.get("hexcode"));
-                                Global.colors.add(color);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                    }
-                };
-                mDatabase.addListenerForSingleValueEvent(colorListener);
-            }
-        };
-        loadingThread.start();
     }
 }

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.tnrkd.colormakey.dto.Color;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -23,6 +24,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by XNOTE on 2017-09-24.
@@ -31,9 +40,13 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
 
     private static final int RC_SIGN_IN = 9001;
-    GoogleApiClient mGoogleApiClient;
-    GoogleSignInOptions gso;
+    private GoogleApiClient mGoogleApiClient;
+    private GoogleSignInOptions gso;
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
+    private final String TAG = "LoginActivity";
+
+    Thread loadingThread;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +65,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mAuth = FirebaseAuth.getInstance();
 
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("user");
+
+        Global.colors = new ArrayList<>();
         findViewById(R.id.sign_in_button).setOnClickListener(LoginActivity.this);
     }
 
@@ -115,9 +131,51 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             // 로그인한 사용자의 email, id값 Global에 저장
             Global.userEmail = user.getEmail();
             Global.userName = user.getDisplayName();
+            Global.userUID = user.getUid();
 
-            Intent intent = new Intent(this, HomeMenuActivity.class);
-            startActivity(intent);
+            // Firebase DB에 사용자 정보 저장
+            mDatabase.child(Global.userUID).child("name").setValue(Global.userName);
+
+            // 사용자의 palette 정보 로딩
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("palette");
+            loadingThread = new Thread() {
+                @Override
+                public void run() {
+                    ValueEventListener colorListener = new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            // DB에서 모든 user 목록을 가져온다.
+                            HashMap<String, Object> list = (HashMap<String, Object>)dataSnapshot.getValue();
+                            ArrayList<HashMap<String, Object>> colorList = (ArrayList<HashMap<String, Object>>)list.get(Global.userUID);
+
+                            if(colorList != null) {
+                                for(HashMap<String, Object> hashMap : colorList) {
+                                    Color color = new Color();
+                                    color.setRgbcode((String)hashMap.get("rgbcode"));
+                                    color.setHexcode((String)hashMap.get("hexcode"));
+                                    Global.colors.add(color);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                        }
+                    };
+                    mDatabase.addListenerForSingleValueEvent(colorListener);
+                }
+            };
+            loadingThread.start();
+
+            while(loadingThread.getState().toString().equals("TERMINATED")) {
+                Log.d(TAG, loadingThread.getState().toString());
+                Intent intent = new Intent(this, HomeMenuActivity.class);
+                startActivity(intent);
+                break;
+            }
+            Log.d(TAG, loadingThread.getState().toString());
         }
     }
 
