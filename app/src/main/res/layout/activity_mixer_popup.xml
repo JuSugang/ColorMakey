@@ -289,12 +289,27 @@
 
     </LinearLayout>
     <LinearLayout
-        android:padding="20dp"
+        android:paddingLeft="100dp"
         android:id="@+id/dialogue0"
         android:background="#eff322"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="vertical"
-        android:gravity="bottom"/>
+        android:orientation="horizontal"
+        android:gravity="bottom">
+
+        <Button
+            android:id="@+id/popupCancel"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="취소" />
+
+        <Button
+            android:id="@+id/popupConfirm"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="확인" />
+    </LinearLayout>
 
 </LinearLayout>

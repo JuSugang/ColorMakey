@@ -11,9 +11,12 @@ import java.util.ArrayList;
 
 public class Global {
     public static GoogleSignInResult result;
+
     public static String userEmail;
     public static String userName;
     public static String userUID;
 
     public static ArrayList<Color> colors;
+    public static ArrayList<colorList> list=new ArrayList<colorList>();
+
 }

@@ -2,18 +2,22 @@ package com.example.tnrkd.colormakey;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -175,11 +179,33 @@ public class MixerPopupActivity extends Activity {
         GridView[] colorArea = new GridView[9];
         for (int i=0;i<9;i++) {
             colorArea[i]=(GridView) findViewById(gridarr[i]);
-//            colorGridAdapter colorAdapter = new colorGridAdapter(getApplicationContext(),R.layout.row, basicColor[i]);
             colorArea[i].setAdapter(new colorGridAdapter(getApplicationContext(),R.layout.row, basicColor[i]));
             colorClickListener itemClickListener= new colorClickListener(basicColor[i],colorPreview,hexTextView,rgbTextView,nameTextView);
             colorArea[i].setOnItemClickListener(itemClickListener);
         }
-
+//-------------------------버튼 리스너 생성-------------------------------------------------
+        Button popupCancel=(Button)findViewById(R.id.popupCancel);
+        Button popupConfirm=(Button)findViewById(R.id.popupConfirm);
+        popupCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        popupConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CharSequence cs = rgbTextView.getText();
+                if(cs.equals("rgb")){
+                    Toast.makeText(MixerPopupActivity.this,"색을 선택하세요",Toast.LENGTH_SHORT).show();
+                }else{
+                    String temp = cs.toString();
+                    String[] RGBstring=temp.substring(1,temp.length()-1).split(",");
+                    Global.list.add(new colorList(Integer.parseInt(RGBstring[0]),Integer.parseInt(RGBstring[1]),Integer.parseInt(RGBstring[2]),1));
+                    MixerActivity.colorAdapter.notifyDataSetChanged();
+                    finish();
+                }
+            }
+        });
     }
 }
