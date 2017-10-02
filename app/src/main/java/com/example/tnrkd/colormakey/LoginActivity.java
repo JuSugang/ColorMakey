@@ -22,7 +22,6 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -64,8 +63,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .build();
 
         mAuth = FirebaseAuth.getInstance();
-
-        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         Global.colors = new ArrayList<>();
         findViewById(R.id.sign_in_button).setOnClickListener(LoginActivity.this);
@@ -134,7 +131,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Global.userUID = user.getUid();
 
             // Firebase DB에 사용자 정보 저장
-            mDatabase.child("user").child(Global.userUID).child("name").setValue(Global.userName);
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("user").child(Global.userUID).child("name");
+            mDatabase.setValue(Global.userName);
 
             // 사용자의 palette 정보 로딩
             mDatabase = FirebaseDatabase.getInstance().getReference().child("palette");
