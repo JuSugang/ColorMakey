@@ -4,11 +4,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.example.tnrkd.colormakey.adapter.ColorGridPaletteAdapter;
+import com.example.tnrkd.colormakey.dto.Color;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by XNOTE on 2017-09-24.
@@ -16,7 +28,12 @@ import android.widget.LinearLayout;
 
 public class SplashActivity extends Activity {
 
+    private final String TAG = "SplashActivity";
+
     Thread splashTread;
+    Thread loadingThread;
+
+    private DatabaseReference mDatabase;
 
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -28,7 +45,8 @@ public class SplashActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
-
+        Global.colors = new ArrayList<>();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("palette");
 
         StartAnimations();
     }
@@ -56,10 +74,10 @@ public class SplashActivity extends Activity {
                         sleep(100);
                         waited += 100;
                     }
-//                    Intent intent = new Intent(SplashActivity.this,
-//                            LoginActivity.class);
                     Intent intent = new Intent(SplashActivity.this,
-                            HomeMenuActivity.class);
+                            LoginActivity.class);
+                    //Intent intent = new Intent(SplashActivity.this,
+                    //        HomeMenuActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     SplashActivity.this.finish();
@@ -71,5 +89,36 @@ public class SplashActivity extends Activity {
             }
         };
         splashTread.start();
+
+        loadingThread = new Thread() {
+            @Override
+            public void run() {
+                ValueEventListener colorListener = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        // DB에서 모든 user 목록을 가져온다.
+                        HashMap<String, Object> list = (HashMap<String, Object>)dataSnapshot.getValue();
+                        ArrayList<HashMap<String, Object>> colorList = (ArrayList<HashMap<String, Object>>)list.get(Global.userEmail.replace('.', '_'));
+
+                        if(colorList != null) {
+                            for(HashMap<String, Object> hashMap : colorList) {
+                                Color color = new Color();
+                                color.setRgbcode((String)hashMap.get("rgbcode"));
+                                color.setHexcode((String)hashMap.get("hexcode"));
+                                Global.colors.add(color);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                    }
+                };
+                mDatabase.addListenerForSingleValueEvent(colorListener);
+            }
+        };
+        loadingThread.start();
     }
 }

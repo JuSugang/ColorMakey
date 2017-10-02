@@ -22,8 +22,8 @@
         <activity android:name=".RemixerActivity"/>
         <activity android:name=".MixerActivity"/>
         <activity android:name=".MixerPopupActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog">
-        </activity>
+        android:theme="@android:style/Theme.DeviceDefault.Light.Dialog">
+    </activity>
         <activity android:name=".PaletteActivity"/>
     </application>
 

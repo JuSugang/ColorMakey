@@ -21,6 +21,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 /**
@@ -110,6 +111,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void updateUI(FirebaseUser user) {
         if(user != null) {
+
+            // 로그인한 사용자의 email, id값 Global에 저장
+            Global.userEmail = user.getEmail();
+            Global.userName = user.getDisplayName();
+
             Intent intent = new Intent(this, HomeMenuActivity.class);
             startActivity(intent);
         }
