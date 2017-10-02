@@ -47,6 +47,7 @@ public class HomeMenuActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeMenuActivity.this,
                         MixerActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("flag","false");
                 startActivity(intent);
             }
         });

@@ -2,6 +2,7 @@ package com.example.tnrkd.colormakey;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TabHost;
@@ -180,6 +182,26 @@ public class MixerPopupActivity extends Activity {
             colorClickListener itemClickListener= new colorClickListener(basicColor[i],colorPreview,hexTextView,rgbTextView,nameTextView);
             colorArea[i].setOnItemClickListener(itemClickListener);
         }
-
+        Button popupCancel=(Button)findViewById(R.id.popupCancel);
+        Button popupConfirm=(Button)findViewById(R.id.popupConfirm);
+        popupCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        popupConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MixerPopupActivity.this, MixerActivity.class);
+                intent.putExtra("flag","true");
+                intent.putExtra("hexcode",hexTextView.getText());
+                intent.putExtra("rgbcode",rgbTextView.getText());
+                intent.putExtra("namecode",nameTextView.getText());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }

@@ -7,14 +7,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
 /**
  * Created by tnrkd on 2017-09-29.
  */
 
 
+class colorList{
 
+}
 public class MixerActivity extends Activity {
-
+//    ArrayList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,12 +29,20 @@ public class MixerActivity extends Activity {
         bLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                startActivity(new Intent(MixerActivity.this, MixerPopupActivity.class));
-
+                Intent intent = new Intent(MixerActivity.this, MixerPopupActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
             }
         });
 
+        Intent intent=getIntent();
+        String flag=intent.getExtras().getString("flag");
+        if(flag.matches("true")){
+            String hexExtras=intent.getExtras().getString("hexcode");
+            String rgbExtras=intent.getExtras().getString("rgbcode");
+            String nameExtras=intent.getExtras().getString("namecode");
+        }
     }
 
 }
