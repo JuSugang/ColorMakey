@@ -126,8 +126,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void updateUI(FirebaseUser user) {
+        if(user==null){
+            Log.e("내 정보는 null이다","음");
+        }
         if(user != null) {
-
+            Log.e("나는 있는가","음");
             // 로그인한 사용자의 email, id값 Global에 저장
             Global.userEmail = user.getEmail();
             Global.userName = user.getDisplayName();

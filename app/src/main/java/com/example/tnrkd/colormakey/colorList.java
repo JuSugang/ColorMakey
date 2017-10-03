@@ -15,4 +15,12 @@ public class colorList{
         B=b;
         Ratio=ratio;
     }
+    public void upRatio(){
+        Ratio++;
+        return;
+    }
+    public void downRatio(){
+        Ratio--;
+        return;
+    }
 }

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -59,8 +61,8 @@ class CustomColorAdapter extends BaseAdapter {
             convertView = inf.inflate(layout, null);
         }
 
-        TextView colorRatio = (TextView) convertView.findViewById(R.id.ratio);
-        ImageView deleteButton = (ImageView)convertView.findViewById(R.id.deleteButton);
+        final TextView colorRatio = (TextView) convertView.findViewById(R.id.ratio);
+        final ImageView deleteButton = (ImageView)convertView.findViewById(R.id.deleteButton);
         LinearLayout colorBack = (LinearLayout)convertView.findViewById(R.id.back);
 
         colorRatio.setText(Integer.toString(infoList.get(position).Ratio));
@@ -69,7 +71,28 @@ class CustomColorAdapter extends BaseAdapter {
         int B=infoList.get(position).B;
         colorBack.setBackgroundColor(Color.rgb(R,G,B));
         deleteButton.setImageResource(com.example.tnrkd.colormakey.R.drawable.delete_button);
-
+//-------------------------색 추가 버튼-------------------------------------------------
+        deleteButton.setTag(position);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                colorList target = Global.list.get(Integer.parseInt(deleteButton.getTag().toString()));
+                target.downRatio();
+                if(target.Ratio==0) {
+                    Global.list.remove(Integer.parseInt(deleteButton.getTag().toString()));
+                }
+                MixerActivity.colorAdapter.notifyDataSetChanged();
+            }
+        });
+        colorRatio.setTag(position);
+        colorRatio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                colorList target = Global.list.get(Integer.parseInt(colorRatio.getTag().toString()));
+                target.upRatio();
+                MixerActivity.colorAdapter.notifyDataSetChanged();
+            }
+        });
         return convertView;
     }
     public void setArrayList(ArrayList<colorList> arrays){
@@ -104,5 +127,6 @@ public class MixerActivity extends Activity {
         colorListView = (ListView) findViewById(R.id.MixerColorList);
         colorAdapter=new CustomColorAdapter(getApplicationContext(),R.layout.row_mixer,Global.list);
         colorListView.setAdapter(colorAdapter);
+//-------------------------List에 listener 추가-------------------------------------------------
     }
 }
