@@ -197,9 +197,23 @@ public class MixerPopupActivity extends Activity {
                 }else{
                     String temp = cs.toString();
                     String[] RGBstring=temp.substring(1,temp.length()-1).split(",");
-                    Global.list.add(new colorList(Integer.parseInt(RGBstring[0]),Integer.parseInt(RGBstring[1]),Integer.parseInt(RGBstring[2]),1));
-                    MixerActivity.mAdapter.notifyDataSetChanged();
-                    finish();
+                    int flag=0;
+                    for(int i=0;i<Global.list.size();i++){
+                        int flagCount=0;
+                        if(Global.list.get(i).R==Integer.parseInt(RGBstring[0])){flagCount++;}
+                        if(Global.list.get(i).G==Integer.parseInt(RGBstring[1])){flagCount++;}
+                        if(Global.list.get(i).B==Integer.parseInt(RGBstring[2])){flagCount++;}
+                        if(flagCount==3){
+                            Toast.makeText(MixerPopupActivity.this,"이미 등록된 색입니다",Toast.LENGTH_SHORT).show();
+                            flag=1;
+                        }
+                    }
+                    if(flag==0) {
+                        Global.list.add(new colorList(Integer.parseInt(RGBstring[0]), Integer.parseInt(RGBstring[1]), Integer.parseInt(RGBstring[2]), 1));
+                        MixerActivity.mAdapter.notifyDataSetChanged();
+                        MixerActivity.calcResult(MixerActivity.colorTexture);
+                        finish();
+                    }
                 }
             }
         });
