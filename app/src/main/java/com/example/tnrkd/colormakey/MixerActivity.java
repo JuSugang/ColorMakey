@@ -157,12 +157,11 @@ public class MixerActivity extends Activity {
             int percentText=Math.round(Global.list.get(i).Ratio*100/(float)sum);
             view1.setText(Integer.toString(percentText)+"%");
             view1.setTextSize(20);
-            view1.setTextColor(Color.GRAY);
+            view1.setTextColor(Color.DKGRAY);
             view1.setBackgroundColor(Color.rgb(Global.list.get(i).R,Global.list.get(i).G,Global.list.get(i).B));
             view1.setGravity(Gravity.CENTER);
 
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
-//            lp.gravity = Gravity.CENTER;
             lp.weight = Global.list.get(i).Ratio;
             view1.setLayoutParams(lp);
 
