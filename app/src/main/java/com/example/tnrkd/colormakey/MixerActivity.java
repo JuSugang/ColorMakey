@@ -108,24 +108,13 @@ public class MixerActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mixer);
-<<<<<<< HEAD
-<<<<<<< HEAD
-//<<<<<<< HEAD
-//=======
-=======
->>>>>>> 32c28b3280213d1067c5e635663b84b2c1bcc327
+
 //-------------------------색 결과 표시-------------------------------------------------
         colorTexture = (ImageView) findViewById(R.id.color_texture);
         colorTexture.setImageResource(R.drawable.mixer_result);
         calcResult(colorTexture);
 //-------------------------색 비율 표시해야함-------------------------------------------------
-<<<<<<< HEAD
-//>>>>>>> sugang
-=======
 
->>>>>>> parent of 51e8f7c... Revert "Merge branch 'master' into pyw"
-=======
->>>>>>> 32c28b3280213d1067c5e635663b84b2c1bcc327
 //-------------------------색 추가 버튼-------------------------------------------------
         ImageView addButton=(ImageView) findViewById(R.id.addButton);
         addButton.setImageResource(R.drawable.add_button);
