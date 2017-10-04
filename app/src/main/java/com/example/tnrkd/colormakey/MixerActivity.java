@@ -88,6 +88,14 @@ public class MixerActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mixer);
+//<<<<<<< HEAD
+//=======
+//-------------------------색 결과 표시-------------------------------------------------
+        colorTexture = (ImageView) findViewById(R.id.color_texture);
+        colorTexture.setImageResource(R.drawable.mixer_result);
+        calcResult(colorTexture);
+//-------------------------색 비율 표시해야함-------------------------------------------------
+//>>>>>>> sugang
 //-------------------------색 추가 버튼-------------------------------------------------
         ImageView addButton=(ImageView) findViewById(R.id.addButton);
         addButton.setImageResource(R.drawable.add_button);
