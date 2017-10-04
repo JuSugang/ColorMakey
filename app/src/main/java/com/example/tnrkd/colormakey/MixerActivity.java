@@ -1,105 +1,131 @@
 package com.example.tnrkd.colormakey;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-/**
- * Created by tnrkd on 2017-09-29.
- */
+class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+    private ArrayList<colorList> mDataset;
 
-class CustomColorAdapter extends BaseAdapter {
-
-    private Context context = null;
-    private int layout;
-    private LayoutInflater inf = null;
-    private ArrayList<colorList> infoList = null;
-
-    public CustomColorAdapter(Context c,  int layout, ArrayList<colorList> arrays){
-        this.context = c;
-        this.layout=layout;
-        this.infoList = arrays;
-        this.inf = (LayoutInflater) context.getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    @Override
-    public int getCount() {
-        return infoList.size();
-    }
-    @Override
-    public colorList getItem(int position) {
-        return infoList.get(position);
-    }
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView==null) {
-            convertView = inf.inflate(layout, null);
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView mImageView;
+        public TextView mTextView;
+        public LinearLayout mback;
+        public ViewHolder(View view) {
+            super(view);
+            mImageView = (ImageView)view.findViewById(R.id.deleteButton);
+            mTextView = (TextView)view.findViewById(R.id.ratio);
+            mback = (LinearLayout)view.findViewById(R.id.back);
         }
-
-        TextView colorRatio = (TextView) convertView.findViewById(R.id.ratio);
-        ImageView deleteButton = (ImageView)convertView.findViewById(R.id.deleteButton);
-        LinearLayout colorBack = (LinearLayout)convertView.findViewById(R.id.back);
-
-        colorRatio.setText(Integer.toString(infoList.get(position).Ratio));
-        int R=infoList.get(position).R;
-        int G=infoList.get(position).G;
-        int B=infoList.get(position).B;
-        colorBack.setBackgroundColor(Color.rgb(R,G,B));
-        deleteButton.setImageResource(com.example.tnrkd.colormakey.R.drawable.delete_button);
-
-        return convertView;
     }
-    public void setArrayList(ArrayList<colorList> arrays){
-        this.infoList = arrays;
+    public MyAdapter(ArrayList<colorList> myDataset) {
+        mDataset = myDataset;
     }
-
-    public ArrayList<colorList> getArrayList(){
-        return infoList;
+    @Override
+    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.row_mixer, parent, false);
+        ViewHolder vh = new ViewHolder(v);
+        return vh;
+    }
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.mTextView.setText(Integer.toString(mDataset.get(position).Ratio));
+        final int index=position;
+        holder.mImageView.setImageResource(com.example.tnrkd.colormakey.R.drawable.delete_button);
+        int R=Global.list.get(position).R;
+        int G=Global.list.get(position).G;
+        int B=Global.list.get(position).B;
+        holder.mback.setBackgroundColor(Color.rgb(R,G,B));
+        holder.mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                colorList target = Global.list.get(index);
+                target.downRatio();
+                if(target.Ratio==0) {
+                    Global.list.remove(index);
+                }
+                MixerActivity.mAdapter.notifyDataSetChanged();
+                MixerActivity.calcResult(MixerActivity.colorTexture);
+            }
+        });
+//        holder.mback.setTag(position);
+        holder.mback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                colorList target = Global.list.get(index);
+                target.upRatio();
+                MixerActivity.mAdapter.notifyDataSetChanged();
+                MixerActivity.calcResult(MixerActivity.colorTexture);
+            }
+        });
+    }
+    @Override
+    public int getItemCount() {
+        return mDataset.size();
     }
 }
 
+
 public class MixerActivity extends Activity {
-    public static ListView colorListView;
-    public static CustomColorAdapter colorAdapter;
+    public static RecyclerView mRecyclerView;
+    public static RecyclerView.Adapter mAdapter;
+    public static RecyclerView.LayoutManager mLayoutManager;
+    public static ImageView colorTexture;
+    public static void calcResult(ImageView colorTexture){
+
+        int[] rgb = {0,0,0};
+        int sum=0;
+        for(int j=0 ; j<Global.list.size() ; j++){
+            rgb[0]+=Global.list.get(j).R*Global.list.get(j).Ratio;
+            rgb[1]+=Global.list.get(j).G*Global.list.get(j).Ratio;
+            rgb[2]+=Global.list.get(j).B*Global.list.get(j).Ratio;
+            sum+=Global.list.get(j).Ratio;
+        }
+        if(sum!=0) {
+            for (int i = 0; i < 3; i++) {
+                rgb[i] /= sum;
+            }
+        }
+        if(Global.list.size()==0)
+            colorTexture.setBackgroundColor(Color.rgb(255,255,255));
+        else
+            colorTexture.setBackgroundColor(Color.rgb(rgb[0],rgb[1],rgb[2]));
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mixer);
 <<<<<<< HEAD
+<<<<<<< HEAD
 //<<<<<<< HEAD
 //=======
+=======
+>>>>>>> 32c28b3280213d1067c5e635663b84b2c1bcc327
 //-------------------------색 결과 표시-------------------------------------------------
         colorTexture = (ImageView) findViewById(R.id.color_texture);
         colorTexture.setImageResource(R.drawable.mixer_result);
         calcResult(colorTexture);
 //-------------------------색 비율 표시해야함-------------------------------------------------
+<<<<<<< HEAD
 //>>>>>>> sugang
 =======
 
 >>>>>>> parent of 51e8f7c... Revert "Merge branch 'master' into pyw"
+=======
+>>>>>>> 32c28b3280213d1067c5e635663b84b2c1bcc327
 //-------------------------색 추가 버튼-------------------------------------------------
         ImageView addButton=(ImageView) findViewById(R.id.addButton);
         addButton.setImageResource(R.drawable.add_button);
@@ -113,8 +139,15 @@ public class MixerActivity extends Activity {
             }
         });
 //-------------------------color 리스트 관리-------------------------------------------------
-        colorListView = (ListView) findViewById(R.id.MixerColorList);
-        colorAdapter=new CustomColorAdapter(getApplicationContext(),R.layout.row_mixer,Global.list);
-        colorListView.setAdapter(colorAdapter);
+        mRecyclerView = (RecyclerView) findViewById(R.id.color_horizontalView);
+        mRecyclerView.setHasFixedSize(true);
+
+        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mAdapter = new MyAdapter(Global.list);
+        mRecyclerView.setAdapter(mAdapter);
     }
 }
+
+
