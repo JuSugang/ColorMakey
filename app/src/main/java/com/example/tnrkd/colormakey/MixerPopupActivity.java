@@ -2,8 +2,10 @@ package com.example.tnrkd.colormakey;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -137,7 +139,8 @@ public class MixerPopupActivity extends Activity {
 
 //-------------------------color text 읽기-------------------------------------------------
         for(int i=0;i<9;i++) {
-            try {
+            try {                //res/raw/txt파일에서 색 hexcode,rgbcode,name 을 불러와 Arraylist에 담는다.
+                // txt 파일을 InpuStream에 넣는다. (open 한다)
                 InputStream in = getResources().openRawResource(txtarr[i]);
                 if (in != null) {
                     InputStreamReader stream = new InputStreamReader(in, "utf-8");
@@ -156,6 +159,7 @@ public class MixerPopupActivity extends Activity {
                 e.printStackTrace();
             }
         }
+
 //-------------------------tabHost 구성-------------------------------------------------
         TabHost tabHost = (TabHost) findViewById(R.id.tabhost1);    //tabhost 생성
         tabHost.setup();
@@ -197,23 +201,9 @@ public class MixerPopupActivity extends Activity {
                 }else{
                     String temp = cs.toString();
                     String[] RGBstring=temp.substring(1,temp.length()-1).split(",");
-                    int flag=0;
-                    for(int i=0;i<Global.list.size();i++){
-                        int flagCount=0;
-                        if(Global.list.get(i).R==Integer.parseInt(RGBstring[0])){flagCount++;}
-                        if(Global.list.get(i).G==Integer.parseInt(RGBstring[1])){flagCount++;}
-                        if(Global.list.get(i).B==Integer.parseInt(RGBstring[2])){flagCount++;}
-                        if(flagCount==3){
-                            Toast.makeText(MixerPopupActivity.this,"이미 등록된 색입니다",Toast.LENGTH_SHORT).show();
-                            flag=1;
-                        }
-                    }
-                    if(flag==0) {
-                        Global.list.add(new colorList(Integer.parseInt(RGBstring[0]), Integer.parseInt(RGBstring[1]), Integer.parseInt(RGBstring[2]), 1));
-                        MixerActivity.mAdapter.notifyDataSetChanged();
-                        MixerActivity.calcResult(MixerActivity.colorTexture);
-                        finish();
-                    }
+                    Global.list.add(new colorList(Integer.parseInt(RGBstring[0]),Integer.parseInt(RGBstring[1]),Integer.parseInt(RGBstring[2]),1));
+                    MixerActivity.colorAdapter.notifyDataSetChanged();
+                    finish();
                 }
             }
         });

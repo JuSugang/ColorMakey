@@ -32,7 +32,8 @@ public class HomeMenuActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(Color.BLUE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//-----------------------TextView listener 추가-------------------------------------------------
+
+        //각 TextView에 listener 추가
         TextView remixer=(TextView)findViewById(R.id.remixer);
         TextView mixer=(TextView)findViewById(R.id.mixer);
         TextView palette=(TextView)findViewById(R.id.palette);
@@ -52,6 +53,7 @@ public class HomeMenuActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeMenuActivity.this,
                         MixerActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                intent.putExtra("flag","false");
                 startActivity(intent);
             }
         });
