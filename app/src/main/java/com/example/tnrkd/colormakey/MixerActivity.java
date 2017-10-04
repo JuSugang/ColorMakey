@@ -110,7 +110,7 @@ public class MixerActivity extends Activity {
         setContentView(R.layout.activity_mixer);
 //-------------------------색 결과 표시-------------------------------------------------
         colorTexture = (ImageView) findViewById(R.id.color_texture);
-        colorTexture.setImageResource(R.drawable.mask);
+        colorTexture.setImageResource(R.drawable.mixer_result);
         calcResult(colorTexture);
 //-------------------------색 비율 표시해야함-------------------------------------------------
 //-------------------------색 추가 버튼-------------------------------------------------
