@@ -211,7 +211,6 @@ public class MixerPopupActivity extends Activity {
                     if(flag==0) {
                         Global.list.add(new colorList(Integer.parseInt(RGBstring[0]), Integer.parseInt(RGBstring[1]), Integer.parseInt(RGBstring[2]), 1));
                         MixerActivity.mAdapter.notifyDataSetChanged();
-                        MixerActivity.calcResult(MixerActivity.colorTexture);
                         finish();
                     }
                 }

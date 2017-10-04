@@ -18,5 +18,4 @@ public class Global {
 
     public static ArrayList<Color> colors;
     public static ArrayList<colorList> list=new ArrayList<colorList>();
-
 }

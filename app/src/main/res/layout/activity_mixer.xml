@@ -27,10 +27,14 @@
             android:background="#421523"
             android:layout_weight="1"/>
     </LinearLayout>
+
     <LinearLayout
+
+        android:id="@+id/ratioView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#eeeeee"></LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
