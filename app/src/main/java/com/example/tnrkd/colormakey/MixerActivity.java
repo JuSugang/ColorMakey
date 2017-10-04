@@ -88,6 +88,7 @@ public class MixerActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mixer);
+
 //-------------------------색 추가 버튼-------------------------------------------------
         ImageView addButton=(ImageView) findViewById(R.id.addButton);
         addButton.setImageResource(R.drawable.add_button);
