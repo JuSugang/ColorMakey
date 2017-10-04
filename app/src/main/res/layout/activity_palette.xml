@@ -12,14 +12,44 @@
         android:layout_height="?attr/actionBarSize">
     </android.support.v7.widget.Toolbar>
 
-    <GridView
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+
+        <GridView
+            android:id="@+id/palette_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="380dp"
+            android:background="#ffffff"
+            android:numColumns="4"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            >
+
+        </GridView>
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="3dp"
-        android:paddingBottom="3dp"
-        android:background="#ffffff"
-        android:id="@+id/palette_gridview"
-        android:numColumns="4">
+        android:gravity="bottom"
+        android:orientation="horizontal">
 
-    </GridView>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="색 추가"
+            android:layout_weight="1"
+            android:onClick="onClickView"
+            android:id="@+id/color_add_button"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="삭제"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    </FrameLayout>
+
 </LinearLayout>
