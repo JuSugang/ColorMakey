@@ -1,13 +1,18 @@
 package com.example.tnrkd.colormakey;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.tnrkd.colormakey.adapter.ColorGridPaletteAdapter;
 import com.example.tnrkd.colormakey.dialog.GalleryCameraDialog;
-import com.google.firebase.database.DatabaseReference;
 
 /**
  * Created by tnrkd on 2017-09-29.
@@ -16,9 +21,13 @@ import com.google.firebase.database.DatabaseReference;
 public class PaletteActivity extends Activity {
 
     private final String TAG = "PaletteActivity";
+    private final int GALLERY = 9002;
+    private final int CAMERA = 9003;
+
     private GridView gridView;
 
     private GalleryCameraDialog galleryCameraDialog;
+    private ImageView paletteImageView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,7 +35,7 @@ public class PaletteActivity extends Activity {
         setContentView(R.layout.activity_palette);
 
         gridView = findViewById(R.id.palette_gridview);
-        ColorGridPaletteAdapter adapter = new ColorGridPaletteAdapter(PaletteActivity.this.getApplicationContext() ,R.layout.row, Global.colors);
+        ColorGridPaletteAdapter adapter = new ColorGridPaletteAdapter(PaletteActivity.this.getApplicationContext(), R.layout.row, Global.colors);
         gridView.setAdapter(adapter);
 
     }
@@ -44,9 +53,31 @@ public class PaletteActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == GALLERY) {
+            if(resultCode == Activity.RESULT_OK) {
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                    paletteImageView = (ImageView)galleryCameraDialog.findViewById(R.id.palette_imageView);
+                    paletteImageView.setImageBitmap(bitmap);
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }else {
+
+        }
+    }
+
     private View.OnClickListener leftListener = new View.OnClickListener() {
         public void onClick(View v) {
-            galleryCameraDialog.dismiss();
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+            intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, GALLERY);
         }
     };
 

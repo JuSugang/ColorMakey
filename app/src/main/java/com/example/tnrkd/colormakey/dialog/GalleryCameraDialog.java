@@ -46,6 +46,7 @@ public class GalleryCameraDialog extends Dialog {
         lpWindow.dimAmount = 0.8f;
         getWindow().setAttributes(lpWindow);
 
+        setCanceledOnTouchOutside(true);
         setContentView(R.layout.dialog_gallery_camera);
 
         titleTextView = (TextView) findViewById(R.id.txt_title);
@@ -65,5 +66,7 @@ public class GalleryCameraDialog extends Dialog {
 
         }
     }
+
+
 
 }
