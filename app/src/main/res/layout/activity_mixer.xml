@@ -6,46 +6,50 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:background="#FFFFFF"
-    android:weightSum="1">
+    android:weightSum="500">
     <android.support.v7.widget.Toolbar
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:titleTextColor="#fff"
         android:id="@+id/toolbar"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="0dp"
+        android:layout_weight="50">
     </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="260">
 
         <ImageView
             android:id="@+id/color_texture"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="match_parent"
             android:background="#421523"
-            android:layout_weight="1"/>
+            android:scaleType="fitXY"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ratioView"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#eeeeee"/>
+        android:layout_height="0dp"
+        android:background="#eeeeee"
+        android:layout_weight="50"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:layout_height="0dp"
+        android:padding="10dp"
+        android:layout_weight="140">
 
         <ImageView
             android:id="@+id/addButton"
             android:layout_width="120dp"
             android:layout_height="60dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/add_button"
-            android:layout_marginRight="5dp"/>
+            app:srcCompat="@drawable/add_button" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/color_horizontalView"
