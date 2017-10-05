@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -46,6 +47,10 @@ public class RemixerActivity extends Activity {
     ImageView loadGallery;
     ImageView loadColorTable;
     ImageView ImageResultView;
+    ImageView remixerPreview;
+    TextView remixerRGBtext;
+    Button calcButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,18 +62,21 @@ public class RemixerActivity extends Activity {
         loadCamera.setImageResource(R.drawable.add_button);
         loadGallery.setImageResource(R.drawable.add_button);
         loadColorTable.setImageResource(R.drawable.add_button);
+        //-------------------------카메라 기능-------------------------------------------------
         loadCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SelectPhoto();
             }
         });
+        //-------------------------갤러리 기능-------------------------------------------------
         loadGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SelectGallery();
             }
         });
+        //-------------------------컬러픽커 기능-------------------------------------------------
         loadColorTable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,6 +101,18 @@ public class RemixerActivity extends Activity {
                     }
                 });
                 dialog.show();
+            }
+        });
+        //-------------------------미리보기창-------------------------------------------------
+        remixerPreview=(ImageView)findViewById(R.id.remixerPreview);
+        remixerRGBtext=(TextView)findViewById(R.id.remixerRGBtext);
+        remixerPreview.setImageResource(R.drawable.mask);
+        //-------------------------계산하기 버튼 리스너 추가-------------------------------------------------
+        Button calcButton=(Button)findViewById(R.id.calcButton);
+        calcButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
