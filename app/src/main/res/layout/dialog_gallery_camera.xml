@@ -23,7 +23,15 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dip"
-            android:id="@+id/palette_imageView"/>
+            android:id="@+id/palette_imageView"
+            android:background="@color/colorPrimary"
+            android:scaleType="fitXY"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="20dip"
+            android:id="@+id/palette_imageView2"
+            android:background="@color/colorPrimaryDark"/>
 
         <TextView
             android:id="@+id/txt_content"
