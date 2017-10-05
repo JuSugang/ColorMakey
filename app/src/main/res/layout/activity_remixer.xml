@@ -18,6 +18,7 @@
         android:id="@+id/ImageResultView"
         android:layout_width="match_parent"
         android:layout_height="400dp"
+        android:scaleType="fitXY"
         app:srcCompat="@android:drawable/ic_menu_report_image" />
 
     <LinearLayout

@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -31,6 +32,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import yuku.ambilwarna.AmbilWarnaDialog;
 
 /**
  * Created by tnrkd on 2017-09-29.
@@ -71,9 +74,39 @@ public class RemixerActivity extends Activity {
         loadColorTable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(RemixerActivity.this,"색상환호출",Toast.LENGTH_SHORT).show();
+
+                AmbilWarnaDialog dialog = new AmbilWarnaDialog(RemixerActivity.this, Color.rgb(0,0,255), new AmbilWarnaDialog.OnAmbilWarnaListener() {
+                    @Override
+                    public void onOk(AmbilWarnaDialog dialog, int color) {
+                        // color is the color selected by the user.
+                        String[] argb= new String[4];
+                        for (int i=0;i<4;i++){
+                            argb[i]=Integer.toBinaryString(color).substring(8*i,8*i+8);
+                        }
+                        int R=binToDec(argb[1]);
+                        int G=binToDec(argb[2]);
+                        int B=binToDec(argb[3]);
+                        ImageResultView.setBackgroundColor(Color.rgb(R,G,B));
+                        Toast.makeText(RemixerActivity.this,Integer.toBinaryString(color),Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCancel(AmbilWarnaDialog dialog) {
+                        // cancel was selected by the user
+                    }
+                });
+                dialog.show();
             }
         });
+    }
+    private static int binToDec(String color){
+        int sum=0;
+        int rex=1;
+        for(int i=color.length();i>0;i--){
+            sum+=rex*Integer.parseInt(color.substring(i-1,i));
+            rex*=2;
+        }
+        return sum;
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -118,13 +151,9 @@ public class RemixerActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.e("JUSUGANG",imgUri.toString());
-        Log.e("JUSUGANG",imagePath);
         int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
         int exifDegree = exifOrientationToDegrees(exifOrientation);
-        Log.e("JUSUGANG","소환 전");
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);//경로를 통해 비트맵으로 전환
-        Log.e("JUSUGANG",bitmap.toString());
         ImageResultView.setImageBitmap(rotate(bitmap, exifDegree));//이미지 뷰에 비트맵 넣기
 
     }
