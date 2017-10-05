@@ -62,6 +62,8 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                 }
                 MixerActivity.mAdapter.notifyDataSetChanged();
                 Intent i=new Intent(context, MixerActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(i);
             }
         });
@@ -72,6 +74,8 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                 target.upRatio();
                 MixerActivity.mAdapter.notifyDataSetChanged();
                 Intent i=new Intent(context, MixerActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(i);
             }
         });
