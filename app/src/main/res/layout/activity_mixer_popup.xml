@@ -198,10 +198,11 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/colpal9"
+                        android:id="@+id/colorPick"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="test22"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="직접 선택하기"
                         android:textSize="24dp" />
                 </LinearLayout>
 

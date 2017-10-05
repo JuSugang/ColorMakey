@@ -60,14 +60,12 @@ public class RemixerActivity extends Activity {
         loadCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(RemixerActivity.this,"카메라호출",Toast.LENGTH_SHORT).show();
                 SelectPhoto();
             }
         });
         loadGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(RemixerActivity.this,"갤러리호출",Toast.LENGTH_SHORT).show();
                 SelectGallery();
             }
         });
@@ -75,7 +73,7 @@ public class RemixerActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                AmbilWarnaDialog dialog = new AmbilWarnaDialog(RemixerActivity.this, Color.rgb(0,0,255), new AmbilWarnaDialog.OnAmbilWarnaListener() {
+                AmbilWarnaDialog dialog = new AmbilWarnaDialog(RemixerActivity.this, Color.rgb(255,255,255), new AmbilWarnaDialog.OnAmbilWarnaListener() {
                     @Override
                     public void onOk(AmbilWarnaDialog dialog, int color) {
                         // color is the color selected by the user.
@@ -87,7 +85,6 @@ public class RemixerActivity extends Activity {
                         int G=binToDec(argb[2]);
                         int B=binToDec(argb[3]);
                         ImageResultView.setBackgroundColor(Color.rgb(R,G,B));
-                        Toast.makeText(RemixerActivity.this,Integer.toBinaryString(color),Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -99,7 +96,7 @@ public class RemixerActivity extends Activity {
             }
         });
     }
-    private static int binToDec(String color){
+    public static int binToDec(String color){
         int sum=0;
         int rex=1;
         for(int i=color.length();i>0;i--){
