@@ -6,15 +6,14 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:background="#FFFFFF"
-    android:weightSum="500">
+    android:weightSum="450">
     <android.support.v7.widget.Toolbar
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:titleTextColor="#fff"
         android:id="@+id/toolbar"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="50">
+        android:layout_height="?attr/actionBarSize">
     </android.support.v7.widget.Toolbar>
 
     <LinearLayout
