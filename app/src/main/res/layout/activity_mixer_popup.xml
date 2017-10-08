@@ -242,21 +242,21 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="hex"
+                android:text="hex 값"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="12sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="rgb"
+                android:text="rgb 값"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="12sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="name"
+                android:text="색 이름"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="12sp" />
         </LinearLayout>

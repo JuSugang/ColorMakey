@@ -161,7 +161,7 @@ public class MixerPopupActivity extends Activity {
 //-------------------------tabHost 구성-------------------------------------------------
         TabHost tabHost = (TabHost) findViewById(R.id.tabhost1);    //tabhost 생성
         tabHost.setup();
-        String[] tabName = {"Basic","Red","Green","Blue","Yellow","Brown","Grey","Orange","Violet","직접선택"};
+        String[] tabName = {"기초색상","빨강","초록","파랑","노랑","갈색","회색","오렌지","보라","직접선택"};
         int[] tabID = {R.id.tab0,R.id.tab1,R.id.tab2,R.id.tab3,R.id.tab4,R.id.tab5,R.id.tab6,R.id.tab7,R.id.tab8,R.id.tab9};
         String[] tabkey =  {"0","1","2","3","4","5","6","7","8","9"};
         for (int i=0;i<10;i++){

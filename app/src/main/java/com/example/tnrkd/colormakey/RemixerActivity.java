@@ -1,38 +1,23 @@
 package com.example.tnrkd.colormakey;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -50,7 +35,9 @@ public class RemixerActivity extends Activity {
     ImageView remixerPreview;
     TextView remixerRGBtext;
     Button calcButton;
-
+    BitmapDrawable d;
+    Bitmap resultImage;
+    boolean imageOnFlag=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +80,9 @@ public class RemixerActivity extends Activity {
                         int G=binToDec(argb[2]);
                         int B=binToDec(argb[3]);
                         ImageResultView.setBackgroundColor(Color.rgb(R,G,B));
+                        remixerPreview.setBackgroundColor(Color.rgb(R,G,B));
+                        remixerRGBtext.setText("("+R+","+G+","+B+")");
+                        imageOnFlag=false;
                     }
 
                     @Override
@@ -101,6 +91,42 @@ public class RemixerActivity extends Activity {
                     }
                 });
                 dialog.show();
+            }
+        });
+        //-------------------------이미지 터치 위치 색 추출-------------------------------------------------
+
+        ImageResultView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(imageOnFlag==true) {
+                    d = (BitmapDrawable) ((ImageView) findViewById(R.id.ImageResultView)).getDrawable();
+                    resultImage = d.getBitmap();
+                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN||motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
+                        float x = motionEvent.getX();
+                        float y = motionEvent.getY();
+                        int imageWidth=resultImage.getWidth();
+                        int imageHeight=resultImage.getHeight();
+                        int viewWidth = ImageResultView.getWidth();
+                        int viewHeight = ImageResultView.getHeight();
+                        x=x*imageWidth/(float)viewWidth;
+                        y=y*imageHeight/(float)viewHeight;
+                        final int sourceColor = resultImage.getPixel((int) x, (int) y);
+
+                        String[] argb = new String[4];
+                        for (int i = 0; i < 4; i++) {
+                            argb[i] = Integer.toBinaryString(sourceColor).substring(8 * i, 8 * i + 8);
+                        }
+                        int R = binToDec(argb[1]);
+                        int G = binToDec(argb[2]);
+                        int B = binToDec(argb[3]);
+
+                        remixerPreview.setBackgroundColor(Color.rgb(R, G, B));
+                        remixerRGBtext.setText("(" + R + "," + G + "," + B + ")");
+
+                    }
+
+                }
+                return true;
             }
         });
         //-------------------------미리보기창-------------------------------------------------
@@ -172,7 +198,7 @@ public class RemixerActivity extends Activity {
         int exifDegree = exifOrientationToDegrees(exifOrientation);
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);//경로를 통해 비트맵으로 전환
         ImageResultView.setImageBitmap(rotate(bitmap, exifDegree));//이미지 뷰에 비트맵 넣기
-
+        imageOnFlag=true;
     }
     public String getRealPathFromURI(Uri contentUri) {
         String[] proj = {MediaStore.Images.Media.DATA};
