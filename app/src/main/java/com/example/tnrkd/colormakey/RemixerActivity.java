@@ -46,9 +46,9 @@ public class RemixerActivity extends Activity {
         loadGallery = (ImageView)findViewById(R.id.loadGallery);
         loadColorTable = (ImageView)findViewById(R.id.loadColorTable);
         ImageResultView =(ImageView)findViewById(R.id.ImageResultView);
-        loadCamera.setImageResource(R.drawable.add_button);
-        loadGallery.setImageResource(R.drawable.add_button);
-        loadColorTable.setImageResource(R.drawable.add_button);
+        loadCamera.setImageResource(R.drawable.camera_button);
+        loadGallery.setImageResource(R.drawable.gallery_button);
+        loadColorTable.setImageResource(R.drawable.picker_button);
         //-------------------------카메라 기능-------------------------------------------------
         loadCamera.setOnClickListener(new View.OnClickListener() {
             @Override
