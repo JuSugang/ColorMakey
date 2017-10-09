@@ -22,6 +22,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import yuku.ambilwarna.AmbilWarnaDialog;
+
 /**
  * Created by tnrkd on 2017-09-30.
  */
@@ -159,7 +161,7 @@ public class MixerPopupActivity extends Activity {
 //-------------------------tabHost 구성-------------------------------------------------
         TabHost tabHost = (TabHost) findViewById(R.id.tabhost1);    //tabhost 생성
         tabHost.setup();
-        String[] tabName = {"Basic","Red","Green","Blue","Yellow","Brown","Grey","Orange","Violet","직접선택"};
+        String[] tabName = {"기초색상","빨강","초록","파랑","노랑","갈색","회색","오렌지","보라","직접선택"};
         int[] tabID = {R.id.tab0,R.id.tab1,R.id.tab2,R.id.tab3,R.id.tab4,R.id.tab5,R.id.tab6,R.id.tab7,R.id.tab8,R.id.tab9};
         String[] tabkey =  {"0","1","2","3","4","5","6","7","8","9"};
         for (int i=0;i<10;i++){
@@ -171,6 +173,7 @@ public class MixerPopupActivity extends Activity {
         final TextView rgbTextView = (TextView) findViewById(R.id.rgbTextView);
         final TextView nameTextView = (TextView) findViewById(R.id.nameTextView);
 
+
         int[] gridarr={R.id.grid0,R.id.grid1,R.id.grid2,R.id.grid3,R.id.grid4,R.id.grid5,R.id.grid6,R.id.grid7,R.id.grid8};
         GridView[] colorArea = new GridView[9];
         for (int i=0;i<9;i++) {
@@ -179,6 +182,36 @@ public class MixerPopupActivity extends Activity {
             colorClickListener itemClickListener= new colorClickListener(basicColor[i],colorPreview,hexTextView,rgbTextView,nameTextView);
             colorArea[i].setOnItemClickListener(itemClickListener);
         }
+        TextView colorPick = (TextView) findViewById(R.id.colorPick);
+        colorPick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AmbilWarnaDialog dialog = new AmbilWarnaDialog(MixerPopupActivity.this, Color.rgb(255,255,255), new AmbilWarnaDialog.OnAmbilWarnaListener() {
+                    @Override
+                    public void onOk(AmbilWarnaDialog dialog, int color) {
+                        // color is the color selected by the user.
+                        String[] argb= new String[4];
+                        for (int i=0;i<4;i++){
+                            argb[i]=Integer.toBinaryString(color).substring(8*i,8*i+8);
+                        }
+                        int R=RemixerActivity.binToDec(argb[1]);
+                        int G=RemixerActivity.binToDec(argb[2]);
+                        int B=RemixerActivity.binToDec(argb[3]);
+                        colorPreview.setImageResource(com.example.tnrkd.colormakey.R.drawable.mask_preview);
+                        colorPreview.setBackgroundColor(Color.rgb(R,G,B));
+                        hexTextView.setText("#" + Integer.toHexString(R)+Integer.toHexString(G)+Integer.toHexString(B));
+                        rgbTextView.setText("("+R+","+G+","+B+")");
+                        nameTextView.setText("직접선택했어요");
+                    }
+
+                    @Override
+                    public void onCancel(AmbilWarnaDialog dialog) {
+                        // cancel was selected by the user
+                    }
+                });
+                dialog.show();
+            }
+        });
 //-------------------------버튼 리스너 생성-------------------------------------------------
         Button popupCancel=(Button)findViewById(R.id.popupCancel);
         Button popupConfirm=(Button)findViewById(R.id.popupConfirm);

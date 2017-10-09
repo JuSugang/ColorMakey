@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tnrkd.colormakey">
 
+    <!-- 사진을 외장 메모리에 저장하기 위해서 외장 USB에 쓰기 권한 요청 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,11 +22,14 @@
         <activity android:name=".LoginActivity"/>
         <activity android:name=".HomeMenuActivity"/>
         <activity android:name=".RemixerActivity"/>
+        <!-- 카메라 사용을 사용자에게 알림 -->
+        <uses-feature android:name="android.hardware.camera" />
+        <uses-feature android:name="android.hardware.camera2" />
         <activity android:name=".MixerActivity"/>
         <activity android:name=".MixerPopupActivity"
-        android:theme="@android:style/Theme.DeviceDefault.Light.Dialog">
-    </activity>
+        android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"/>
         <activity android:name=".PaletteActivity"/>
     </application>
 
 </manifest>
+

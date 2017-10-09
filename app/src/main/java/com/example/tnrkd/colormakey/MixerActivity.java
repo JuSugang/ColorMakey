@@ -62,6 +62,8 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                 }
                 MixerActivity.mAdapter.notifyDataSetChanged();
                 Intent i=new Intent(context, MixerActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(i);
             }
         });
@@ -72,6 +74,8 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                 target.upRatio();
                 MixerActivity.mAdapter.notifyDataSetChanged();
                 Intent i=new Intent(context, MixerActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(i);
             }
         });
@@ -157,12 +161,11 @@ public class MixerActivity extends Activity {
             int percentText=Math.round(Global.list.get(i).Ratio*100/(float)sum);
             view1.setText(Integer.toString(percentText)+"%");
             view1.setTextSize(20);
-            view1.setTextColor(Color.GRAY);
+            view1.setTextColor(Color.DKGRAY);
             view1.setBackgroundColor(Color.rgb(Global.list.get(i).R,Global.list.get(i).G,Global.list.get(i).B));
             view1.setGravity(Gravity.CENTER);
 
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
-//            lp.gravity = Gravity.CENTER;
             lp.weight = Global.list.get(i).Ratio;
             view1.setLayoutParams(lp);
 
