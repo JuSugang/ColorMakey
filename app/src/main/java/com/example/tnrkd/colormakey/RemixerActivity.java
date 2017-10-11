@@ -18,8 +18,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.BitmapTypeRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 
 import java.io.IOException;
 
@@ -40,7 +42,6 @@ public class RemixerActivity extends Activity {
     ImageView remixerPreview;
     TextView remixerRGBtext;
     Button calcButton;
-    BitmapDrawable d;
     Bitmap resultImage;
     boolean imageOnFlag=false;
 
@@ -110,7 +111,8 @@ public class RemixerActivity extends Activity {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if(imageOnFlag==true) {
-                    d = (BitmapDrawable) ((ImageView) findViewById(R.id.ImageResultView)).getDrawable();
+
+                    GlideBitmapDrawable d=(GlideBitmapDrawable)ImageResultView.getDrawable();
                     resultImage = d.getBitmap();
                     if (motionEvent.getAction() == MotionEvent.ACTION_DOWN||motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
                         float x = motionEvent.getX();
