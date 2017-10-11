@@ -98,13 +98,11 @@ public class PaletteActivity extends Activity {
                                     for (int i = 0; i < 4; i++) {
                                         argb[i] = Integer.toBinaryString(sourceColor).substring(8 * i, 8 * i + 8);
                                     }
-                                    int R = binToDec(argb[1]);
-                                    int G = binToDec(argb[2]);
-                                    int B = binToDec(argb[3]);
+                                    int R = RemixerActivity.binToDec(argb[1]);
+                                    int G = RemixerActivity.binToDec(argb[2]);
+                                    int B = RemixerActivity.binToDec(argb[3]);
 
                                     paletteImageView2.setBackgroundColor(Color.rgb(R, G, B));
-                                    //remixerRGBtext.setText("(" + R + "," + G + "," + B + ")");
-
                                 }
 
                             }
@@ -134,15 +132,4 @@ public class PaletteActivity extends Activity {
         public void onClick(View v) {
         }
     };
-
-    public static int binToDec(String color){
-        int sum=0;
-        int rex=1;
-        for(int i=color.length();i>0;i--){
-            sum+=rex*Integer.parseInt(color.substring(i-1,i));
-            rex*=2;
-        }
-        return sum;
-    }
-
 }

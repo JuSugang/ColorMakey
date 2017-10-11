@@ -2,6 +2,7 @@ package com.example.tnrkd.colormakey;
 
 import com.example.tnrkd.colormakey.dto.Color;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 
@@ -18,4 +19,6 @@ public class Global {
 
     public static ArrayList<Color> colors;
     public static ArrayList<colorList> list=new ArrayList<colorList>();
+
+    public static boolean logoutFlag = false;
 }
