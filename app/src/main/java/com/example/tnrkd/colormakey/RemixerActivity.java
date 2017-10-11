@@ -28,6 +28,7 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 public class RemixerActivity extends Activity {
     static final int CAMERA_CODE=1;
     static final int GALLERY_CODE=2;
+    private final int GALLERY = 9002;
     ImageView loadCamera;
     ImageView loadGallery;
     ImageView loadColorTable;
@@ -38,6 +39,7 @@ public class RemixerActivity extends Activity {
     BitmapDrawable d;
     Bitmap resultImage;
     boolean imageOnFlag=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +63,12 @@ public class RemixerActivity extends Activity {
             @Override
             public void onClick(View view) {
                 SelectGallery();
+//                Intent intent = new Intent(Intent.ACTION_PICK);
+//                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+//                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(intent, GALLERY);
             }
+
         });
         //-------------------------컬러픽커 기능-------------------------------------------------
         loadColorTable.setOnClickListener(new View.OnClickListener() {
@@ -164,11 +171,22 @@ public class RemixerActivity extends Activity {
                 case CAMERA_CODE:
                     SendPicture(data); //카메라에서 가져오기
                     break;
-
+                case GALLERY:
+                    SendPicture2(data);
                 default:
                     break;
             }
 
+        }
+    }
+    private void SendPicture2(Intent data){
+        try {
+            final Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+            ImageResultView = (ImageView)findViewById(R.id.ImageResultView);
+            ImageResultView.setImageBitmap(bitmap);
+            imageOnFlag=true;
+        }catch (Exception e) {
+            e.printStackTrace();
         }
     }
     private void SelectPhoto() {

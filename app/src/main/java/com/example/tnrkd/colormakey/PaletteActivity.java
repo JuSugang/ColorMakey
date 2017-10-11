@@ -98,7 +98,7 @@ public class PaletteActivity extends Activity {
                         }
 
                         public void getAbsoluteTouchLocation(View v, MotionEvent event,
-                                                                    int[] locationView) {
+                                                             int[] locationView) {
                             v.getLocationOnScreen(locationView);
                             locationView[0]+=(int)event.getX();
                             locationView[1]+=(int)event.getY();
