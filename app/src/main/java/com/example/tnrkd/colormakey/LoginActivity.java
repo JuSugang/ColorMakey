@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Global.userEmail = user.getEmail();
             Global.userName = user.getDisplayName();
             Global.userUID = user.getUid();
-
+            Log.e("hi","hihi0");
             // Firebase DB에 사용자 정보 저장
             mDatabase = FirebaseDatabase.getInstance().getReference().child("user").child(Global.userUID).child("name");
             mDatabase.setValue(Global.userName);
