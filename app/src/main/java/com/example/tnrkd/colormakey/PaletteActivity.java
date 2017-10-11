@@ -116,7 +116,7 @@ public class PaletteActivity extends Activity {
             }
         }else {
 
-        } 
+        }
     }
 
     private View.OnClickListener leftListener = new View.OnClickListener() {
