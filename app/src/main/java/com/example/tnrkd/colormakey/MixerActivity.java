@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -128,18 +129,30 @@ public class MixerActivity extends Activity {
 
 
     }
-
+//    public float[] RGBtoCMYK(int R,int G,int B){
+//        float r=R/(float)255;
+//        float g=B/(float)255;
+//        float b=G/(float)255;
+//        float[] cmyk=new float[4];
+//        cmyk[3]=1-Math.max(Math.max(r,g),b);
+//        cmyk[0]=(1-r-cmyk[3])/(1-cmyk[3]);
+//        cmyk[1]=(1-g-cmyk[3])/(1-cmyk[3]);
+//        cmyk[2]=(1-b-cmyk[3])/(1-cmyk[3]);
+//        return cmyk;
+//    }
     @Override
     protected void onResume() {
         super.onResume();
         Log.e("resume","resume");
 //-------------------------색 결과물 업데이트-------------------------------------------------
         int[] rgb = {0,0,0};
+//        float[] cmyk={0,0,0,0};
         int sum=0;
         for(int j=0 ; j<Global.list.size() ; j++){
             rgb[0]+=Global.list.get(j).R*Global.list.get(j).Ratio;
             rgb[1]+=Global.list.get(j).G*Global.list.get(j).Ratio;
             rgb[2]+=Global.list.get(j).B*Global.list.get(j).Ratio;
+//            cmyk=RGBtoCMYK(Global.list.get(j).R,Global.list.get(j).R,Global.list.get(j).B);
             sum+=Global.list.get(j).Ratio;
         }
         if(sum!=0) {
@@ -150,6 +163,8 @@ public class MixerActivity extends Activity {
         if(Global.list.size()==0)
             colorTexture.setBackgroundColor(Color.rgb(230,230,230));
         else {
+            Toast.makeText(getApplicationContext(), Integer.toString(Global.list.get(0).Ratio)+" "+Integer.toString(rgb[0])+" "+Integer.toString(rgb[1])+" "+Integer.toString(rgb[2]), Toast.LENGTH_LONG).show();
+
             colorTexture.setBackgroundColor(Color.rgb(rgb[0], rgb[1], rgb[2]));
             ratioView.setWeightSum(sum);
         }
