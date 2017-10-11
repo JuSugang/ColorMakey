@@ -17,6 +17,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.io.IOException;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
@@ -62,11 +66,11 @@ public class RemixerActivity extends Activity {
         loadGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SelectGallery();
-//                Intent intent = new Intent(Intent.ACTION_PICK);
-//                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-//                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                startActivityForResult(intent, GALLERY);
+   //             SelectGallery();
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, GALLERY);
             }
 
         });
@@ -181,9 +185,8 @@ public class RemixerActivity extends Activity {
     }
     private void SendPicture2(Intent data){
         try {
-            final Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
             ImageResultView = (ImageView)findViewById(R.id.ImageResultView);
-            ImageResultView.setImageBitmap(bitmap);
+            Glide.with(this).load(data.getData()).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ImageResultView);
             imageOnFlag=true;
         }catch (Exception e) {
             e.printStackTrace();
