@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -13,6 +14,9 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.example.tnrkd.colormakey.adapter.ColorGridPaletteAdapter;
 import com.example.tnrkd.colormakey.dialog.GalleryCameraDialog;
 
@@ -31,6 +35,10 @@ public class PaletteActivity extends Activity {
     private GalleryCameraDialog galleryCameraDialog;
     private ImageView paletteImageView;
     private ImageView paletteImageView2;
+
+    boolean imageOnFlag = false;
+    BitmapDrawable d;
+    Bitmap resultImage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,46 +71,46 @@ public class PaletteActivity extends Activity {
         if(requestCode == GALLERY) {
             if(resultCode == Activity.RESULT_OK) {
                 try {
-                    final Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                    imageOnFlag = true;
                     paletteImageView = (ImageView)galleryCameraDialog.findViewById(R.id.palette_imageView);
                     paletteImageView2 = (ImageView)galleryCameraDialog.findViewById(R.id.palette_imageView2);
-                    paletteImageView.setImageBitmap(bitmap);
+                    Glide.with(this).load(data.getData()).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(paletteImageView);
 
                     paletteImageView.setOnTouchListener(new View.OnTouchListener() {
                         @Override
                         public boolean onTouch(View view, MotionEvent motionEvent) {
+                            if(imageOnFlag==true) {
+                                //d = (BitmapDrawable) paletteImageView.getDrawable();
+                                GlideBitmapDrawable dd = (GlideBitmapDrawable)paletteImageView.getDrawable();
+                                resultImage = dd.getBitmap();
+                                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN||motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
+                                    float x = motionEvent.getX();
+                                    float y = motionEvent.getY();
+                                    int imageWidth=resultImage.getWidth();
+                                    int imageHeight=resultImage.getHeight();
+                                    int viewWidth = paletteImageView.getWidth();
+                                    int viewHeight = paletteImageView.getHeight();
+                                    x=x*imageWidth/(float)viewWidth;
+                                    y=y*imageHeight/(float)viewHeight;
+                                    final int sourceColor = resultImage.getPixel((int) x, (int) y);
 
-                            /**
-                             * motionEvent.getX(), getY()는 ImageView에서의 절대좌표를 반환
-                             * */
+                                    String[] argb = new String[4];
+                                    for (int i = 0; i < 4; i++) {
+                                        argb[i] = Integer.toBinaryString(sourceColor).substring(8 * i, 8 * i + 8);
+                                    }
+                                    int R = binToDec(argb[1]);
+                                    int G = binToDec(argb[2]);
+                                    int B = binToDec(argb[3]);
 
-                            if(MotionEvent.ACTION_DOWN == motionEvent.getAction()) {
+                                    paletteImageView2.setBackgroundColor(Color.rgb(R, G, B));
+                                    //remixerRGBtext.setText("(" + R + "," + G + "," + B + ")");
 
+                                }
 
-                                int[] locationView = {0, 0};
-
-                                getAbsoluteTouchLocation(view, motionEvent, locationView);
-
-                                //int rgb = bitmap.getPixel(locationView[0], locationView[1]);
-                                getWindow().getDecorView().setDrawingCacheEnabled(true);
-                                int rgb = getWindow().getDecorView().getDrawingCache().getPixel(locationView[0], locationView[1]);
-
-                                int r = Color.red(rgb);
-                                int g = Color.green(rgb);
-                                int b = Color.blue(rgb);
-
-                                paletteImageView2.setBackgroundColor(Color.rgb(r,g,b));
                             }
-
                             return true;
                         }
 
-                        public void getAbsoluteTouchLocation(View v, MotionEvent event,
-                                                             int[] locationView) {
-                            v.getLocationOnScreen(locationView);
-                            locationView[0]+=(int)event.getX();
-                            locationView[1]+=(int)event.getY();
-                        }
                     });
                 }catch (Exception e) {
                     e.printStackTrace();
@@ -126,5 +134,15 @@ public class PaletteActivity extends Activity {
         public void onClick(View v) {
         }
     };
+
+    public static int binToDec(String color){
+        int sum=0;
+        int rex=1;
+        for(int i=color.length();i>0;i--){
+            sum+=rex*Integer.parseInt(color.substring(i-1,i));
+            rex*=2;
+        }
+        return sum;
+    }
 
 }
