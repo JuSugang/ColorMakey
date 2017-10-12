@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public class RemixerPopupActivity extends Activity {
     PieDataSet pieDataSet ;
     PieData pieData ;
     TextView targetColor;
+    Button confirmButton;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +76,13 @@ public class RemixerPopupActivity extends Activity {
 
         pieChart.setData(pieData);
         pieChart.animateXY(1000,1000);
-
+        confirmButton=(Button)findViewById(R.id.confirmButton);
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public void AddValuesToPIEENTRY(float[][] result_W){
