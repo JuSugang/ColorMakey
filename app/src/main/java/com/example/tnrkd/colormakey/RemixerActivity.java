@@ -12,14 +12,18 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.BitmapTypeRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 
 import java.io.IOException;
 
@@ -40,7 +44,6 @@ public class RemixerActivity extends Activity {
     ImageView remixerPreview;
     TextView remixerRGBtext;
     Button calcButton;
-    BitmapDrawable d;
     Bitmap resultImage;
     boolean imageOnFlag=false;
 
@@ -66,11 +69,7 @@ public class RemixerActivity extends Activity {
         loadGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-   //             SelectGallery();
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, GALLERY);
+                SelectGallery();
             }
 
         });
@@ -91,6 +90,7 @@ public class RemixerActivity extends Activity {
                         int G=binToDec(argb[2]);
                         int B=binToDec(argb[3]);
                         ImageResultView.setBackgroundColor(Color.rgb(R,G,B));
+                        ImageResultView.setImageBitmap(null);
                         remixerPreview.setBackgroundColor(Color.rgb(R,G,B));
                         remixerRGBtext.setText("("+R+","+G+","+B+")");
                         imageOnFlag=false;
@@ -110,7 +110,8 @@ public class RemixerActivity extends Activity {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if(imageOnFlag==true) {
-                    d = (BitmapDrawable) ((ImageView) findViewById(R.id.ImageResultView)).getDrawable();
+
+                    GlideBitmapDrawable d=(GlideBitmapDrawable)ImageResultView.getDrawable();
                     resultImage = d.getBitmap();
                     if (motionEvent.getAction() == MotionEvent.ACTION_DOWN||motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
                         float x = motionEvent.getX();
@@ -149,7 +150,9 @@ public class RemixerActivity extends Activity {
         calcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(remixerRGBtext.getText()!="(R,G,B)"){
 
+                }
             }
         });
     }
@@ -168,28 +171,16 @@ public class RemixerActivity extends Activity {
         if (resultCode == RESULT_OK) {
 
             switch (requestCode) {
-
-                case GALLERY_CODE:
-                    SendPicture(data); //갤러리에서 가져오기
+                case GALLERY:
+                    SendPicture2(data); //갤러리에서 가져오기
                     break;
                 case CAMERA_CODE:
                     SendPicture(data); //카메라에서 가져오기
                     break;
-                case GALLERY:
-                    SendPicture2(data);
                 default:
                     break;
             }
 
-        }
-    }
-    private void SendPicture2(Intent data){
-        try {
-            ImageResultView = (ImageView)findViewById(R.id.ImageResultView);
-            Glide.with(this).load(data.getData()).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ImageResultView);
-            imageOnFlag=true;
-        }catch (Exception e) {
-            e.printStackTrace();
         }
     }
     private void SelectPhoto() {
@@ -197,29 +188,25 @@ public class RemixerActivity extends Activity {
         startActivityForResult(intent, CAMERA_CODE);
     }
     private void SelectGallery() {
-
         Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY_CODE);
-
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, GALLERY);
     }
     private void SendPicture(Intent data) {
-
         Uri imgUri = data.getData();
-
         String imagePath = getRealPathFromURI(imgUri); // path 경로
-        ExifInterface exif = null;
+        Glide.with(this).load(imagePath).into(ImageResultView);
+
+        imageOnFlag=true;
+    }
+    private void SendPicture2(Intent data){
         try {
-            exif = new ExifInterface(imagePath);
-        } catch (IOException e) {
+            Glide.with(this).load(data.getData()).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ImageResultView);
+            imageOnFlag=true;
+        }catch (Exception e) {
             e.printStackTrace();
         }
-        int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-        int exifDegree = exifOrientationToDegrees(exifOrientation);
-        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);//경로를 통해 비트맵으로 전환
-        ImageResultView.setImageBitmap(rotate(bitmap, exifDegree));//이미지 뷰에 비트맵 넣기
-        imageOnFlag=true;
     }
     public String getRealPathFromURI(Uri contentUri) {
         String[] proj = {MediaStore.Images.Media.DATA};
