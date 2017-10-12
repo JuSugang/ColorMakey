@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.BitmapTypeRequest;
 import com.bumptech.glide.Glide;
@@ -89,6 +90,7 @@ public class RemixerActivity extends Activity {
                         int G=binToDec(argb[2]);
                         int B=binToDec(argb[3]);
                         ImageResultView.setBackgroundColor(Color.rgb(R,G,B));
+                        ImageResultView.setImageBitmap(null);
                         remixerPreview.setBackgroundColor(Color.rgb(R,G,B));
                         remixerRGBtext.setText("("+R+","+G+","+B+")");
                         imageOnFlag=false;
@@ -148,7 +150,9 @@ public class RemixerActivity extends Activity {
         calcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(remixerRGBtext.getText()!="(R,G,B)"){
 
+                }
             }
         });
     }
@@ -191,23 +195,10 @@ public class RemixerActivity extends Activity {
     }
     private void SendPicture(Intent data) {
         Uri imgUri = data.getData();
-
         String imagePath = getRealPathFromURI(imgUri); // path 경로
-        ExifInterface exif = null;
-        try {
-            exif = new ExifInterface(imagePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-        int exifDegree = exifOrientationToDegrees(exifOrientation);
-        Bitmap profileBitmap = (Bitmap)data.getExtras().get("data");
-        ImageResultView.setImageBitmap(profileBitmap);
+        Glide.with(this).load(imagePath).into(ImageResultView);
 
-//        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);//경로를 통해 비트맵으로 전환
-//        ImageResultView.setImageBitmap(rotate(bitmap, exifDegree));//이미지 뷰에 비트맵 넣기
         imageOnFlag=true;
-
     }
     private void SendPicture2(Intent data){
         try {
