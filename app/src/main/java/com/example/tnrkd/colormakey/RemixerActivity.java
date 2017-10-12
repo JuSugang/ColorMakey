@@ -92,7 +92,7 @@ public class RemixerActivity extends Activity {
                         ImageResultView.setBackgroundColor(Color.rgb(R,G,B));
                         ImageResultView.setImageBitmap(null);
                         remixerPreview.setBackgroundColor(Color.rgb(R,G,B));
-                        remixerRGBtext.setText("("+R+","+G+","+B+")");
+                        remixerRGBtext.setText("(빨강: " + R + ",초록: " + G + ",파랑: " + B + ")");
                         imageOnFlag=false;
                     }
 
@@ -133,7 +133,7 @@ public class RemixerActivity extends Activity {
                         int B = binToDec(argb[3]);
 
                         remixerPreview.setBackgroundColor(Color.rgb(R, G, B));
-                        remixerRGBtext.setText("(" + R + "," + G + "," + B + ")");
+                        remixerRGBtext.setText("(빨강: " + R + ",초록: " + G + ",파랑: " + B + ")");
 
                     }
 
@@ -150,8 +150,13 @@ public class RemixerActivity extends Activity {
         calcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(remixerRGBtext.getText()!="(R,G,B)"){
-
+                if(remixerRGBtext.getText().equals("(빨강,초록,파랑)")){
+                    Toast.makeText(RemixerActivity.this,"색을 선택하세요",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Intent intent = new Intent(RemixerActivity.this, RemixerPopupActivity.class);
+                    intent.putExtra("rgb", remixerRGBtext.getText());
+                    startActivity(intent);
                 }
             }
         });
@@ -215,24 +220,5 @@ public class RemixerActivity extends Activity {
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }
-    public int exifOrientationToDegrees(int exifOrientation) {
-        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
-            return 90;
-        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
-            return 180;
-        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
-            return 270;
-        }
-        return 0;
-    }
-    public Bitmap rotate(Bitmap src, float degree) {
 
-        // Matrix 객체 생성
-        Matrix matrix = new Matrix();
-        // 회전 각도 셋팅
-        matrix.postRotate(degree);
-        // 이미지와 Matrix 를 셋팅해서 Bitmap 객체 생성
-        return Bitmap.createBitmap(src, 0, 0, src.getWidth(),
-                src.getHeight(), matrix, true);
-    }
 }
