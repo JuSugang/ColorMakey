@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="(R,G,B)"
+            android:text="(빨강,초록,파랑)"
             android:layout_weight="1" />
 
         <Button
