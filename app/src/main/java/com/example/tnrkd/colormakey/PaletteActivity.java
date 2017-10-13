@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridView;
@@ -21,8 +22,11 @@ import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.example.tnrkd.colormakey.adapter.ColorGridPaletteAdapter;
 import com.example.tnrkd.colormakey.dialog.GalleryCameraDialog;
 import com.example.tnrkd.colormakey.dialog.SelectGalleryCameraDialog;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -37,6 +41,7 @@ public class PaletteActivity extends Activity {
     private final int CAMERA = 9003;
 
     private GridView gridView;
+    private ColorGridPaletteAdapter adapter;
 
     private GalleryCameraDialog galleryCameraDialog;
     private SelectGalleryCameraDialog selectGalleryCameraDialog;
@@ -57,10 +62,11 @@ public class PaletteActivity extends Activity {
         setContentView(R.layout.activity_palette);
 
         gridView = findViewById(R.id.palette_gridview);
-        ColorGridPaletteAdapter adapter = new ColorGridPaletteAdapter(PaletteActivity.this.getApplicationContext(), R.layout.row, Global.colors);
+        adapter = new ColorGridPaletteAdapter(PaletteActivity.this.getApplicationContext(), R.layout.row, Global.colors);
         gridView.setAdapter(adapter);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.addValueEventListener(postListener);
     }
 
     public void onClickView(View v) {
@@ -164,14 +170,6 @@ public class PaletteActivity extends Activity {
         }
     };
 
-    public String getRealPathFromURI(Uri contentUri) {
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
-    }
-
     View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -208,6 +206,26 @@ public class PaletteActivity extends Activity {
                 }
             }
             return true;
+        }
+    };
+
+    ValueEventListener postListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            // Get Post object and use the values to update the UI
+
+            if(galleryCameraDialog != null && galleryCameraDialog.isShowing()) {
+                galleryCameraDialog.dismiss();
+                adapter.notifyDataSetChanged();
+            }
+            // ...
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            // Getting Post failed, log a message
+            Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            // ...
         }
     };
 }
