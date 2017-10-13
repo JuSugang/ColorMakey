@@ -11,8 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -20,7 +18,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -121,6 +118,7 @@ public class PaletteActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        // 갤러리에서 사진 불러오기
         if(requestCode == GALLERY) {
             if(resultCode == Activity.RESULT_OK) {
 
@@ -142,7 +140,7 @@ public class PaletteActivity extends Activity {
                     e.printStackTrace();
                 }
             }
-        }else {
+        }else { // 카메라에서 사진 불러오기
 
             if(resultCode == Activity.RESULT_OK) {
 
@@ -162,7 +160,6 @@ public class PaletteActivity extends Activity {
 
                 imageOnFlag=true;
             }
-
         }
     }
 
@@ -264,8 +261,6 @@ public class PaletteActivity extends Activity {
     ValueEventListener postListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            // Get Post object and use the values to update the UI
-
             if(galleryCameraDialog != null && galleryCameraDialog.isShowing()) {
                 galleryCameraDialog.dismiss();
                 adapter.notifyDataSetChanged();
@@ -275,7 +270,6 @@ public class PaletteActivity extends Activity {
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-            // Getting Post failed, log a message
             Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
         }
     };
