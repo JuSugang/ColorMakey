@@ -200,8 +200,8 @@ public class RemixerActivity extends Activity {
     }
     private void SendPicture(Intent data) {
         Uri imgUri = data.getData();
-        String imagePath = getRealPathFromURI(imgUri); // path 경로
-        Glide.with(this).load(imagePath).into(ImageResultView);
+        //String imagePath = getRealPathFromURI(imgUri); // path 경로
+        Glide.with(this).load(imgUri).into(ImageResultView);
 
         imageOnFlag=true;
     }

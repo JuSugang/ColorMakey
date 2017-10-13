@@ -115,7 +115,6 @@ public class PaletteActivity extends Activity {
                 paletteImageView.setOnTouchListener(onTouchListener);
 
                 Uri imgUri = data.getData();
-                String imagePath = getRealPathFromURI(imgUri); // path 경로
                 Glide.with(this).load(imgUri).into(paletteImageView);
 
                 imageOnFlag=true;
