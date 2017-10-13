@@ -1,7 +1,9 @@
 package com.example.tnrkd.colormakey;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -9,11 +11,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -63,7 +70,38 @@ public class PaletteActivity extends Activity {
         gridView = findViewById(R.id.palette_gridview);
         adapter = new ColorGridPaletteAdapter(PaletteActivity.this.getApplicationContext(), R.layout.row, Global.colors);
         gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                TextView colorName = (TextView)view.findViewById(R.id.colorName);
+                final String selectedColorName = colorName.getText().toString();
 
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PaletteActivity.this);
+                alertDialogBuilder.setMessage("해당 색상을 삭제하시겠습니까?").setCancelable(false).setNegativeButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                for(com.example.tnrkd.colormakey.dto.Color color : Global.colors) {
+                                    if(selectedColorName.equals(color.getColorname().toString())) {
+                                        Global.colors.remove(color);
+                                        mDatabase.child("palette").child(Global.userUID).setValue(Global.colors);
+                                        break;
+                                    }
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+                        }).setPositiveButton("취소",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // 'No'
+                                return;
+                            }
+                        });
+                AlertDialog alert = alertDialogBuilder.create();
+                alert.show();
+            }
+        });
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.addValueEventListener(postListener);
     }
