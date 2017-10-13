@@ -24,22 +24,36 @@
             android:layout_width="match_parent"
             android:layout_height="200dip"
             android:id="@+id/palette_imageView"
-            android:background="@color/colorPrimary"
             android:scaleType="fitXY"/>
-
-        <ImageView
+        
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="20dip"
-            android:id="@+id/palette_imageView2"
-            android:background="@color/colorPrimaryDark"/>
-
-        <TextView
-            android:id="@+id/txt_content"
-            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@android:color/black"
-            android:textSize="25sp" />
+            android:orientation="horizontal"
+            android:layout_marginTop="10dip"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip">
+
+            <ImageView
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:id="@+id/palette_imageView2"
+                android:background="#ffffffff"
+                />
+
+            <TextView
+                android:id="@+id/txt_content"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:text="선택한 위치의 색상"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,27 +61,27 @@
             android:layout_marginTop="40dip"
             android:gravity="center"
             android:orientation="horizontal" >
-            
-            <ImageButton
+
+            <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dip"
                 android:layout_weight="1"
-                android:src="@drawable/photo_camera"
-                android:background="#eaeaea"
+                android:background="#FAE0D4"
                 android:layout_marginRight="2dp"
                 android:layout_marginLeft="2dp"
-                android:id="@+id/camera_button"
+                android:id="@+id/register_button"
+                android:text="등록"
                 />
-            
-            <ImageButton
+
+            <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dip"
                 android:layout_weight="1"
-                android:src="@drawable/gallery"
-                android:background="#eaeaea"
+                android:background="#FAE0D4"
                 android:layout_marginRight="2dp"
                 android:layout_marginLeft="2dp"
-                android:id="@+id/gallery_button"/>
+                android:id="@+id/cancel_button"
+                android:text="취소"/>
         </LinearLayout>
 
     </LinearLayout>

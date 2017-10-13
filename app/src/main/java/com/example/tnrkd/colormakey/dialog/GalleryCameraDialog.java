@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -18,8 +19,8 @@ public class GalleryCameraDialog extends Dialog {
 
     private TextView titleTextView;
     private TextView contentTextView;
-    private ImageButton galleryImageButton;
-    private ImageButton cameraImageButton;
+    private Button registerButton;
+    private Button cancelButton;
 
     private String title;
     private String content;
@@ -51,22 +52,19 @@ public class GalleryCameraDialog extends Dialog {
 
         titleTextView = (TextView) findViewById(R.id.txt_title);
         contentTextView = (TextView) findViewById(R.id.txt_content);
-        galleryImageButton = findViewById(R.id.gallery_button);
-        cameraImageButton = findViewById(R.id.camera_button);
+        registerButton = findViewById(R.id.register_button);
+        cancelButton = findViewById(R.id.cancel_button);
 
         // 제목과 내용을 생성자에서 셋팅한다.
         titleTextView.setText(title);
-        contentTextView.setText(content);
+        //contentTextView.setText(content);
 
         // 클릭 이벤트 셋팅
         if (mLeftClickListener != null && mRightClickListener != null) {
-            galleryImageButton.setOnClickListener(mLeftClickListener);
-            cameraImageButton.setOnClickListener(mRightClickListener);
+            registerButton.setOnClickListener(mLeftClickListener);
+            cancelButton.setOnClickListener(mRightClickListener);
         }else {
 
         }
     }
-
-
-
 }

@@ -1,8 +1,16 @@
 package com.example.tnrkd.colormakey.dto;
 
+import java.util.ArrayList;
+
 /**
  * Created by XNOTE on 2017-10-02.
  */
+
+/**
+ * setValue()의 경우 child 아래의 데이터를 모두 덮어 쓴다.
+ * List 형태로 데이터를 저장했다면, 해당 List를 불러와서 자바 내의 List로 저장한 후에,
+ * 자바 List에 add 메소드로 DTO를 추가한 후, 그 List를 setValue()의 인자로 전달하자.
+ * */
 
 public class Color {
 
@@ -20,14 +28,23 @@ public class Color {
         this.colorname=colorname;
     }
 
-    public int[] getRGBarray(){
+    /**
+     * Firebase Database에서 setValue()를 통해 DTO를 넣을 때,
+     * getter뒤의 단어를 키값으로 하여 객체에 넣음
+     *
+     * 변수가 들어가는 것이 아닌 getXXX 에서의 XXX가 들어간다
+     *
+     * 또한, getter의 반환값이 배열이라면 데이터를 넣을 수 없다. List를 사용해야함
+     * */
+    public ArrayList mGetRGBarray() {
         int temp = Integer.parseInt(rgbcode);
-        int[] rgb=new int[3];
-        rgb[0]=temp/1000000;
-        rgb[1]=temp%1000000/1000;
-        rgb[2]=temp%1000;
+        ArrayList rgb = new ArrayList();
+        rgb.add(temp/1000000);
+        rgb.add(temp%1000000/1000);
+        rgb.add(temp%1000);
         return rgb;
     }
+
     public String getHexcode(){
         return hexcode;
     }
