@@ -136,7 +136,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Global.userEmail = user.getEmail();
             Global.userName = user.getDisplayName();
             Global.userUID = user.getUid();
-            Log.e("hi","hihi0");
+
             // Firebase DB에 사용자 정보 저장
             mDatabase = FirebaseDatabase.getInstance().getReference().child("user").child(Global.userUID).child("name");
             mDatabase.setValue(Global.userName);
@@ -155,6 +155,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             ArrayList<HashMap<String, Object>> colorList = (ArrayList<HashMap<String, Object>>)list.get(Global.userUID);
 
                             if(colorList != null) {
+                                Global.colors.clear(); // colors 초기화 하고 다시 add
+
                                 for(HashMap<String, Object> hashMap : colorList) {
                                     Color color = new Color();
                                     color.setRgbcode((String)hashMap.get("rgbcode"));
@@ -189,11 +191,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public static void logout(AppCompatActivity activity) {
 
         Global.logoutFlag = true;
+        Global.activity = activity;
 
         final GoogleApiClient.ConnectionCallbacks gaccc = new GoogleApiClient.ConnectionCallbacks() {
             @Override
             public void onConnected(@Nullable Bundle bundle) {
-
                 if(!Global.logoutFlag) {
 
                 }else {
@@ -203,14 +205,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             @Override
                             public void onResult(@NonNull Status status) {
                                 if (status.isSuccess()) {
-
+                                    Global.activity.finish();
+                                    Global.activity = null;
                                 }
                             }
                         });
                     }
-
                 }
-
             }
 
             @Override
@@ -218,7 +219,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             }
         };
-
         mGoogleApiClient.connect();
         mGoogleApiClient.registerConnectionCallbacks(gaccc);
     }
