@@ -16,6 +16,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -39,9 +41,9 @@ import java.util.HashMap;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
 
     private static final int RC_SIGN_IN = 9001;
-    private GoogleApiClient mGoogleApiClient;
+    private static GoogleApiClient mGoogleApiClient;
     private GoogleSignInOptions gso;
-    private FirebaseAuth mAuth;
+    private static FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private final String TAG = "LoginActivity";
 
@@ -71,6 +73,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onStart() {
         super.onStart();
+        if(mAuth == null) {
+            mAuth = FirebaseAuth.getInstance();
+        }else {
+
+        }
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
     }
@@ -129,7 +136,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Global.userEmail = user.getEmail();
             Global.userName = user.getDisplayName();
             Global.userUID = user.getUid();
-            Log.e("hi","hihi0");
+
             // Firebase DB에 사용자 정보 저장
             mDatabase = FirebaseDatabase.getInstance().getReference().child("user").child(Global.userUID).child("name");
             mDatabase.setValue(Global.userName);
@@ -147,6 +154,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             HashMap<String, Object> list = (HashMap<String, Object>)dataSnapshot.getValue();
                             ArrayList<HashMap<String, Object>> colorList = (ArrayList<HashMap<String, Object>>)list.get(Global.userUID);
 
+                            Global.colors.clear(); // colors 초기화 하고 다시 add
                             if(colorList != null) {
                                 for(HashMap<String, Object> hashMap : colorList) {
                                     Color color = new Color();
@@ -169,11 +177,52 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             Intent intent = new Intent(this, HomeMenuActivity.class);
             startActivity(intent);
+            Global.logoutFlag = false;
+        }else {
+
         }
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    public static void logout(AppCompatActivity activity) {
+
+        Global.logoutFlag = true;
+        Global.activity = activity;
+
+        final GoogleApiClient.ConnectionCallbacks gaccc = new GoogleApiClient.ConnectionCallbacks() {
+            @Override
+            public void onConnected(@Nullable Bundle bundle) {
+                if(!Global.logoutFlag) {
+
+                }else {
+                    mAuth.signOut();
+                    if(mGoogleApiClient.isConnected()) {
+                        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
+                            @Override
+                            public void onResult(@NonNull Status status) {
+                                if (status.isSuccess()) {
+                                    if(Global.activity != null) {
+                                        Global.activity.finish();
+                                        Global.activity = null;
+                                        Global.logoutFlag = false;
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onConnectionSuspended(int i) {
+
+            }
+        };
+        mGoogleApiClient.connect();
+        mGoogleApiClient.registerConnectionCallbacks(gaccc);
     }
 }
