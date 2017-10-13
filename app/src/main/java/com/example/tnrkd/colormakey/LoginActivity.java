@@ -160,6 +160,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     Color color = new Color();
                                     color.setRgbcode((String)hashMap.get("rgbcode"));
                                     color.setHexcode((String)hashMap.get("hexcode"));
+                                    color.setColorname((String)hashMap.get("colorname"));
                                     Global.colors.add(color);
                                 }
                             }

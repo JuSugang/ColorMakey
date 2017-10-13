@@ -1,34 +1,32 @@
 package com.example.tnrkd.colormakey;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.example.tnrkd.colormakey.adapter.ColorGridPaletteAdapter;
 import com.example.tnrkd.colormakey.dialog.GalleryCameraDialog;
+import com.example.tnrkd.colormakey.dialog.NewColorNameDialog;
 import com.example.tnrkd.colormakey.dialog.SelectGalleryCameraDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 /**
  * Created by tnrkd on 2017-09-29.
@@ -45,11 +43,12 @@ public class PaletteActivity extends Activity {
 
     private GalleryCameraDialog galleryCameraDialog;
     private SelectGalleryCameraDialog selectGalleryCameraDialog;
+    private NewColorNameDialog newColorNameDialog;
+
     private ImageView paletteImageView;
     private ImageView paletteImageView2;
 
     boolean imageOnFlag = false;
-    BitmapDrawable d;
     Bitmap resultImage;
 
     private DatabaseReference mDatabase;
@@ -141,14 +140,27 @@ public class PaletteActivity extends Activity {
                 }
                 case R.id.register_button : {
 
-                    com.example.tnrkd.colormakey.dto.Color color = new com.example.tnrkd.colormakey.dto.Color(hexcode, rgbcode, "TestColor");
+                    // 새로 등록할 색상의 이름 적을 다이얼로그 생성
+                    newColorNameDialog = new NewColorNameDialog(PaletteActivity.this, this, rightListener);
+                    newColorNameDialog.show();
 
+                    // 키보드 올리기
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+
+                    break;
+                }
+                case R.id.new_color_name_register_button : {
+
+                    // 새로 등록할 색상의 이름 받아오기
+                    String newColorName = newColorNameDialog.colorNameEdittext.getText().toString();
+                    // Color 객체 만들어서 DB에 insert
+                    com.example.tnrkd.colormakey.dto.Color color = new com.example.tnrkd.colormakey.dto.Color(hexcode, rgbcode, newColorName);
                     Global.colors.add(color);
                     mDatabase.child("palette").child(Global.userUID).setValue(Global.colors);
                     break;
                 }
             }
-
         }
     };
 
@@ -166,6 +178,9 @@ public class PaletteActivity extends Activity {
                 case R.id.cancel_button : {
                     galleryCameraDialog.dismiss();
                 }
+                case R.id.new_color_name_cancel_button : {
+                    newColorNameDialog.dismiss();
+                }
             }
         }
     };
@@ -174,7 +189,6 @@ public class PaletteActivity extends Activity {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if(imageOnFlag==true) {
-                //d = (BitmapDrawable) paletteImageView.getDrawable();
                 GlideBitmapDrawable dd = (GlideBitmapDrawable)paletteImageView.getDrawable();
                 resultImage = dd.getBitmap();
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN||motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
@@ -217,15 +231,14 @@ public class PaletteActivity extends Activity {
             if(galleryCameraDialog != null && galleryCameraDialog.isShowing()) {
                 galleryCameraDialog.dismiss();
                 adapter.notifyDataSetChanged();
+                newColorNameDialog.dismiss();
             }
-            // ...
         }
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
             // Getting Post failed, log a message
             Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-            // ...
         }
     };
 }
