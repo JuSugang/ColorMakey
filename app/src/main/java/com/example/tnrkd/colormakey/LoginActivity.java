@@ -154,9 +154,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             HashMap<String, Object> list = (HashMap<String, Object>)dataSnapshot.getValue();
                             ArrayList<HashMap<String, Object>> colorList = (ArrayList<HashMap<String, Object>>)list.get(Global.userUID);
 
+                            Global.colors.clear(); // colors 초기화 하고 다시 add
                             if(colorList != null) {
-                                Global.colors.clear(); // colors 초기화 하고 다시 add
-
                                 for(HashMap<String, Object> hashMap : colorList) {
                                     Color color = new Color();
                                     color.setRgbcode((String)hashMap.get("rgbcode"));
@@ -180,6 +179,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
             Global.logoutFlag = false;
         }else {
+
         }
     }
 
@@ -205,8 +205,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             @Override
                             public void onResult(@NonNull Status status) {
                                 if (status.isSuccess()) {
-                                    Global.activity.finish();
-                                    Global.activity = null;
+                                    if(Global.activity != null) {
+                                        Global.activity.finish();
+                                        Global.activity = null;
+                                        Global.logoutFlag = false;
+                                    }
                                 }
                             }
                         });
