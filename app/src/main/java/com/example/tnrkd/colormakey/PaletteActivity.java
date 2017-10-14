@@ -1,30 +1,36 @@
 package com.example.tnrkd.colormakey;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.example.tnrkd.colormakey.adapter.ColorGridPaletteAdapter;
 import com.example.tnrkd.colormakey.dialog.GalleryCameraDialog;
+import com.example.tnrkd.colormakey.dialog.NewColorNameDialog;
 import com.example.tnrkd.colormakey.dialog.SelectGalleryCameraDialog;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by tnrkd on 2017-09-29.
@@ -37,19 +43,23 @@ public class PaletteActivity extends Activity {
     private final int CAMERA = 9003;
 
     private GridView gridView;
+    private ColorGridPaletteAdapter adapter;
 
     private GalleryCameraDialog galleryCameraDialog;
     private SelectGalleryCameraDialog selectGalleryCameraDialog;
+    private NewColorNameDialog newColorNameDialog;
+
     private ImageView paletteImageView;
     private ImageView paletteImageView2;
 
     boolean imageOnFlag = false;
-    BitmapDrawable d;
     Bitmap resultImage;
 
     private DatabaseReference mDatabase;
     String rgbcode;
     String hexcode;
+
+    AlertDialog.Builder alertDialogBuilder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,10 +67,43 @@ public class PaletteActivity extends Activity {
         setContentView(R.layout.activity_palette);
 
         gridView = findViewById(R.id.palette_gridview);
-        ColorGridPaletteAdapter adapter = new ColorGridPaletteAdapter(PaletteActivity.this.getApplicationContext(), R.layout.row, Global.colors);
+        adapter = new ColorGridPaletteAdapter(PaletteActivity.this.getApplicationContext(), R.layout.row, Global.colors);
         gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                TextView colorName = (TextView)view.findViewById(R.id.colorName);
+                final String selectedColorName = colorName.getText().toString();
 
+                alertDialogBuilder.setMessage("해당 색상을 삭제하시겠습니까?").setCancelable(false).setNegativeButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                for(com.example.tnrkd.colormakey.dto.Color color : Global.colors) {
+                                    if(selectedColorName.equals(color.getColorname().toString())) {
+                                        Global.colors.remove(color);
+                                        mDatabase.child("palette").child(Global.userUID).setValue(Global.colors);
+                                        break;
+                                    }
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+                        }).setPositiveButton("취소",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // 'No'
+                                return;
+                            }
+                        });
+                AlertDialog alert = alertDialogBuilder.create();
+                alert.show();
+            }
+        });
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.addValueEventListener(postListener);
+
+        alertDialogBuilder = new AlertDialog.Builder(PaletteActivity.this);
     }
 
     public void onClickView(View v) {
@@ -78,6 +121,7 @@ public class PaletteActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        // 갤러리에서 사진 불러오기
         if(requestCode == GALLERY) {
             if(resultCode == Activity.RESULT_OK) {
 
@@ -99,7 +143,7 @@ public class PaletteActivity extends Activity {
                     e.printStackTrace();
                 }
             }
-        }else {
+        }else { // 카메라에서 사진 불러오기
 
             if(resultCode == Activity.RESULT_OK) {
 
@@ -119,7 +163,6 @@ public class PaletteActivity extends Activity {
 
                 imageOnFlag=true;
             }
-
         }
     }
 
@@ -135,14 +178,48 @@ public class PaletteActivity extends Activity {
                 }
                 case R.id.register_button : {
 
-                    com.example.tnrkd.colormakey.dto.Color color = new com.example.tnrkd.colormakey.dto.Color(hexcode, rgbcode, "TestColor");
+                    // 새로 등록할 색상의 이름 적을 다이얼로그 생성
+                    newColorNameDialog = new NewColorNameDialog(PaletteActivity.this, this, rightListener);
+                    newColorNameDialog.show();
 
-                    Global.colors.add(color);
-                    mDatabase.child("palette").child(Global.userUID).setValue(Global.colors);
+                    // 키보드 올리기
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+
                     break;
                 }
-            }
+                case R.id.new_color_name_register_button : {
 
+                    // 새로 등록할 색상의 이름 받아오기
+                    String newColorName = newColorNameDialog.colorNameEdittext.getText().toString();
+                    // 색상이름 중복 검사
+                    boolean validCheck = false;
+                    for(com.example.tnrkd.colormakey.dto.Color color : Global.colors) {
+                        if(newColorName.equals(color.getColorname())) {
+                            validCheck = true;
+                            alertDialogBuilder.setMessage("같은 이름의 색상이 존재합니다").setPositiveButton("확인",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // 'No'
+                                            return;
+                                        }
+                                    });
+                            AlertDialog alert = alertDialogBuilder.create();
+                            alert.show();
+                            break;
+                        }
+                    }
+                    // Color 객체 만들어서 DB에 insert
+                    if(!validCheck) {
+                        com.example.tnrkd.colormakey.dto.Color color = new com.example.tnrkd.colormakey.dto.Color(hexcode, rgbcode, newColorName);
+                        Global.colors.add(color);
+                        mDatabase.child("palette").child(Global.userUID).setValue(Global.colors);
+                        break;
+                    }
+
+                }
+            }
         }
     };
 
@@ -159,24 +236,20 @@ public class PaletteActivity extends Activity {
                 }
                 case R.id.cancel_button : {
                     galleryCameraDialog.dismiss();
+                    break;
+                }
+                case R.id.new_color_name_cancel_button : {
+                    newColorNameDialog.dismiss();
+                    break;
                 }
             }
         }
     };
 
-    public String getRealPathFromURI(Uri contentUri) {
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
-    }
-
     View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if(imageOnFlag==true) {
-                //d = (BitmapDrawable) paletteImageView.getDrawable();
                 GlideBitmapDrawable dd = (GlideBitmapDrawable)paletteImageView.getDrawable();
                 resultImage = dd.getBitmap();
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN||motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
@@ -208,6 +281,22 @@ public class PaletteActivity extends Activity {
                 }
             }
             return true;
+        }
+    };
+
+    ValueEventListener postListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            if(galleryCameraDialog != null && galleryCameraDialog.isShowing()) {
+                galleryCameraDialog.dismiss();
+                adapter.notifyDataSetChanged();
+                newColorNameDialog.dismiss();
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
         }
     };
 }
