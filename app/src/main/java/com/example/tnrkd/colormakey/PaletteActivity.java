@@ -236,9 +236,11 @@ public class PaletteActivity extends Activity {
                 }
                 case R.id.cancel_button : {
                     galleryCameraDialog.dismiss();
+                    break;
                 }
                 case R.id.new_color_name_cancel_button : {
                     newColorNameDialog.dismiss();
+                    break;
                 }
             }
         }
