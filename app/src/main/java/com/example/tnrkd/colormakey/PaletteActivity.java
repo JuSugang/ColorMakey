@@ -59,6 +59,8 @@ public class PaletteActivity extends Activity {
     String rgbcode;
     String hexcode;
 
+    AlertDialog.Builder alertDialogBuilder;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +75,6 @@ public class PaletteActivity extends Activity {
                 TextView colorName = (TextView)view.findViewById(R.id.colorName);
                 final String selectedColorName = colorName.getText().toString();
 
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PaletteActivity.this);
                 alertDialogBuilder.setMessage("해당 색상을 삭제하시겠습니까?").setCancelable(false).setNegativeButton("확인",
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -101,6 +102,8 @@ public class PaletteActivity extends Activity {
         });
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.addValueEventListener(postListener);
+
+        alertDialogBuilder = new AlertDialog.Builder(PaletteActivity.this);
     }
 
     public void onClickView(View v) {
@@ -189,11 +192,32 @@ public class PaletteActivity extends Activity {
 
                     // 새로 등록할 색상의 이름 받아오기
                     String newColorName = newColorNameDialog.colorNameEdittext.getText().toString();
+                    // 색상이름 중복 검사
+                    boolean validCheck = false;
+                    for(com.example.tnrkd.colormakey.dto.Color color : Global.colors) {
+                        if(newColorName.equals(color.getColorname())) {
+                            validCheck = true;
+                            alertDialogBuilder.setMessage("같은 이름의 색상이 존재합니다").setPositiveButton("확인",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // 'No'
+                                            return;
+                                        }
+                                    });
+                            AlertDialog alert = alertDialogBuilder.create();
+                            alert.show();
+                            break;
+                        }
+                    }
                     // Color 객체 만들어서 DB에 insert
-                    com.example.tnrkd.colormakey.dto.Color color = new com.example.tnrkd.colormakey.dto.Color(hexcode, rgbcode, newColorName);
-                    Global.colors.add(color);
-                    mDatabase.child("palette").child(Global.userUID).setValue(Global.colors);
-                    break;
+                    if(!validCheck) {
+                        com.example.tnrkd.colormakey.dto.Color color = new com.example.tnrkd.colormakey.dto.Color(hexcode, rgbcode, newColorName);
+                        Global.colors.add(color);
+                        mDatabase.child("palette").child(Global.userUID).setValue(Global.colors);
+                        break;
+                    }
+
                 }
             }
         }
