@@ -56,6 +56,10 @@ public class RemixerPopupActivity extends Activity {
         float [][] result_W=gd.W;
         float [][] result_hypo=gd.MatMul();
 
+        for(int i=0;i<result_W.length;i++){
+
+        }
+
         pieChart = (PieChart) findViewById(R.id.chart1);
 
         entries = new ArrayList<>();
@@ -64,7 +68,7 @@ public class RemixerPopupActivity extends Activity {
         AddValuesToPIEENTRY(result_W);
         AddValuesToPieEntryLabels();
 //
-        pieDataSet = new PieDataSet(entries, "2ed");
+        pieDataSet = new PieDataSet(entries, "");
 
         pieData = new PieData(PieEntryLabels, pieDataSet);
 //        new PieData()
