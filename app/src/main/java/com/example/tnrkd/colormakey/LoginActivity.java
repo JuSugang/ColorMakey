@@ -31,6 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -38,7 +39,7 @@ import java.util.HashMap;
  * Created by XNOTE on 2017-09-24.
  */
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
 
     private static final int RC_SIGN_IN = 9001;
     private static GoogleApiClient mGoogleApiClient;
@@ -65,9 +66,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .build();
 
         mAuth = FirebaseAuth.getInstance();
-
         Global.colors = new ArrayList<>();
-        findViewById(R.id.sign_in_button).setOnClickListener(LoginActivity.this);
+        findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn();
+
+            }
+        });
     }
 
     @Override
@@ -78,18 +84,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }else {
 
         }
+
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.sign_in_button:
-                signIn();
-                break;
-        }
-    }
+
 
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
@@ -99,7 +99,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
@@ -131,7 +130,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void updateUI(FirebaseUser user) {
         if(user != null) {
-
             // 로그인한 사용자의 email, id값 Global에 저장
             Global.userEmail = user.getEmail();
             Global.userName = user.getDisplayName();
@@ -180,7 +178,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
             Global.logoutFlag = false;
         }else {
-
         }
     }
 
