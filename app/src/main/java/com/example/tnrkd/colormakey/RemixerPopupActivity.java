@@ -29,6 +29,13 @@ public class RemixerPopupActivity extends Activity {
     PieData pieData ;
     TextView targetColor;
     Button confirmButton;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +54,7 @@ public class RemixerPopupActivity extends Activity {
         targetColor.setBackgroundColor(Color.rgb((int)Y_data[0],(int)Y_data[1],(int)Y_data[2]));
 
         GradientDescent test=new GradientDescent(Global.colors,Y_data);
-        test.minimize(5000, (float)0.000001);
+        test.minimize(3000, (float)0.00001);
 
         ArrayList<com.example.tnrkd.colormakey.dto.Color> result_Color=test.getColor();
         ArrayList<Float> result_W=test.getW();
@@ -82,6 +89,7 @@ public class RemixerPopupActivity extends Activity {
                 finish();
             }
         });
+
     }
 
     public void AddValuesToPIEENTRY(ArrayList<Float> result_W){

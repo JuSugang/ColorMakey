@@ -5,13 +5,15 @@ import com.example.tnrkd.colormakey.dto.Color;
 import java.util.ArrayList;
 
 public class GradientDescent {
-	public static ArrayList<Color> X_data;
-	public static float[] Y_data;
-	public static ArrayList<Float> W;
+	public ArrayList<Color> X_data=new ArrayList<Color>();
+	public float[] Y_data;
+	public ArrayList<Float> W;
 
 
 	public GradientDescent(ArrayList<Color> X_data,float[] Y_data){
-		this.X_data=X_data;
+		for (int i=0;i<X_data.size();i++) {
+			this.X_data.add(X_data.get(i));
+		}
 		this.Y_data=Y_data;
 		int row = this.X_data.size();
 		this.W = new ArrayList<Float>();
@@ -19,7 +21,8 @@ public class GradientDescent {
 			this.W.add((float)Math.random());
 		}
 	}
-	public static ArrayList<Float> getW(){
+
+	public ArrayList<Float> getW(){
 		float Wsum=0;
 		for (int i = 0; i < W.size(); i++) {
 			Wsum+=W.get(i);
@@ -30,13 +33,13 @@ public class GradientDescent {
 		}
 		return realW;
 	}
-	public static ArrayList<Color> getColor(){
+	public ArrayList<Color> getColor(){
 		return X_data;
 	}
-	public static float[] getRGBResult(){
+	public float[] getRGBResult(){
 		return MatMul();
 	}
-	public static float getPercent() {
+	public float getPercent() {
 		float[] result=MatMul();
 		float diff=0;
 		for (int i = 0; i < 3; i++) {
@@ -45,7 +48,7 @@ public class GradientDescent {
 		float percent=(765-diff)/765;
 		return percent;
 	}
-	public static ArrayList<Float> W_standarize(ArrayList<Float> W){
+	public ArrayList<Float> W_standarize(ArrayList<Float> W){
 		ArrayList<Float> edited_W=new ArrayList<Float>();
 		float sum=0;
 		for (int i = 0; i < W.size(); i++) {
@@ -56,7 +59,7 @@ public class GradientDescent {
 		}
 		return edited_W;
 	}
-	public static float[] MatMul(){
+	public float[] MatMul(){
 		float[] result= new float[3];
 		ArrayList<Float> edited_W= W_standarize(W);
 		for (int i = 0; i < 3; i++) {
@@ -68,14 +71,14 @@ public class GradientDescent {
 		}
 		return result;
 	}
-	public static float calCost(float[] H) {
+	public float calCost(float[] H) {
 		float result=0;
 		for (int i = 0; i < 3; i++) {
 			result+=(float)Math.pow(H[i]-Y_data[i], 2)/(float)(H.length);
 		}
 		return result/2;
 	}
-	public static float[] W_diff_in_Cost(){
+	public float[] W_diff_in_Cost(){
 		float h=(float) 0.0001;
 		float[] H;
 		int row=W.size();
@@ -95,7 +98,7 @@ public class GradientDescent {
 		}
 		return grad;
 	}
-	public static void GradientDescentOptimization(float l) {
+	public void GradientDescentOptimization(float l) {
 		float[] wdiff=W_diff_in_Cost();
 		for (int i = 0; i < W.size(); i++) {
 			W.set(i, W.get(i)-l*wdiff[i]);
@@ -113,7 +116,7 @@ public class GradientDescent {
 
 		return;
 	}
-	public static void minimize(int epoch,float l) {
+	public void minimize(int epoch,float l) {
 		int epoch_=epoch;
 		while(epoch_-->0) {
 			GradientDescentOptimization(l);
