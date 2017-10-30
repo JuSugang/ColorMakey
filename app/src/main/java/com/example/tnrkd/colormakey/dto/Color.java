@@ -36,12 +36,20 @@ public class Color {
      *
      * 또한, getter의 반환값이 배열이라면 데이터를 넣을 수 없다. List를 사용해야함
      * */
+//    public ArrayList mGetRGBarray() {
+//        int temp = Integer.parseInt(rgbcode);
+//        ArrayList rgb = new ArrayList();
+//        rgb.add(temp/1000000);
+//        rgb.add(temp%1000000/1000);
+//        rgb.add(temp%1000);
+//        return rgb;
+//    }
     public ArrayList mGetRGBarray() {
         int temp = Integer.parseInt(rgbcode);
-        ArrayList rgb = new ArrayList();
-        rgb.add(temp/1000000);
-        rgb.add(temp%1000000/1000);
-        rgb.add(temp%1000);
+        ArrayList<Float> rgb = new ArrayList<Float>();
+        rgb.add((float)(temp/1000000));
+        rgb.add((float)(temp%1000000/1000));
+        rgb.add((float)(temp%1000));
         return rgb;
     }
 

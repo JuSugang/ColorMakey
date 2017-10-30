@@ -1,127 +1,116 @@
 package com.example.tnrkd.colormakey;
 
-public class GradientDescent {
+import com.example.tnrkd.colormakey.dto.Color;
 
-	public static float[][] X_data= {
-			{0,255,255,255,3},
-			{255,0,255,255,3},
-			{255,255,0,255,3}};
-	public static float[][] Y_data= {
-			{65},
-			{172},
-			{106}};
-	public static float[][] W={
-			{1},
-			{1},
-			{1},
-			{1},
-			{(float)0.3}};
-	
-	public GradientDescent(float[][] X_data,float[][] Y_data){
+import java.util.ArrayList;
+
+public class GradientDescent {
+	public static ArrayList<Color> X_data;
+	public static float[] Y_data;
+	public static ArrayList<Float> W;
+
+
+	public GradientDescent(ArrayList<Color> X_data,float[] Y_data){
 		this.X_data=X_data;
 		this.Y_data=Y_data;
-		int row = this.X_data[0].length; //5
-		int col = this.Y_data[0].length; //1
-		this.W = new float[row][col];
-		float[] bright=new float[row];
-		
-		float tempmin;
-		float tempmax;
-		if(this.Y_data[0][0]>this.Y_data[1][0]) {
-			tempmin=this.Y_data[1][0];
-			tempmax=this.Y_data[0][0];
-		}
-		else {
-			tempmin=this.Y_data[0][0];
-			tempmax=this.Y_data[1][0];
-		}
-		if(this.Y_data[2][0]<tempmin)
-			tempmin=this.Y_data[2][0];
-		if(this.Y_data[2][0]>tempmax)
-			tempmax=this.Y_data[2][0];
-		float tarbright=(tempmin+tempmax)/(2*255);
-		
+		int row = this.X_data.size();
+		this.W = new ArrayList<Float>();
 		for (int i = 0; i < row; i++) {
-			float min;
-			float max;
-			if(this.X_data[0][i]>this.X_data[1][i]) {
-				min=this.X_data[1][i];
-				max=this.X_data[0][i];
-			}
-			else {
-				min=this.X_data[0][i];
-				max=this.X_data[1][i];
-			}
-			if(this.X_data[2][i]<min)
-				min=this.X_data[2][i];
-			if(this.X_data[2][i]>max)
-				max=this.X_data[2][i];
-			bright[i]=(min+max)/(2*255);
-			
-			if(bright[i]>=tarbright) {
-				W[i][0]=1;
-			}
-			else {
-				W[i][0]=tarbright;
-			}
+			this.W.add((float)Math.random());
 		}
 	}
-	
-	public static float[][] MatMul(){
-		float[][] result= new float[X_data.length][W[0].length];
-		for (int i = 0; i < W[0].length; i++) {
-			for (int j = 0; j < X_data.length; j++) {
-				float sum=0;	
-				for (int k = 0; k < X_data[0].length; k++) {
-					sum+=X_data[j][k]*W[k][i];
-				}
-				result[j][i]=sum;
-			}
+	public static ArrayList<Float> getW(){
+		float Wsum=0;
+		for (int i = 0; i < W.size(); i++) {
+			Wsum+=W.get(i);
 		}
-		
+		ArrayList<Float> realW=new ArrayList<Float>();
+		for (int i = 0; i < W.size(); i++) {
+			realW.add(W.get(i)/Wsum);
+		}
+		return realW;
+	}
+	public static ArrayList<Color> getColor(){
+		return X_data;
+	}
+	public static float[] getRGBResult(){
+		return MatMul();
+	}
+	public static float getPercent() {
+		float[] result=MatMul();
+		float diff=0;
+		for (int i = 0; i < 3; i++) {
+			diff+=Math.abs(Y_data[i]-result[i]);
+		}
+		float percent=(765-diff)/765;
+		return percent;
+	}
+	public static ArrayList<Float> W_standarize(ArrayList<Float> W){
+		ArrayList<Float> edited_W=new ArrayList<Float>();
+		float sum=0;
+		for (int i = 0; i < W.size(); i++) {
+			sum+=W.get(i);
+		}
+		for (int i = 0; i < W.size(); i++) {
+			edited_W.add(W.get(i)/sum);
+		}
+		return edited_W;
+	}
+	public static float[] MatMul(){
+		float[] result= new float[3];
+		ArrayList<Float> edited_W= W_standarize(W);
+		for (int i = 0; i < 3; i++) {
+			float sum=0;
+			for (int j = 0; j < X_data.size(); j++) {
+				sum+=edited_W.get(j)*(float)(X_data.get(j).mGetRGBarray().get(i));
+			}
+			result[i]=sum;
+		}
 		return result;
 	}
-	public static float calCost(float[][] H) {
+	public static float calCost(float[] H) {
 		float result=0;
-		int row=H.length;
-		int col=H[0].length;
-		for (int i = 0; i < H.length; i++) {
-			for (int j = 0; j < H[0].length; j++) {
-				result+=(float)Math.pow(H[i][j]-Y_data[i][j], 2)/(float)(row*col);
-			}
-
+		for (int i = 0; i < 3; i++) {
+			result+=(float)Math.pow(H[i]-Y_data[i], 2)/(float)(H.length);
 		}
 		return result/2;
 	}
-	public static float[][] W_diff_in_Cost(){
-			float h=(float) 0.0001;
-			float[][] H;
-			int row=W.length;
-			int col=W[0].length;
-			
-			float[][] grad= new float[row][col];
-			
-			for (int i = 0; i < row*col; i++) {
-				float temp_val=W[i%row][i%col];
-				W[i%row][i%col]=temp_val+h;
-				H = MatMul();
-				float costF1=calCost(H);
-				W[i%row][i%col]=temp_val-h;
-				H = MatMul();
-				float costF2=calCost(H);
-				W[i%row][i%col]=temp_val;
-				grad[i%row][i%col]=(costF1-costF2)/(2*h);
-			}
+	public static float[] W_diff_in_Cost(){
+		float h=(float) 0.0001;
+		float[] H;
+		int row=W.size();
+
+		float[] grad= new float[row];
+
+		for (int i = 0; i < row; i++) {
+			float temp_val=W.get(i);
+			W.set(i,temp_val+h);
+			H = MatMul();
+			float costF1=calCost(H);
+			W.set(i,temp_val-h);
+			H = MatMul();
+			float costF2=calCost(H);
+			W.set(i,temp_val);
+			grad[i]=(costF1-costF2)/(2*h);
+		}
 		return grad;
 	}
 	public static void GradientDescentOptimization(float l) {
-		float[][] wdiff=W_diff_in_Cost();
-		for (int i = 0; i < W.length; i++) {
-			for (int j = 0; j < W[0].length; j++) {
-				W[i][j]=W[i][j]-l*wdiff[i][j];
-				if(W[i][j]<0)W[i][j]=-W[i][j];
+		float[] wdiff=W_diff_in_Cost();
+		for (int i = 0; i < W.size(); i++) {
+			W.set(i, W.get(i)-l*wdiff[i]);
+		}
+		ArrayList<Integer> removeIndex=new ArrayList<Integer>();
+		for (int i = 0; i < wdiff.length; i++) {
+			if(W.get(i)<0.01) {
+				removeIndex.add(i);
 			}
 		}
+		for (int i = removeIndex.size()-1; i>=0 ; i--) {
+			W.remove((int)removeIndex.get(i));
+			X_data.remove((int)removeIndex.get(i));
+		}
+
 		return;
 	}
 	public static void minimize(int epoch,float l) {

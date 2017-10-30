@@ -51,9 +51,9 @@ public class ColorGridPaletteAdapter extends BaseAdapter {
         ImageView colorView = (ImageView)convertView.findViewById(R.id.imageView1);
         TextView colorHexCodeTextView = (TextView)convertView.findViewById(R.id.colorName);
 
-        int R=(int)colorIDs.get(position).mGetRGBarray().get(0);
-        int G=(int)colorIDs.get(position).mGetRGBarray().get(1);
-        int B=(int)colorIDs.get(position).mGetRGBarray().get(2);
+        int R=(int)(float)colorIDs.get(position).mGetRGBarray().get(0);
+        int G=(int)(float)colorIDs.get(position).mGetRGBarray().get(1);
+        int B=(int)(float)colorIDs.get(position).mGetRGBarray().get(2);
         colorView.setImageResource(com.example.tnrkd.colormakey.R.drawable.mask);
         colorView.setBackgroundColor(android.graphics.Color.rgb(R,G,B));
         colorHexCodeTextView.setText(colorIDs.get(position).getColorname());
