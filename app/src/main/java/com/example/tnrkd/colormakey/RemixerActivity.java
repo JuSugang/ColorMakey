@@ -1,6 +1,7 @@
 package com.example.tnrkd.colormakey;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -155,6 +156,7 @@ public class RemixerActivity extends Activity {
                     Toast.makeText(RemixerActivity.this,"색을 선택하세요",Toast.LENGTH_SHORT).show();
                 }
                 else{
+
                     Intent intent = new Intent(RemixerActivity.this, RemixerPopupActivity.class);
                     intent.putExtra("rgb", remixerRGBtext.getText());
                     startActivity(intent);
@@ -221,5 +223,6 @@ public class RemixerActivity extends Activity {
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }
+//--------------------------------로딩클래스----------------------------------------
 
 }
