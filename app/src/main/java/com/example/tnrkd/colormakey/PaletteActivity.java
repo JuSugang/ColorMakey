@@ -288,9 +288,11 @@ public class PaletteActivity extends Activity {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             if(galleryCameraDialog != null && galleryCameraDialog.isShowing()) {
-                galleryCameraDialog.dismiss();
+                //galleryCameraDialog.dismiss();
                 adapter.notifyDataSetChanged();
                 newColorNameDialog.dismiss();
+
+                galleryCameraDialog.startFlicker();
             }
         }
 

@@ -32,7 +32,8 @@
             android:orientation="horizontal"
             android:layout_marginTop="10dip"
             android:paddingLeft="20dip"
-            android:paddingRight="20dip">
+            android:paddingRight="20dip"
+            android:id="@+id/showColorLinearLayout">
 
             <ImageView
                 android:layout_width="50dip"

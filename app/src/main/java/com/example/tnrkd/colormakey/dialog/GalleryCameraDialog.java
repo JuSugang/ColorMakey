@@ -2,11 +2,13 @@ package com.example.tnrkd.colormakey.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.tnrkd.colormakey.R;
@@ -21,6 +23,7 @@ public class GalleryCameraDialog extends Dialog {
     private TextView contentTextView;
     private Button registerButton;
     private Button cancelButton;
+    private LinearLayout showColorLinearLayout;
 
     private String title;
     private String content;
@@ -54,6 +57,7 @@ public class GalleryCameraDialog extends Dialog {
         contentTextView = (TextView) findViewById(R.id.txt_content);
         registerButton = findViewById(R.id.register_button);
         cancelButton = findViewById(R.id.cancel_button);
+        showColorLinearLayout = findViewById(R.id.showColorLinearLayout);
 
         // 제목과 내용을 생성자에서 셋팅한다.
         titleTextView.setText(title);
@@ -66,5 +70,47 @@ public class GalleryCameraDialog extends Dialog {
         }else {
 
         }
+    }
+
+    public void startFlicker() {
+
+        AsyncTask task = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                try {
+                    int r = 1;
+                    while(r < 7) {
+                        publishProgress(r);
+                        Thread.sleep(1000);
+                        r++;
+                    }
+                }catch(InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onProgressUpdate(Object[] values) {
+                super.onProgressUpdate(values);
+
+                contentTextView.setText("해당 색이 팔레트에 추가되었습니다");
+
+                int rr = (Integer)values[0];
+                if(rr % 2 == 0) {
+                    showColorLinearLayout.setVisibility(View.INVISIBLE);
+                }else {
+                    showColorLinearLayout.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                contentTextView.setText("선택한 위치의 색상");
+                showColorLinearLayout.setVisibility(View.VISIBLE);
+            }
+        };
+        task.execute();
     }
 }
