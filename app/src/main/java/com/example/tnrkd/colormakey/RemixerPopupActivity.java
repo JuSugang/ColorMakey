@@ -33,7 +33,7 @@ public class RemixerPopupActivity extends Activity {
     TextView targetColor;
     Button confirmButton;
     float[] Y_data;
-    int epoch=3000;
+    int epoch=2000;
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -57,8 +57,6 @@ public class RemixerPopupActivity extends Activity {
         targetColor=(TextView)findViewById(R.id.targetColor);
         targetColor.setText("목표 색 ("+target[0]+","+target[1]+","+target[2]+")");
         targetColor.setBackgroundColor(Color.rgb((int)Y_data[0],(int)Y_data[1],(int)Y_data[2]));
-
-        Log.e("생성완료","완료");
     }
 
     @Override
@@ -89,8 +87,8 @@ public class RemixerPopupActivity extends Activity {
             // TODO Auto-generated method stub
             super.onPreExecute();
             dialog= new ProgressDialog(RemixerPopupActivity.this);
-            dialog.setTitle("Progress");
-            dialog.setMessage("Loading.....");
+            dialog.setTitle("색을 섞어보고 있어요!");
+            dialog.setMessage("잠시만 기다려주세요!");
             dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             dialog.setCanceledOnTouchOutside(false);
             dialog.show();
@@ -109,7 +107,6 @@ public class RemixerPopupActivity extends Activity {
         protected void onProgressUpdate(Integer... values) {
             // TODO Auto-generated method stub
             super.onProgressUpdate(values);
-            Log.e("값",values[0].toString());
             dialog.setProgress((int)(values[0]*100/(float)epoch));
         }
         @Override
@@ -143,7 +140,7 @@ public class RemixerPopupActivity extends Activity {
 
             pieChart.setData(pieData);
             pieChart.animateXY(1000,1000);
-            pieChart.setCenterText("정확도 : "+(float)Math.round(test.getPercent()*1000)/10+"%");
+            pieChart.setCenterText("정확도 : "+test.getPercent()+"%");
             pieChart.setCenterTextSize(20);
             float[] calcColor=test.getRGBResult();
             pieChart.setHoleColor(Color.rgb((int)calcColor[0],(int)calcColor[1],(int)calcColor[2]));
@@ -154,10 +151,10 @@ public class RemixerPopupActivity extends Activity {
                     finish();
                 }
             });
-            if(test.getPercent()<0.70) {
+            if(test.getPercent()<94) {
                 Toast.makeText(RemixerPopupActivity.this, "현재 가지고 있는 색으로는\n원하는 색상을 만들기 어렵습니다.", Toast.LENGTH_SHORT).show();
             }
-            else if(test.getPercent()<0.85) {
+            else if(test.getPercent()<95) {
                 Toast.makeText(RemixerPopupActivity.this, "현재 가지고 있는 색으로는\n비슷한 색만 만들 수 있습니다.", Toast.LENGTH_SHORT).show();
             }
         }

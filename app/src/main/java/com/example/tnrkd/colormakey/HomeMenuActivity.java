@@ -34,7 +34,7 @@ public class HomeMenuActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitleTextColor(Color.BLUE);
+        toolbar.setTitleTextColor(Color.rgb(255,255,255));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
