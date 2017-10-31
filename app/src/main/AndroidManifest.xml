@@ -25,6 +25,7 @@
         </activity>
         <activity android:name=".LoginActivity"/>
         <activity android:name=".HomeMenuActivity"/>
+        <activity android:name=".LoadingPopupActivity"/>
         <activity android:name=".RemixerActivity"/>
         <activity android:name=".RemixerPopupActivity"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"/>
