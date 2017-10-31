@@ -41,12 +41,12 @@ public class GradientDescent {
 	}
 	public float getPercent() {
 		float[] result=MatMul();
-		float diff=0;
-		for (int i = 0; i < 3; i++) {
-			diff+=Math.abs(Y_data[i]-result[i]);
-		}
-		float percent=(765-diff)/765;
-		return percent;
+		float rmean=(float)(result[0]+Y_data[0])/2;
+		float r=result[0]-Y_data[0];
+		float g=result[1]-Y_data[1];
+		float b=result[2]-Y_data[2];
+		float c=(float)Math.sqrt((2+r/256)*r*r+4*g*g+(2+(255-r)/256)*b*b);
+		return (float) Math.round(((764.834-c)*1000/764.834))/10;
 	}
 	public ArrayList<Float> W_standarize(ArrayList<Float> W){
 		ArrayList<Float> edited_W=new ArrayList<Float>();

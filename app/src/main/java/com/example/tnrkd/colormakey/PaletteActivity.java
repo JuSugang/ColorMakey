@@ -287,7 +287,9 @@ public class PaletteActivity extends Activity {
             if(galleryCameraDialog != null && galleryCameraDialog.isShowing()) {
                 //galleryCameraDialog.dismiss();
                 adapter.notifyDataSetChanged();
-                newColorNameDialog.dismiss();
+//                if(newColorNameDialog!=null){
+//                    newColorNameDialog.dismiss();
+//                }
                 galleryCameraDialog.startFlicker();
             }
         }
