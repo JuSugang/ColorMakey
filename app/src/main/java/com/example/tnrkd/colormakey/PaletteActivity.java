@@ -289,6 +289,10 @@ public class PaletteActivity extends Activity {
                 adapter.notifyDataSetChanged();
                 newColorNameDialog.dismiss();
                 galleryCameraDialog.startFlicker();
+
+                // 키보드 내리기
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(newColorNameDialog.colorNameEdittext.getWindowToken(), 0);
             }
         }
 
