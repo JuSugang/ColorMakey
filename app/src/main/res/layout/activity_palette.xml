@@ -42,12 +42,6 @@
             android:layout_weight="1"
             android:onClick="onClickView"
             android:id="@+id/color_add_button"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="삭제"
-            android:layout_weight="1"/>
     </LinearLayout>
 
     </FrameLayout>
