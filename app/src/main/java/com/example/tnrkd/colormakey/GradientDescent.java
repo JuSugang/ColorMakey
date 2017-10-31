@@ -18,7 +18,7 @@ public class GradientDescent {
 		int row = this.X_data.size();
 		this.W = new ArrayList<Float>();
 		for (int i = 0; i < row; i++) {
-			this.W.add((float)Math.random());
+			this.W.add((float)1);
 		}
 	}
 
@@ -103,9 +103,10 @@ public class GradientDescent {
 		for (int i = 0; i < W.size(); i++) {
 			W.set(i, W.get(i)-l*wdiff[i]);
 		}
+		ArrayList<Float> edited_W= W_standarize(W);
 		ArrayList<Integer> removeIndex=new ArrayList<Integer>();
 		for (int i = 0; i < wdiff.length; i++) {
-			if(W.get(i)<0.01) {
+			if(edited_W.get(i)<0.09) {
 				removeIndex.add(i);
 			}
 		}

@@ -259,25 +259,27 @@ public class PaletteActivity extends Activity {
                     int imageHeight=resultImage.getHeight();
                     int viewWidth = paletteImageView.getWidth();
                     int viewHeight = paletteImageView.getHeight();
-                    x=x*imageWidth/(float)viewWidth;
-                    y=y*imageHeight/(float)viewHeight;
-                    final int sourceColor = resultImage.getPixel((int) x, (int) y);
+                    if(x>0 && x<viewWidth && y>0 && y<viewHeight) {
+                        x = x * imageWidth / (float) viewWidth;
+                        y = y * imageHeight / (float) viewHeight;
+                        final int sourceColor = resultImage.getPixel((int) x, (int) y);
 
-                    String[] argb = new String[4];
-                    for (int i = 0; i < 4; i++) {
-                        argb[i] = Integer.toBinaryString(sourceColor).substring(8 * i, 8 * i + 8);
-                    }
-                    int R = RemixerActivity.binToDec(argb[1]);
-                    int G = RemixerActivity.binToDec(argb[2]);
-                    int B = RemixerActivity.binToDec(argb[3]);
+                        String[] argb = new String[4];
+                        for (int i = 0; i < 4; i++) {
+                            argb[i] = Integer.toBinaryString(sourceColor).substring(8 * i, 8 * i + 8);
+                        }
+                        int R = RemixerActivity.binToDec(argb[1]);
+                        int G = RemixerActivity.binToDec(argb[2]);
+                        int B = RemixerActivity.binToDec(argb[3]);
 
-                    rgbcode = String.format("%03d",R) + String.format("%03d", G) + String.format("%03d", B);
-                    hexcode = String.format("%02X", R) + String.format("%02X", G) + String.format("%02X", B);
+                        rgbcode = String.format("%03d", R) + String.format("%03d", G) + String.format("%03d", B);
+                        hexcode = String.format("%02X", R) + String.format("%02X", G) + String.format("%02X", B);
 
 //                                    float[] hsv = new float[3];
 //                                    Color.RGBToHSV(R, G, B, hsv);
 
-                    paletteImageView2.setBackgroundColor(Color.rgb(R, G, B));
+                        paletteImageView2.setBackgroundColor(Color.rgb(R, G, B));
+                    }
                 }
             }
             return true;

@@ -122,21 +122,22 @@ public class RemixerActivity extends Activity {
                         int imageHeight=resultImage.getHeight();
                         int viewWidth = ImageResultView.getWidth();
                         int viewHeight = ImageResultView.getHeight();
-                        x=x*imageWidth/(float)viewWidth;
-                        y=y*imageHeight/(float)viewHeight;
-                        final int sourceColor = resultImage.getPixel((int) x, (int) y);
+                        if(x>0 && x<viewWidth && y>0 && y<viewHeight) {
+                            x = x * imageWidth / (float) viewWidth;
+                            y = y * imageHeight / (float) viewHeight;
+                            final int sourceColor = resultImage.getPixel((int) x, (int) y);
 
-                        String[] argb = new String[4];
-                        for (int i = 0; i < 4; i++) {
-                            argb[i] = Integer.toBinaryString(sourceColor).substring(8 * i, 8 * i + 8);
+                            String[] argb = new String[4];
+                            for (int i = 0; i < 4; i++) {
+                                argb[i] = Integer.toBinaryString(sourceColor).substring(8 * i, 8 * i + 8);
+                            }
+                            int R = binToDec(argb[1]);
+                            int G = binToDec(argb[2]);
+                            int B = binToDec(argb[3]);
+
+                            remixerPreview.setBackgroundColor(Color.rgb(R, G, B));
+                            remixerRGBtext.setText("(빨강: " + R + ",초록: " + G + ",파랑: " + B + ")");
                         }
-                        int R = binToDec(argb[1]);
-                        int G = binToDec(argb[2]);
-                        int B = binToDec(argb[3]);
-
-                        remixerPreview.setBackgroundColor(Color.rgb(R, G, B));
-                        remixerRGBtext.setText("(빨강: " + R + ",초록: " + G + ",파랑: " + B + ")");
-
                     }
 
                 }
@@ -156,7 +157,6 @@ public class RemixerActivity extends Activity {
                     Toast.makeText(RemixerActivity.this,"색을 선택하세요",Toast.LENGTH_SHORT).show();
                 }
                 else{
-
                     Intent intent = new Intent(RemixerActivity.this, RemixerPopupActivity.class);
                     intent.putExtra("rgb", remixerRGBtext.getText());
                     startActivity(intent);
