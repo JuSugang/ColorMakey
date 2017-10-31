@@ -132,7 +132,6 @@ public class RemixerPopupActivity extends Activity {
             AddValuesToPieEntryLabels(result_Color);
 
             pieDataSet = new PieDataSet(entries, "");
-
             pieData = new PieData(PieEntryLabels, pieDataSet);
 
             int[] color=new int[result_Color.size()];
@@ -144,6 +143,10 @@ public class RemixerPopupActivity extends Activity {
 
             pieChart.setData(pieData);
             pieChart.animateXY(1000,1000);
+            pieChart.setCenterText("정확도 : "+(float)Math.round(test.getPercent()*1000)/10+"%");
+            pieChart.setCenterTextSize(20);
+            float[] calcColor=test.getRGBResult();
+            pieChart.setHoleColor(Color.rgb((int)calcColor[0],(int)calcColor[1],(int)calcColor[2]));
             confirmButton=(Button)findViewById(R.id.confirmButton);
             confirmButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -151,7 +154,12 @@ public class RemixerPopupActivity extends Activity {
                     finish();
                 }
             });
-            Toast.makeText(RemixerPopupActivity.this, result, Toast.LENGTH_SHORT).show();
+            if(test.getPercent()<0.70) {
+                Toast.makeText(RemixerPopupActivity.this, "현재 가지고 있는 색으로는\n원하는 색상을 만들기 어렵습니다.", Toast.LENGTH_SHORT).show();
+            }
+            else if(test.getPercent()<0.85) {
+                Toast.makeText(RemixerPopupActivity.this, "현재 가지고 있는 색으로는\n비슷한 색만 만들 수 있습니다.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

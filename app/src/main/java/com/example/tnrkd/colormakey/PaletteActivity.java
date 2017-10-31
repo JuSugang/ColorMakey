@@ -168,7 +168,6 @@ public class PaletteActivity extends Activity {
 
     private View.OnClickListener leftListener = new View.OnClickListener() {
         public void onClick(View v) {
-
             switch(v.getId()) {
                 case R.id.camera_button : {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -274,10 +273,6 @@ public class PaletteActivity extends Activity {
 
                         rgbcode = String.format("%03d", R) + String.format("%03d", G) + String.format("%03d", B);
                         hexcode = String.format("%02X", R) + String.format("%02X", G) + String.format("%02X", B);
-
-//                                    float[] hsv = new float[3];
-//                                    Color.RGBToHSV(R, G, B, hsv);
-
                         paletteImageView2.setBackgroundColor(Color.rgb(R, G, B));
                     }
                 }
@@ -293,7 +288,6 @@ public class PaletteActivity extends Activity {
                 //galleryCameraDialog.dismiss();
                 adapter.notifyDataSetChanged();
                 newColorNameDialog.dismiss();
-
                 galleryCameraDialog.startFlicker();
             }
         }
