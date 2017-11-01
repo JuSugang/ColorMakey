@@ -84,25 +84,9 @@ public class PaletteActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_palette);
 
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},MY_REQUEST);
-            }else {
-                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, MY_REQUEST);
-            }
-        }else {
-
-        }
-
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
-                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA},MY_REQUEST_2);
-            }else {
-                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, MY_REQUEST_2);
-            }
-        }else {
-
-        }
+        // 허가
+        Global.requestExternalStoragePermission(this, MY_REQUEST);
+        Global.requestCameraPermission(this, MY_REQUEST_2);
 
         gridView = findViewById(R.id.palette_gridview);
         adapter = new ColorGridPaletteAdapter(PaletteActivity.this.getApplicationContext(), R.layout.row, Global.colors);
@@ -204,7 +188,6 @@ public class PaletteActivity extends Activity {
 //                Uri imgUri = data.getData();
 //                Glide.with(this).load(imgUri).into(paletteImageView);
                 Glide.with(this).load(fileUri).into(paletteImageView);
-//                Picasso.with(this).load(imgUri).into(paletteImageView);
 
                 imageOnFlag=true;
             }

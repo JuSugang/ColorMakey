@@ -1,20 +1,16 @@
 package com.example.tnrkd.colormakey;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.ExifInterface;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
+import android.support.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -22,12 +18,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.BitmapTypeRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 
-import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -38,6 +34,8 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 public class RemixerActivity extends Activity {
     static final int CAMERA_CODE=1;
     static final int GALLERY_CODE=2;
+    private final int MY_REQUEST = 1100;
+    private final int MY_REQUEST_2 = 1200;
     private final int GALLERY = 9002;
     ImageView loadCamera;
     ImageView loadGallery;
@@ -48,11 +46,14 @@ public class RemixerActivity extends Activity {
     Button calcButton;
     Bitmap resultImage;
     boolean imageOnFlag=false;
+    private Uri fileUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remixer);
+        Global.requestExternalStoragePermission(this, MY_REQUEST);
+        Global.requestCameraPermission(this, MY_REQUEST_2);
         loadCamera = (ImageView)findViewById(R.id.loadCamera);
         loadGallery = (ImageView)findViewById(R.id.loadGallery);
         loadColorTable = (ImageView)findViewById(R.id.loadColorTable);
@@ -64,7 +65,7 @@ public class RemixerActivity extends Activity {
         loadCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SelectPhoto();
+                SelectPhoto(view);
             }
         });
         //-------------------------갤러리 기능-------------------------------------------------
@@ -139,7 +140,6 @@ public class RemixerActivity extends Activity {
                             remixerRGBtext.setText("(빨강: " + R + ",초록: " + G + ",파랑: " + B + ")");
                         }
                     }
-
                 }
                 return true;
             }
@@ -191,9 +191,10 @@ public class RemixerActivity extends Activity {
 
         }
     }
-    private void SelectPhoto() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, CAMERA_CODE);
+    private void SelectPhoto(View v) {
+//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        startActivityForResult(intent, CAMERA_CODE);
+        onCaptureImage(v);
     }
     private void SelectGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -202,9 +203,9 @@ public class RemixerActivity extends Activity {
         startActivityForResult(intent, GALLERY);
     }
     private void SendPicture(Intent data) {
-        Uri imgUri = data.getData();
+//        Uri imgUri = data.getData();
         //String imagePath = getRealPathFromURI(imgUri); // path 경로
-        Glide.with(this).load(imgUri).into(ImageResultView);
+        Glide.with(this).load(fileUri).into(ImageResultView);
 
         imageOnFlag=true;
     }
@@ -225,4 +226,45 @@ public class RemixerActivity extends Activity {
     }
 //--------------------------------로딩클래스----------------------------------------
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch(requestCode) {
+            case MY_REQUEST : {
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                }else {
+                    Toast.makeText(this, "권한 사용을 동의해야 사용이 가능합니다", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                break;
+            }
+            case MY_REQUEST_2 : {
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                }else {
+                    Toast.makeText(this, "권한 사용을 동의해야 사용이 가능합니다", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                break;
+            }
+        }
+    }
+
+    public void onCaptureImage(View v)
+    {
+        // give the image a name so we can store it in the phone's default location
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "IMG_" + timeStamp + ".jpg");
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        //fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image (this doesn't work at all for images)
+        fileUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values); // store content values
+        intent.putExtra( MediaStore.EXTRA_OUTPUT,  fileUri);
+
+        // start the image capture Intent
+        startActivityForResult(intent, CAMERA_CODE);
+    }
 }
