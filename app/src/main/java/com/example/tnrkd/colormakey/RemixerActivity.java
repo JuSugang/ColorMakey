@@ -135,7 +135,6 @@ public class RemixerActivity extends Activity {
                             int R = binToDec(argb[1]);
                             int G = binToDec(argb[2]);
                             int B = binToDec(argb[3]);
-
                             remixerPreview.setBackgroundColor(Color.rgb(R, G, B));
                             remixerRGBtext.setText("(빨강: " + R + ",초록: " + G + ",파랑: " + B + ")");
                         }

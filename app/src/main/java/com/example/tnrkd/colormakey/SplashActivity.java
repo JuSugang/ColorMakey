@@ -4,23 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import com.example.tnrkd.colormakey.adapter.ColorGridPaletteAdapter;
-import com.example.tnrkd.colormakey.dto.Color;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * Created by XNOTE on 2017-09-24.
@@ -42,7 +30,23 @@ public class SplashActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
+        try {
+            InputStream in = getResources().openRawResource(R.raw.koeancolorname);
+            if (in != null) {
+                InputStreamReader stream = new InputStreamReader(in, "utf-8");
+                BufferedReader buffer = new BufferedReader(stream);
+                String read;
+                while ((read = buffer.readLine()) != null) {
+                    String[] colorInfoArr = read.split(" ");
+                    ko_color node = new ko_color(colorInfoArr[0], colorInfoArr[1]);
+                    KoreanColorList.ko_colorlist.add(node);   //basic 색 만 테스트
+                }
+                in.close();
 
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         StartAnimations();
     }
 

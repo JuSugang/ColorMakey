@@ -53,9 +53,10 @@ public class RemixerPopupActivity extends Activity {
                 (float)Integer.parseInt(target[0].substring(4,target[0].length())),
                 (float)Integer.parseInt(target[1].substring(4,target[1].length())),
                 (float)Integer.parseInt(target[2].substring(4,target[2].length()))};
+        int[] Y_data_int={(int)Y_data2[0],(int)Y_data2[1],(int)Y_data2[2]};
         Y_data=Y_data2;
         targetColor=(TextView)findViewById(R.id.targetColor);
-        targetColor.setText("목표 색 ("+target[0]+","+target[1]+","+target[2]+")");
+        targetColor.setText("선택하신 색은 '" +KoreanColorList.getName(Y_data_int)+"'이에요!");
         targetColor.setBackgroundColor(Color.rgb((int)Y_data[0],(int)Y_data[1],(int)Y_data[2]));
     }
 
