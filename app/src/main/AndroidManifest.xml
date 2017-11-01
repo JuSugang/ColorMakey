@@ -5,6 +5,7 @@
     <!-- 사진을 외장 메모리에 저장하기 위해서 외장 USB에 쓰기 권한 요청 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

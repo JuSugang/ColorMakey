@@ -1,15 +1,24 @@
 package com.example.tnrkd.colormakey;
 
+import android.*;
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -31,6 +41,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by tnrkd on 2017-09-29.
@@ -41,6 +55,8 @@ public class PaletteActivity extends Activity {
     private final String TAG = "PaletteActivity";
     private final int GALLERY = 9002;
     private final int CAMERA = 9003;
+    private final int MY_REQUEST = 1100;
+    private final int MY_REQUEST_2 = 1200;
 
     private GridView gridView;
     private ColorGridPaletteAdapter adapter;
@@ -61,10 +77,32 @@ public class PaletteActivity extends Activity {
 
     AlertDialog.Builder alertDialogBuilder;
 
+    private Uri fileUri;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_palette);
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},MY_REQUEST);
+            }else {
+                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, MY_REQUEST);
+            }
+        }else {
+
+        }
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA},MY_REQUEST_2);
+            }else {
+                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, MY_REQUEST_2);
+            }
+        }else {
+
+        }
 
         gridView = findViewById(R.id.palette_gridview);
         adapter = new ColorGridPaletteAdapter(PaletteActivity.this.getApplicationContext(), R.layout.row, Global.colors);
@@ -158,8 +196,15 @@ public class PaletteActivity extends Activity {
                 paletteImageView2 = (ImageView)galleryCameraDialog.findViewById(R.id.palette_imageView2);
                 paletteImageView.setOnTouchListener(onTouchListener);
 
-                Uri imgUri = data.getData();
-                Glide.with(this).load(imgUri).into(paletteImageView);
+                if(fileUri != null) {
+                    Log.d(TAG, "Image saved to:\n" + fileUri);
+                    Log.d(TAG, "Image path:\n" + fileUri.getPath());
+                }
+
+//                Uri imgUri = data.getData();
+//                Glide.with(this).load(imgUri).into(paletteImageView);
+                Glide.with(this).load(fileUri).into(paletteImageView);
+//                Picasso.with(this).load(imgUri).into(paletteImageView);
 
                 imageOnFlag=true;
             }
@@ -170,8 +215,10 @@ public class PaletteActivity extends Activity {
         public void onClick(View v) {
             switch(v.getId()) {
                 case R.id.camera_button : {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, CAMERA);
+//                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    startActivityForResult(intent, CAMERA);
+                    
+                    onCaptureImage(v);
                     selectGalleryCameraDialog.dismiss();
                     break;
                 }
@@ -250,6 +297,7 @@ public class PaletteActivity extends Activity {
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if(imageOnFlag==true) {
                 GlideBitmapDrawable dd = (GlideBitmapDrawable)paletteImageView.getDrawable();
+//                Drawable dd = paletteImageView.getDrawable();
                 resultImage = dd.getBitmap();
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN||motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
                     float x = motionEvent.getX();
@@ -291,6 +339,7 @@ public class PaletteActivity extends Activity {
 //                    newColorNameDialog.dismiss();
 //                }
                 galleryCameraDialog.startFlicker();
+                newColorNameDialog.dismiss();
 
                 // 키보드 내리기
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -303,4 +352,46 @@ public class PaletteActivity extends Activity {
             Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
         }
     };
+
+    public void onCaptureImage(View v)
+    {
+        // give the image a name so we can store it in the phone's default location
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "IMG_" + timeStamp + ".jpg");
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        //fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image (this doesn't work at all for images)
+        fileUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values); // store content values
+        intent.putExtra( MediaStore.EXTRA_OUTPUT,  fileUri);
+
+        // start the image capture Intent
+        startActivityForResult(intent, CAMERA);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch(requestCode) {
+            case MY_REQUEST : {
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                }else {
+                    Toast.makeText(this, "권한 사용을 동의해야 사용이 가능합니다", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                break;
+            }
+            case MY_REQUEST_2 : {
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                }else {
+                    Toast.makeText(this, "권한 사용을 동의해야 사용이 가능합니다", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                break;
+            }
+        }
+    }
 }
