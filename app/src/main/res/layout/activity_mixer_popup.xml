@@ -49,7 +49,8 @@
                         android:layout_height="match_parent"
                         android:background="#ffffff"
                         android:id="@+id/grid0"
-                        android:numColumns="4">
+                        android:numColumns="4"
+                        android:listSelector="@android:color/transparent" >
                     </GridView>
                 </LinearLayout>
                 <!--1.red-->
@@ -66,7 +67,8 @@
                         android:layout_height="match_parent"
                         android:background="#ffffff"
                         android:id="@+id/grid1"
-                        android:numColumns="4">
+                        android:numColumns="4"
+                        android:listSelector="@android:color/transparent" >
                     </GridView>
                 </LinearLayout>
                 <!--2.green-->
@@ -83,7 +85,8 @@
                         android:layout_height="match_parent"
                         android:background="#ffffff"
                         android:id="@+id/grid2"
-                        android:numColumns="4">
+                        android:numColumns="4"
+                        android:listSelector="@android:color/transparent" >
                     </GridView>
                 </LinearLayout>
                 <!--3.blue-->
@@ -100,7 +103,8 @@
                         android:layout_height="match_parent"
                         android:background="#ffffff"
                         android:id="@+id/grid3"
-                        android:numColumns="4">
+                        android:numColumns="4"
+                        android:listSelector="@android:color/transparent" >
                     </GridView>
                 </LinearLayout>
                 <!--4.yellow-->
@@ -117,7 +121,8 @@
                         android:layout_height="match_parent"
                         android:background="#ffffff"
                         android:id="@+id/grid4"
-                        android:numColumns="4">
+                        android:numColumns="4"
+                        android:listSelector="@android:color/transparent" >
                     </GridView>
                 </LinearLayout>
                 <!--5.brown-->
@@ -134,7 +139,8 @@
                         android:layout_height="match_parent"
                         android:background="#ffffff"
                         android:id="@+id/grid5"
-                        android:numColumns="4">
+                        android:numColumns="4"
+                        android:listSelector="@android:color/transparent" >
                     </GridView>
                 </LinearLayout>
                 <!--6.grey-->
@@ -151,7 +157,8 @@
                         android:layout_height="match_parent"
                         android:background="#ffffff"
                         android:id="@+id/grid6"
-                        android:numColumns="4">
+                        android:numColumns="4"
+                        android:listSelector="@android:color/transparent" >
                     </GridView>
                 </LinearLayout>
                 <!--7.orange-->
@@ -168,7 +175,8 @@
                         android:layout_height="match_parent"
                         android:background="#ffffff"
                         android:id="@+id/grid7"
-                        android:numColumns="4">
+                        android:numColumns="4"
+                        android:listSelector="@android:color/transparent" >
                     </GridView>
                 </LinearLayout>
                 <!--8.violet-->
@@ -185,7 +193,8 @@
                         android:layout_height="match_parent"
                         android:background="#ffffff"
                         android:id="@+id/grid8"
-                        android:numColumns="4">
+                        android:numColumns="4"
+                        android:listSelector="@android:color/transparent" >
                     </GridView>
                 </LinearLayout>
                 <!--9.picker-->
@@ -286,7 +295,7 @@
                 android:layout_height="wrap_content"
                 android:text="name"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </LinearLayout>x
 
     </LinearLayout>
     <LinearLayout
