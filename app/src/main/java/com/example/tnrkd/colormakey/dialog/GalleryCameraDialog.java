@@ -72,45 +72,45 @@ public class GalleryCameraDialog extends Dialog {
         }
     }
 
-    public void startFlicker() {
-
-        AsyncTask task = new AsyncTask() {
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                try {
-                    int r = 1;
-                    while(r < 7) {
-                        publishProgress(r);
-                        Thread.sleep(1000);
-                        r++;
-                    }
-                }catch(InterruptedException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onProgressUpdate(Object[] values) {
-                super.onProgressUpdate(values);
-
-                contentTextView.setText("해당 색이 팔레트에 추가되었습니다");
-
-                int rr = (Integer)values[0];
-                if(rr % 2 == 0) {
-                    showColorLinearLayout.setVisibility(View.INVISIBLE);
-                }else {
-                    showColorLinearLayout.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                contentTextView.setText("선택한 위치의 색상");
-                showColorLinearLayout.setVisibility(View.VISIBLE);
-            }
-        };
-        task.execute();
-    }
+//    public void startFlicker() {
+//
+//        AsyncTask task = new AsyncTask() {
+//            @Override
+//            protected Object doInBackground(Object[] objects) {
+//                try {
+//                    int r = 1;
+//                    while(r < 7) {
+//                        publishProgress(r);
+//                        Thread.sleep(1000);
+//                        r++;
+//                    }
+//                }catch(InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                return null;
+//            }
+//
+//            @Override
+//            protected void onProgressUpdate(Object[] values) {
+//                super.onProgressUpdate(values);
+//
+//                contentTextView.setText("해당 색이 팔레트에 추가되었습니다");
+//
+//                int rr = (Integer)values[0];
+//                if(rr % 2 == 0) {
+//                    showColorLinearLayout.setVisibility(View.INVISIBLE);
+//                }else {
+//                    showColorLinearLayout.setVisibility(View.VISIBLE);
+//                }
+//            }
+//
+//            @Override
+//            protected void onPostExecute(Object o) {
+//                super.onPostExecute(o);
+//                contentTextView.setText("선택한 위치의 색상");
+//                showColorLinearLayout.setVisibility(View.VISIBLE);
+//            }
+//        };
+//        task.execute();
+//    }
 }

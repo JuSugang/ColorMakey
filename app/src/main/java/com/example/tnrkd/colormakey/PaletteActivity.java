@@ -1,7 +1,5 @@
 package com.example.tnrkd.colormakey;
 
-import android.*;
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -11,14 +9,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -41,7 +35,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -69,13 +62,13 @@ public class PaletteActivity extends Activity {
     private ImageView paletteImageView2;
 
     boolean imageOnFlag = false;
-    Bitmap resultImage;
+    private Bitmap resultImage;
 
     private DatabaseReference mDatabase;
-    String rgbcode;
-    String hexcode;
+    private String rgbcode;
+    private String hexcode;
 
-    AlertDialog.Builder alertDialogBuilder;
+    private AlertDialog.Builder alertDialogBuilder;
 
     private Uri fileUri;
 
@@ -114,7 +107,6 @@ public class PaletteActivity extends Activity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // 'No'
                                 return;
                             }
                         });
@@ -200,7 +192,6 @@ public class PaletteActivity extends Activity {
                 case R.id.camera_button : {
 //                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //                    startActivityForResult(intent, CAMERA);
-                    
                     onCaptureImage(v);
                     selectGalleryCameraDialog.dismiss();
                     break;
@@ -230,7 +221,6 @@ public class PaletteActivity extends Activity {
                                     new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            // 'No'
                                             return;
                                         }
                                     });
@@ -246,7 +236,6 @@ public class PaletteActivity extends Activity {
                         mDatabase.child("palette").child(Global.userUID).setValue(Global.colors);
                         break;
                     }
-
                 }
             }
         }
@@ -280,7 +269,6 @@ public class PaletteActivity extends Activity {
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if(imageOnFlag==true) {
                 GlideBitmapDrawable dd = (GlideBitmapDrawable)paletteImageView.getDrawable();
-//                Drawable dd = paletteImageView.getDrawable();
                 resultImage = dd.getBitmap();
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN||motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
                     float x = motionEvent.getX();
@@ -316,12 +304,12 @@ public class PaletteActivity extends Activity {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             if(galleryCameraDialog != null && galleryCameraDialog.isShowing()) {
-                //galleryCameraDialog.dismiss();
                 adapter.notifyDataSetChanged();
 //                if(newColorNameDialog!=null){
 //                    newColorNameDialog.dismiss();
 //                }
-                galleryCameraDialog.startFlicker();
+//                galleryCameraDialog.startFlicker();
+                Toast.makeText(PaletteActivity.this, "새로운 색상이 추가되었습니다", Toast.LENGTH_SHORT).show();
                 newColorNameDialog.dismiss();
 
                 // 키보드 내리기
@@ -336,6 +324,7 @@ public class PaletteActivity extends Activity {
         }
     };
 
+    // 팔레트나 리믹스에서 카메라 사용할 때, 찍은 사진은 로컬에 저장해 주는 메소드
     public void onCaptureImage(View v)
     {
         // give the image a name so we can store it in the phone's default location
