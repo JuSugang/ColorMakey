@@ -71,6 +71,7 @@ public class PaletteActivity extends Activity {
     private AlertDialog.Builder alertDialogBuilder;
 
     private Uri fileUri;
+    private boolean isSelected = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -145,6 +146,12 @@ public class PaletteActivity extends Activity {
                         leftListener, // 왼쪽 버튼 이벤트
                         rightListener);
                 galleryCameraDialog.show();
+                galleryCameraDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        isSelected = false;
+                    }
+                });
 
                 try {
                     imageOnFlag = true;
@@ -198,6 +205,11 @@ public class PaletteActivity extends Activity {
                 }
                 case R.id.register_button : {
 
+                    // 색상을 선택했는지 검사
+                    if(!isSelected) {
+                        Toast.makeText(PaletteActivity.this, "색상을 선택해 주세요", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
                     // 새로 등록할 색상의 이름 적을 다이얼로그 생성
                     newColorNameDialog = new NewColorNameDialog(PaletteActivity.this, this, rightListener);
                     newColorNameDialog.show();
@@ -268,6 +280,7 @@ public class PaletteActivity extends Activity {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if(imageOnFlag==true) {
+                isSelected = true;
                 GlideBitmapDrawable dd = (GlideBitmapDrawable)paletteImageView.getDrawable();
                 resultImage = dd.getBitmap();
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN||motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
