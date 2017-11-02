@@ -106,7 +106,7 @@ public class HomeMenuActivity extends AppCompatActivity {
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "뒤로가기 버튼을 한번 더 클릭하면 앱이 종료됩니다", Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
 
