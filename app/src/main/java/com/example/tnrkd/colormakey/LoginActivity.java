@@ -223,4 +223,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mGoogleApiClient.connect();
         mGoogleApiClient.registerConnectionCallbacks(gaccc);
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Global.loginActivity = this;
+    }
 }

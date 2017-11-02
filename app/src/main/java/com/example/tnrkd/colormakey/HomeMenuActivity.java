@@ -3,6 +3,7 @@ package com.example.tnrkd.colormakey;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,8 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 
 public class HomeMenuActivity extends AppCompatActivity {
+
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,6 +94,26 @@ public class HomeMenuActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+
+            if(Global.loginActivity != null) {
+                Global.loginActivity.finish();
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(0);
+            }
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }

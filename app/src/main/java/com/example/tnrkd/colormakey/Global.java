@@ -30,6 +30,7 @@ public class Global {
     public static boolean logoutFlag = false;
 
     public static AppCompatActivity activity;
+    public static LoginActivity loginActivity;
 
     public static void requestExternalStoragePermission(Activity activity, int requestCode) {
         if(ContextCompat.checkSelfPermission(activity, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
