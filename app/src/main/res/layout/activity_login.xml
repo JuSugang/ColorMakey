@@ -5,13 +5,6 @@
     android:layout_height="match_parent"
     android:background="#ffffff">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/linear_gradient2"
-        app:titleTextColor="#fff"></android.support.v7.widget.Toolbar>
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
