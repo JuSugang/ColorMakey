@@ -99,6 +99,8 @@ public class HomeMenuActivity extends AppCompatActivity {
 
             if(Global.loginActivity != null) {
                 Global.loginActivity.finish();
+                // 아래의 두 줄만 사용하여 앱을 종료시키면,
+                // 실행되고 있는 액티비티가 2개 이상일 때, 이전의 액티비티가 살아나 앱이 다시 실행된다
                 android.os.Process.killProcess(android.os.Process.myPid());
                 System.exit(0);
             }
