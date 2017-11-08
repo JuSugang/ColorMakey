@@ -3,7 +3,7 @@
     android:interpolator="@android:anim/decelerate_interpolator"
     android:fillAfter="true">
     <scale
-        android:duration="400"
+        android:duration="800"
         android:fromXScale="3.0"
         android:fromYScale="3.0"
         android:toXScale="0.6"
@@ -16,5 +16,5 @@
         android:toXDelta="0%"
         android:fromYDelta="0%"
         android:toYDelta="-45%"
-        android:duration="400"/>
+        android:duration="800"/>
 </set>
