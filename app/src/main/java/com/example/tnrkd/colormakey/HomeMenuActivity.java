@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,6 +49,13 @@ public class HomeMenuActivity extends BaseActivity {
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        toolbar.setPadding(0, Global.statusBar, 0, 0);
 
+        ImageView background=(ImageView)findViewById(R.id.toolbar_round);
+        DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics();
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+        background.getLayoutParams().height=height*42/100;
+        background.getLayoutParams().width=width;
+        background.requestLayout();
         //각 TextView에 listener 추가
         ImageView remixer=(ImageView)findViewById(R.id.remixer);
         ImageView mixer=(ImageView)findViewById(R.id.mixer);

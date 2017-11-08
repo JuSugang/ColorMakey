@@ -35,7 +35,7 @@
             android:text="가지고 계신 물감으로 원하는 색을"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="#808080"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/intro2"
