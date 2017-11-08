@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +43,7 @@ public class HomeMenuActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.rgb(255,255,255));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        toolbar.setPadding(0, Global.statusBar, 0, 0);
 
         //각 TextView에 listener 추가
         ImageView remixer=(ImageView)findViewById(R.id.remixer);

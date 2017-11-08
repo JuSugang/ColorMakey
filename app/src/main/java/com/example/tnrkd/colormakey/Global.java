@@ -32,6 +32,8 @@ public class Global {
     public static AppCompatActivity activity;
     public static LoginActivity loginActivity;
 
+    public static int statusBar;
+
     public static void requestExternalStoragePermission(Activity activity, int requestCode) {
         if(ContextCompat.checkSelfPermission(activity, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             if(ActivityCompat.shouldShowRequestPermissionRationale(activity, android.Manifest.permission.READ_EXTERNAL_STORAGE)) {

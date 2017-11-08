@@ -52,6 +52,7 @@ public class SplashActivity extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        getStatusBarHeight();
         StartAnimations();
     }
 
@@ -84,5 +85,14 @@ public class SplashActivity extends Activity {
             }
         };
         splashTread.start();
+    }
+
+    public void getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        Global.statusBar = result;
     }
 }
