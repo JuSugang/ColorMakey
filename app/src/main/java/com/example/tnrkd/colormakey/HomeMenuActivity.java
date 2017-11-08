@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,16 +36,17 @@ public class HomeMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_menu);
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        ImageView toolbar_round = (ImageView)findViewById(R.id.toolbar_round);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.rgb(255,255,255));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         //각 TextView에 listener 추가
-        TextView remixer=(TextView)findViewById(R.id.remixer);
-        TextView mixer=(TextView)findViewById(R.id.mixer);
-        TextView palette=(TextView)findViewById(R.id.palette);
+        ImageView remixer=(ImageView)findViewById(R.id.remixer);
+        ImageView mixer=(ImageView)findViewById(R.id.mixer);
+        ImageView palette=(ImageView)findViewById(R.id.palette);
 
         remixer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +63,6 @@ public class HomeMenuActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeMenuActivity.this,
                         MixerActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                intent.putExtra("flag","false");
                 startActivity(intent);
             }
         });

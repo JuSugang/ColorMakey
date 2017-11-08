@@ -100,17 +100,26 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Animation login_button = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.login_button);
         login_button.reset();
         ImageButton b=(ImageButton) findViewById(R.id.sign_in_button);
-        TextView intro0= (TextView)findViewById(R.id.intro0);
-        TextView intro1= (TextView)findViewById(R.id.intro1);
-        TextView intro2= (TextView)findViewById(R.id.intro2);
-        intro0.clearAnimation();
-        intro1.clearAnimation();
-        intro2.clearAnimation();
         b.clearAnimation();
-        intro0.startAnimation(login_button);
-        intro1.startAnimation(login_button);
-        intro2.startAnimation(login_button);
         b.startAnimation(login_button);
+
+        Animation i0 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.intro0);
+        i0.reset();
+        TextView intro0= (TextView)findViewById(R.id.intro0);
+        intro0.clearAnimation();
+        intro0.startAnimation(i0);
+
+        Animation i1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.intro1);
+        i1.reset();
+        TextView intro1= (TextView)findViewById(R.id.intro1);
+        intro1.clearAnimation();
+        intro1.startAnimation(i1);
+
+        Animation i2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.intro2);
+        i2.reset();
+        TextView intro2= (TextView)findViewById(R.id.intro2);
+        intro2.clearAnimation();
+        intro2.startAnimation(i2);
 
         Animation login_circle = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.login_circle);
         login_circle.reset();
