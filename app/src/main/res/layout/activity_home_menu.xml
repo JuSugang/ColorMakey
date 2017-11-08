@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:titleTextColor="#fff"
         android:id="@+id/toolbar"
-        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
-    </android.support.v7.widget.Toolbar>
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="#fff"></android.support.v7.widget.Toolbar>
 
     <TextView
         android:id="@+id/remixer"
@@ -29,10 +28,10 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
+        android:gravity="center"
         android:text="색 섞어보기"
         android:textColor="@color/orange"
         android:textSize="25sp"
-        android:gravity="center"
         android:textStyle="bold" />
 
     <TextView

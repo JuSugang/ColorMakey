@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="85dp"
+            android:layout_marginTop="145dp"
             android:gravity="center"
             android:text="가지고 계신 물감으로 원하는 색을"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="110dp"
+            android:layout_marginTop="170dp"
             android:gravity="center"
             android:text="만들 수 있도록 도와드려요!"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -51,11 +51,11 @@
 
         <ImageButton
             android:id="@+id/sign_in_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="180dp"
-            android:background="@drawable/login_button" />
+            android:layout_marginTop="230dp"
+            android:background="@drawable/login_button_click" />
 
         <ImageView
             android:id="@+id/login_circle"
