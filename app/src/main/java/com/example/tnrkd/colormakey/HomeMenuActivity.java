@@ -29,7 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
  * Created by XNOTE on 2017-09-24.
  */
 
-public class HomeMenuActivity extends AppCompatActivity {
+public class HomeMenuActivity extends BaseActivity {
 
     boolean doubleBackToExitPressedOnce = false;
 
@@ -38,12 +38,15 @@ public class HomeMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_menu);
 
-        ImageView toolbar_round = (ImageView)findViewById(R.id.toolbar_round);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitleTextColor(Color.rgb(255,255,255));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setPadding(0, Global.statusBar, 0, 0);
+        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
+        setToolbar(toolbar);
+
+//        ImageView toolbar_round = (ImageView)findViewById(R.id.toolbar_round);
+//        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        toolbar.setTitleTextColor(Color.rgb(255,255,255));
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        toolbar.setPadding(0, Global.statusBar, 0, 0);
 
         //각 TextView에 listener 추가
         ImageView remixer=(ImageView)findViewById(R.id.remixer);

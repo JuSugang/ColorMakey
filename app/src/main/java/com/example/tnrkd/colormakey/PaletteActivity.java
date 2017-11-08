@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -43,7 +44,7 @@ import java.util.Date;
  * Created by tnrkd on 2017-09-29.
  */
 
-public class PaletteActivity extends Activity {
+public class PaletteActivity extends BaseActivity {
 
     private final String TAG = "PaletteActivity";
     private final int GALLERY = 9002;
@@ -78,11 +79,14 @@ public class PaletteActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_palette);
 
+        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
+        setToolbar(toolbar);
+
         // 허가
         Global.requestExternalStoragePermission(this, MY_REQUEST);
         Global.requestCameraPermission(this, MY_REQUEST_2);
 
-        gridView = findViewById(R.id.palette_gridview);
+        gridView = (GridView)findViewById(R.id.palette_gridview);
         adapter = new ColorGridPaletteAdapter(PaletteActivity.this.getApplicationContext(), R.layout.row, Global.colors);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

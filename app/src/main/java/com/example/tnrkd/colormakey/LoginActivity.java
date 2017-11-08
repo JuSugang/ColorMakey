@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -48,7 +49,7 @@ import java.util.HashMap;
  * Created by XNOTE on 2017-09-24.
  */
 
-public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
+public class LoginActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener{
 
     private static final int RC_SIGN_IN = 9001;
     private static GoogleApiClient mGoogleApiClient;
@@ -62,6 +63,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
+        setToolbar(toolbar);
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.client_id))

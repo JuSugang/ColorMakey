@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -31,7 +32,7 @@ import yuku.ambilwarna.AmbilWarnaDialog;
  * Created by tnrkd on 2017-09-29.
  */
 
-public class RemixerActivity extends Activity {
+public class RemixerActivity extends BaseActivity {
     static final int CAMERA_CODE=1;
     static final int GALLERY_CODE=2;
     private final int MY_REQUEST = 1100;
@@ -52,6 +53,10 @@ public class RemixerActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remixer);
+
+        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
+        setToolbar(toolbar);
+
         Global.requestExternalStoragePermission(this, MY_REQUEST);
         Global.requestCameraPermission(this, MY_REQUEST_2);
         loadCamera = (ImageView)findViewById(R.id.loadCamera);

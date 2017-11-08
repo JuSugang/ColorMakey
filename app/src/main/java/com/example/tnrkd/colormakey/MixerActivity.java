@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -87,7 +88,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     }
 }
 
-public class MixerActivity extends Activity {
+public class MixerActivity extends BaseActivity {
     public static RecyclerView mRecyclerView;
     public static RecyclerView.Adapter mAdapter;
     public static RecyclerView.LayoutManager mLayoutManager;
@@ -98,6 +99,10 @@ public class MixerActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mixer);
+
+        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
+        setToolbar(toolbar);
+
         Log.e("Create","Create");
 //-------------------------색 결과 표시-------------------------------------------------
         colorTexture = (ImageView) findViewById(R.id.color_texture);

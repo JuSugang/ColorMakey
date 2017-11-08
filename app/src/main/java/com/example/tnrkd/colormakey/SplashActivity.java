@@ -19,7 +19,7 @@ import java.io.InputStreamReader;
  * Created by XNOTE on 2017-09-24.
  */
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends BaseActivity {
 
     private final String TAG = "SplashActivity";
 
