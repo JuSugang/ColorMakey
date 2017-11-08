@@ -4,7 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -51,18 +56,6 @@ public class SplashActivity extends Activity {
     }
 
     private void StartAnimations() {
-//        Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
-//        anim.reset();
-//        LinearLayout l=(LinearLayout) findViewById(R.id.lin_lay);
-//        l.clearAnimation();
-//        l.startAnimation(anim);
-//
-//        anim = AnimationUtils.loadAnimation(this, R.anim.translate);
-//        anim.reset();
-//        ImageView iv = (ImageView) findViewById(R.id.splash);
-//        iv.clearAnimation();
-//        iv.startAnimation(anim); //애니메이션 구동방식 기록
-
         splashTread = new Thread() {
             @Override
             public void run() {
@@ -73,6 +66,7 @@ public class SplashActivity extends Activity {
                         sleep(100);
                         waited += 100;
                     }
+
                     Intent intent = new Intent(SplashActivity.this,
                             LoginActivity.class);
 //                    Intent intent = new Intent(SplashActivity.this,

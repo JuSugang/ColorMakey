@@ -2,11 +2,19 @@ package com.example.tnrkd.colormakey;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tnrkd.colormakey.dto.Color;
@@ -15,6 +23,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
@@ -47,7 +56,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private static FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private final String TAG = "LoginActivity";
-
     Thread loadingThread;
 
     @Override
@@ -71,9 +79,45 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onClick(View v) {
                 signIn();
-
             }
         });
+
+        StartAnimations();
+    }
+    private void StartAnimations() {
+        Animation splash_logo = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.splash_logo);
+        splash_logo.reset();
+        ImageView l=(ImageView) findViewById(R.id.splash_image);
+        l.clearAnimation();
+        l.startAnimation(splash_logo);
+
+        Animation splash_text = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.splash_text);
+        splash_text.reset();
+        ImageView a=(ImageView) findViewById(R.id.splash_text);
+        a.clearAnimation();
+        a.startAnimation(splash_text);
+
+        Animation login_button = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.login_button);
+        login_button.reset();
+        ImageButton b=(ImageButton) findViewById(R.id.sign_in_button);
+        TextView intro0= (TextView)findViewById(R.id.intro0);
+        TextView intro1= (TextView)findViewById(R.id.intro1);
+        TextView intro2= (TextView)findViewById(R.id.intro2);
+        intro0.clearAnimation();
+        intro1.clearAnimation();
+        intro2.clearAnimation();
+        b.clearAnimation();
+        intro0.startAnimation(login_button);
+        intro1.startAnimation(login_button);
+        intro2.startAnimation(login_button);
+        b.startAnimation(login_button);
+
+        Animation login_circle = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.login_circle);
+        login_circle.reset();
+        ImageView c=(ImageView) findViewById(R.id.login_circle);
+        c.clearAnimation();
+        c.startAnimation(login_circle);
+
     }
 
     @Override
@@ -88,8 +132,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
     }
-
-
 
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);

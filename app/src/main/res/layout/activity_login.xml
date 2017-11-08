@@ -1,11 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ffffff">
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/login_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background"
+            android:layout_gravity="top"/>
+
+        <TextView
+            android:id="@+id/intro0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="안녕하세요!"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="#42a5f5"
+            android:textSize="32sp" />
+
+        <TextView
+            android:id="@+id/intro1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="85dp"
+            android:gravity="center"
+            android:text="가지고 계신 물감으로 원하는 색을"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="#808080"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/intro2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="110dp"
+            android:gravity="center"
+            android:text="만들 수 있도록 도와드려요!"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="#808080"
+            android:textSize="14sp" />
+
+        <ImageButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="180dp"
+            android:background="@drawable/login_button" />
+
+        <ImageView
+            android:id="@+id/login_circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_circle"
+            android:layout_gravity="center"/>
+        <ImageView
+            android:id="@+id/splash_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/logo_text"
+            android:layout_gravity="center"/>
+
+        <ImageView
+            android:id="@+id/splash_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/logo_image" />
+
+    </FrameLayout>
 
 </LinearLayout>
