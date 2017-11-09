@@ -64,6 +64,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
     private final String TAG = "LoginActivity";
     private ProgressBar progressBar;
 
+    Boolean loadingFlag=false;
     Thread loadingThread;
     LoadingProgressBar loadingProgressBar;
 
@@ -88,7 +89,11 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadingFlag=true;
+                loadingProgressBar = new LoadingProgressBar();
+                loadingProgressBar.execute();
                 signIn();
+
             }
         });
 
@@ -192,10 +197,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
-                            loadingProgressBar = new LoadingProgressBar();
-                            loadingProgressBar.execute();
-
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                         } else {
@@ -203,6 +204,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
+                        loadingFlag=false;
                     }
                 });
     }
@@ -319,17 +321,18 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         }
 
         protected Integer doInBackground(Integer ... values) {
-            while (isCancelled() == false) {
-                value++;
-                if (value >= 20) {
-                    break;
-                } else {
-                    publishProgress(value);
-                }
+            while (loadingFlag==true) {
+//                value++;
+//                if (value >= 20) {
+//                    break;
+//                } else {
+//                    publishProgress(value);
+//                }
+//
+//                try {
+//                    Thread.sleep(100);
+//                } catch (InterruptedException ex) {}
 
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException ex) {}
             }
 
             return value;
