@@ -25,7 +25,7 @@ public class BaseActivity extends AppCompatActivity {
         this.toolbar = toolbar;
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.rgb(255,255,255));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setPadding(0, Global.statusBar, 0, 0);
     }
 }
