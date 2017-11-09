@@ -1,6 +1,8 @@
 package com.example.tnrkd.colormakey;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,7 +62,10 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
     private static FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private final String TAG = "LoginActivity";
+    private ProgressBar progressBar;
+
     Thread loadingThread;
+    LoadingProgressBar loadingProgressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,6 +91,8 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                 signIn();
             }
         });
+
+        progressBar = (ProgressBar)findViewById(R.id.login_progressbar);
 
         ImageView background=(ImageView)findViewById(R.id.login_background);
         DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics();
@@ -184,6 +192,10 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+                            loadingProgressBar = new LoadingProgressBar();
+                            loadingProgressBar.execute();
+
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                         } else {
@@ -197,6 +209,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
 
     private void updateUI(FirebaseUser user) {
         if(user != null) {
+
             // 로그인한 사용자의 email, id값 Global에 저장
             Global.userEmail = user.getEmail();
             Global.userName = user.getDisplayName();
@@ -228,6 +241,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                                     color.setColorname((String)hashMap.get("colorname"));
                                     Global.colors.add(color);
                                 }
+
                             }
                         }
 
@@ -240,10 +254,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                 }
             };
             loadingThread.start();
-
-            Intent intent = new Intent(this, HomeMenuActivity.class);
-            startActivity(intent);
-            Global.logoutFlag = false;
         }else {
         }
     }
@@ -296,5 +306,53 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         super.onStop();
 
         Global.loginActivity = this;
+    }
+
+    class LoadingProgressBar extends AsyncTask<Integer, Integer, Integer> {
+
+        int value = 0;
+
+        protected void onPreExecute() {
+            value = 0;
+            progressBar.setVisibility(View.VISIBLE);
+            progressBar.setProgress(value);
+        }
+
+        protected Integer doInBackground(Integer ... values) {
+            while (isCancelled() == false) {
+                value++;
+                if (value >= 20) {
+                    break;
+                } else {
+                    publishProgress(value);
+                }
+
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {}
+            }
+
+            return value;
+        }
+
+        protected void onProgressUpdate(Integer ... values) {
+            progressBar.setProgress(values[0].intValue());
+        }
+
+        protected void onPostExecute(Integer result) {
+
+            progressBar.setVisibility(View.INVISIBLE);
+            progressBar.setProgress(0);
+
+            Intent intent = new Intent(LoginActivity.this, HomeMenuActivity.class);
+            startActivity(intent);
+            Global.logoutFlag = false;
+        }
+
+        protected void onCancelled() {
+
+            progressBar.setVisibility(View.INVISIBLE);
+            progressBar.setProgress(0);
+        }
     }
 }
