@@ -9,6 +9,14 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:id="@+id/bubble"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/bubble" />
+
+        <ImageView
             android:id="@+id/toolbar_round"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="82.5dp"
-            android:layout_marginTop="-80dp"
+            android:layout_marginTop="-110dp"
             android:background="@drawable/small_button" />
 
         <ImageView
@@ -37,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="82.5dp"
-            android:layout_marginTop="-80dp"
+            android:layout_marginTop="-110dp"
             android:background="@drawable/small_button" />
 
         <ImageView
@@ -45,32 +53,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/large_button" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/Copyright1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="210dp"
+            android:layout_marginTop="120dp"
             android:gravity="center"
             android:text="Copyrightⓒ 주수강, 박용우"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="#aaaaaa"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/Copyright2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="230dp"
+            android:layout_marginTop="135dp"
             android:gravity="center"
             android:text="All Rights Reserved"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="#aaaaaa"
-            android:textSize="16sp" />
-
+            android:textSize="12sp" />
     </FrameLayout>
 </LinearLayout>

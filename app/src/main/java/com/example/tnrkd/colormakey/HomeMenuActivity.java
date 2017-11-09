@@ -15,6 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +36,9 @@ import com.google.firebase.auth.FirebaseAuth;
 public class HomeMenuActivity extends BaseActivity {
 
     boolean doubleBackToExitPressedOnce = false;
-
+    ImageView remixer;
+    ImageView mixer;
+    ImageView palette;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +61,15 @@ public class HomeMenuActivity extends BaseActivity {
         background.getLayoutParams().height=height*42/100;
         background.getLayoutParams().width=width;
         background.requestLayout();
+
+        ImageView bubble = (ImageView) findViewById(R.id.bubble);
+        bubble.getLayoutParams().height=width*170/432;
+        bubble.getLayoutParams().width=width;
+        background.requestLayout();
         //각 TextView에 listener 추가
-        ImageView remixer=(ImageView)findViewById(R.id.remixer);
-        ImageView mixer=(ImageView)findViewById(R.id.mixer);
-        ImageView palette=(ImageView)findViewById(R.id.palette);
+        remixer=(ImageView)findViewById(R.id.remixer);
+        mixer=(ImageView)findViewById(R.id.mixer);
+        palette=(ImageView)findViewById(R.id.palette);
 
         remixer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,8 +98,35 @@ public class HomeMenuActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+        StartAnimations();
     }
+    private void StartAnimations() {
 
+
+        Animation home_palette = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.home_palatte);
+        home_palette.reset();
+        palette.clearAnimation();
+        palette.startAnimation(home_palette);
+
+        Animation home_mixer = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.home_mixer);
+        home_mixer.reset();
+        mixer.clearAnimation();
+        mixer.startAnimation(home_mixer);
+
+        Animation home_remixer = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.home_remixer);
+        home_remixer.reset();
+        remixer.clearAnimation();
+        remixer.startAnimation(home_remixer);
+
+        Animation copyright = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.copyright);
+        copyright.reset();
+        TextView copyright1=(TextView)findViewById(R.id.Copyright1);
+        TextView copyright2=(TextView)findViewById(R.id.Copyright2);
+        copyright1.clearAnimation();
+        copyright2.clearAnimation();
+        copyright1.startAnimation(copyright);
+        copyright2.startAnimation(copyright);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
