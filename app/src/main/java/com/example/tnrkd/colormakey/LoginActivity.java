@@ -255,6 +255,8 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                 }
             };
             loadingThread.start();
+            Intent intent = new Intent(LoginActivity.this, HomeMenuActivity.class);
+            startActivity(intent);
         }else {
         }
     }
@@ -346,8 +348,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
             progressBar.setVisibility(View.INVISIBLE);
             progressBar.setProgress(0);
 
-            Intent intent = new Intent(LoginActivity.this, HomeMenuActivity.class);
-            startActivity(intent);
             Global.logoutFlag = false;
         }
 
@@ -356,5 +356,12 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
             progressBar.setVisibility(View.INVISIBLE);
             progressBar.setProgress(0);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadingFlag = false;
+        progressBar.setVisibility(View.INVISIBLE);
     }
 }
