@@ -160,6 +160,9 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
     @Override
     public void onStart() {
         super.onStart();
+        loadingFlag = false;
+        progressBar.setVisibility(View.INVISIBLE);
+
         if(mAuth == null) {
             mAuth = FirebaseAuth.getInstance();
         }else {
@@ -184,6 +187,8 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             } else {
+                loadingFlag = false;
+                progressBar.setVisibility(View.INVISIBLE);
                 updateUI(null);
             }
         }
@@ -346,12 +351,5 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
             progressBar.setVisibility(View.INVISIBLE);
             progressBar.setProgress(0);
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        loadingFlag = false;
-        progressBar.setVisibility(View.INVISIBLE);
     }
 }
