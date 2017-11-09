@@ -101,7 +101,8 @@
             android:visibility="gone"
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
-            android:indeterminateDrawable="@anim/style_progress"/>
+            android:indeterminateDrawable="@anim/style_progress"
+            android:indeterminateDuration="600"/>
 
     </FrameLayout>
 

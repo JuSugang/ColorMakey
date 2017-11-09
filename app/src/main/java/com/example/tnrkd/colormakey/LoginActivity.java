@@ -323,16 +323,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
 
         protected Integer doInBackground(Integer ... values) {
             while (loadingFlag==true) {
-//                value++;
-//                if (value >= 20) {
-//                    break;
-//                } else {
-//                    publishProgress(value);
-//                }
-//
-//                try {
-//                    Thread.sleep(100);
-//                } catch (InterruptedException ex) {}
 
             }
 
