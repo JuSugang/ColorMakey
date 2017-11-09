@@ -94,6 +94,10 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         background.getLayoutParams().height=height*49/100;
         background.getLayoutParams().width=width;
         background.requestLayout();
+        ImageView bubble = (ImageView) findViewById(R.id.bubble);
+        bubble.getLayoutParams().height=width*170/432;
+        bubble.getLayoutParams().width=width;
+        bubble.requestLayout();
         StartAnimations();
     }
     private void StartAnimations() {

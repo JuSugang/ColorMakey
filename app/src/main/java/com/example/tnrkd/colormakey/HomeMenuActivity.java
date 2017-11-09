@@ -65,7 +65,7 @@ public class HomeMenuActivity extends BaseActivity {
         ImageView bubble = (ImageView) findViewById(R.id.bubble);
         bubble.getLayoutParams().height=width*170/432;
         bubble.getLayoutParams().width=width;
-        background.requestLayout();
+        bubble.requestLayout();
         //각 TextView에 listener 추가
         remixer=(ImageView)findViewById(R.id.remixer);
         mixer=(ImageView)findViewById(R.id.mixer);

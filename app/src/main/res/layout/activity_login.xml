@@ -8,6 +8,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
+            android:id="@+id/bubble"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/bubble" />
+        <ImageView
             android:id="@+id/login_background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="70dp"
             android:gravity="center"
             android:text="가지고 계신 물감으로 원하는 색을"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -42,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="170dp"
+            android:layout_marginTop="90dp"
             android:gravity="center"
             android:text="만들 수 있도록 도와드려요!"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -54,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="230dp"
+            android:layout_marginTop="150dp"
             android:background="@drawable/login_button_click" />
 
         <TextView
@@ -62,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="217dp"
+            android:layout_marginTop="137dp"
             android:text="구글 로그인"
             android:textColor="#fff"
             android:textSize="22dp" />
