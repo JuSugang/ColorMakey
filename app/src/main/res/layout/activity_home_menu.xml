@@ -37,7 +37,7 @@
             android:layout_gravity="center"
             android:layout_marginRight="82.5dp"
             android:layout_marginTop="-110dp"
-            android:background="@drawable/palette_button" />
+            android:background="@drawable/palette_button_click" />
 
         <ImageView
             android:id="@+id/mixer"
@@ -46,7 +46,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="82.5dp"
             android:layout_marginTop="-110dp"
-            android:background="@drawable/mixer_button" />
+            android:background="@drawable/mixer_button_click" />
 
         <ImageView
             android:id="@+id/remixer"
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:background="@drawable/large_button" />
+            android:background="@drawable/remixer_button_click" />
 
         <TextView
             android:id="@+id/Copyright1"
