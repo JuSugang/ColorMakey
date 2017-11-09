@@ -93,7 +93,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                 loadingProgressBar = new LoadingProgressBar();
                 loadingProgressBar.execute();
                 signIn();
-
             }
         });
 
