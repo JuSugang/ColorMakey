@@ -4,93 +4,155 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ffffff"
-    android:weightSum="50">
-    <android.support.v7.widget.Toolbar
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:titleTextColor="#fff"
-        android:id="@+id/toolbar"
-        android:background="@drawable/linear_gradient2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </android.support.v7.widget.Toolbar>
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="만들고 싶은 색을 골라주세요"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="24sp"
-        android:layout_weight="1"/>
+    android:background="#ffffff">
 
-    <ImageView
-        android:id="@+id/ImageResultView"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="49"
-        android:scaleType="fitXY"
-        app:srcCompat="@android:drawable/ic_menu_report_image" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:orientation="horizontal"
-        android:layout_weight="0">
+        android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/loadCamera"
-            android:layout_width="wrap_content"
+            android:id="@+id/remixer_toolbar_round"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/add_button" />
+            android:layout_gravity="top"
+            android:background="@drawable/background2" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/remixer_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/linear_gradient2"
+            app:titleTextColor="#fff"></android.support.v7.widget.Toolbar>
 
         <ImageView
-            android:id="@+id/loadGallery"
+            android:id="@+id/remixer_bubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/add_button" />
+            android:layout_gravity="bottom"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/bubble" />
 
-        <ImageView
-            android:id="@+id/loadColorTable"
-            android:layout_width="wrap_content"
+
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/add_button" />
+            android:layout_gravity="center"
+            android:layout_marginLeft="26dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="166dp">
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/remixer_button_background" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:orientation="horizontal"
-        android:layout_weight="0"
-        android:weightSum="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:gravity="center">
 
-        <ImageView
-            android:id="@+id/remixerPreview"
-            android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/loadCamera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/add_button" />
+
+                <ImageView
+                    android:id="@+id/loadGallery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/add_button" />
+
+                <ImageView
+                    android:id="@+id/loadColorTable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/add_button" />
+
+            </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/mask" />
+            android:layout_gravity="center"
+            android:layout_marginLeft="26dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="246dp">
+
+            <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/remixer_button_background" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:gravity="center"
+>
+
+                <ImageView
+                    android:id="@+id/remixerPreview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/mask" />
+
+                <TextView
+                    android:id="@+id/remixerRGBtext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="(빨강,초록,파랑)" />
+
+                <Button
+                    android:id="@+id/calcButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="계산하기" />
+            </LinearLayout>
+        </FrameLayout>
 
         <TextView
-            android:id="@+id/remixerRGBtext"
-            android:layout_width="wrap_content"
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
             android:gravity="center"
-            android:text="(빨강,초록,파랑)"
-            android:layout_weight="1" />
+            android:text="만들고 싶은 색을 골라주세요"
+            android:textColor="#ffffff"
+            android:textSize="24sp" />
 
-        <Button
-            android:id="@+id/calcButton"
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="계산하기" />
-    </LinearLayout>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="70dp">
+
+            <ImageView
+                android:id="@+id/ResultViewBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/remixer_view" />
+
+            <ImageView
+                android:id="@+id/ImageResultView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/remixer_button_click" />
+        </FrameLayout>
+
+    </FrameLayout>
 
 </LinearLayout>
