@@ -45,14 +45,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="107dp"
-                app:srcCompat="@drawable/remixer_camera_button" />
+                app:srcCompat="@drawable/remixer_camera_click" />
 
             <ImageView
                 android:id="@+id/loadGallery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/remixer_gallery_button" />
+                app:srcCompat="@drawable/remixer_gallery_click" />
 
             <ImageView
                 android:id="@+id/loadColorTable"
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="107dp"
-                app:srcCompat="@drawable/remixer_color_button" />
+                app:srcCompat="@drawable/remixer_color_click" />
 
         </FrameLayout>
 
@@ -133,8 +133,9 @@
                 android:id="@+id/ImageResultView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/remixer_button_click" />
+                android:layout_gravity="center"
+                android:layout_marginBottom="3dp"
+                app:srcCompat="@drawable/remixer_basicview" />
         </FrameLayout>
 
     </FrameLayout>

@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -108,8 +109,9 @@ public class RemixerActivity extends BaseActivity {
                         int R=binToDec(argb[1]);
                         int G=binToDec(argb[2]);
                         int B=binToDec(argb[3]);
+                        Log.e("주수강","test");
                         ImageResultView.setBackgroundColor(Color.rgb(R,G,B));
-                        ImageResultView.setImageBitmap(null);
+                        ImageResultView.setImageResource(com.example.tnrkd.colormakey.R.drawable.remixer_basicview_alpha);
                         remixerPreview.setBackgroundColor(Color.rgb(R,G,B));
                         remixerRGBtext.setText("(빨강: " + R + ",초록: " + G + ",파랑: " + B + ")");
                         imageOnFlag=false;
@@ -220,13 +222,13 @@ public class RemixerActivity extends BaseActivity {
     private void SendPicture(Intent data) {
 //        Uri imgUri = data.getData();
         //String imagePath = getRealPathFromURI(imgUri); // path 경로
-        Glide.with(this).load(fileUri).into(ImageResultView);
+        Glide.with(this).load(fileUri).centerCrop().into(ImageResultView);
 
         imageOnFlag=true;
     }
     private void SendPicture2(Intent data){
         try {
-            Glide.with(this).load(data.getData()).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ImageResultView);
+            Glide.with(this).load(data.getData()).diskCacheStrategy(DiskCacheStrategy.SOURCE).centerCrop().into(ImageResultView);
             imageOnFlag=true;
         }catch (Exception e) {
             e.printStackTrace();
