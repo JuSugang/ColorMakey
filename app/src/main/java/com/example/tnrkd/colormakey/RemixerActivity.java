@@ -55,7 +55,6 @@ public class RemixerActivity extends BaseActivity {
         setContentView(R.layout.activity_remixer);
 
         Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
-        setToolbar(toolbar);
 
         Global.requestExternalStoragePermission(this, MY_REQUEST);
         Global.requestCameraPermission(this, MY_REQUEST_2);
