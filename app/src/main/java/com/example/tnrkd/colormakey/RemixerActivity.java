@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -56,15 +57,26 @@ public class RemixerActivity extends BaseActivity {
 
         Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
 
+        ImageView background=(ImageView)findViewById(R.id.remixer_toolbar_round);
+        DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics();
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+        background.getLayoutParams().height=height*42/100;
+        background.getLayoutParams().width=width;
+        background.requestLayout();
+
+        ImageView bubble = (ImageView) findViewById(R.id.remixer_bubble);
+        bubble.getLayoutParams().height=width*170/432;
+        bubble.getLayoutParams().width=width;
+        bubble.requestLayout();
+
         Global.requestExternalStoragePermission(this, MY_REQUEST);
         Global.requestCameraPermission(this, MY_REQUEST_2);
         loadCamera = (ImageView)findViewById(R.id.loadCamera);
         loadGallery = (ImageView)findViewById(R.id.loadGallery);
         loadColorTable = (ImageView)findViewById(R.id.loadColorTable);
         ImageResultView =(ImageView)findViewById(R.id.ImageResultView);
-        loadCamera.setImageResource(R.drawable.camera_button);
-        loadGallery.setImageResource(R.drawable.gallery_button);
-        loadColorTable.setImageResource(R.drawable.picker_button);
+
         //-------------------------카메라 기능-------------------------------------------------
         loadCamera.setOnClickListener(new View.OnClickListener() {
             @Override
