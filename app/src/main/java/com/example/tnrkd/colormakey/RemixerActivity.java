@@ -1,6 +1,5 @@
 package com.example.tnrkd.colormakey;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,10 +12,12 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +37,6 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class RemixerActivity extends BaseActivity {
     static final int CAMERA_CODE=1;
-    static final int GALLERY_CODE=2;
     private final int MY_REQUEST = 1100;
     private final int MY_REQUEST_2 = 1200;
     private final int GALLERY = 9002;
@@ -45,6 +45,8 @@ public class RemixerActivity extends BaseActivity {
     ImageView loadColorTable;
     ImageView ImageResultView;
     ImageView remixerPreview;
+    FrameLayout framePreview;
+    FrameLayout frameView;
     TextView remixerRGBtext;
     Button calcButton;
     Bitmap resultImage;
@@ -109,11 +111,10 @@ public class RemixerActivity extends BaseActivity {
                         int R=binToDec(argb[1]);
                         int G=binToDec(argb[2]);
                         int B=binToDec(argb[3]);
-                        Log.e("주수강","test");
                         ImageResultView.setBackgroundColor(Color.rgb(R,G,B));
                         ImageResultView.setImageResource(com.example.tnrkd.colormakey.R.drawable.remixer_basicview_alpha);
                         remixerPreview.setBackgroundColor(Color.rgb(R,G,B));
-                        remixerRGBtext.setText("(빨강: " + R + ",초록: " + G + ",파랑: " + B + ")");
+                        remixerRGBtext.setText("빨강: " + R + "\n초록: " + G + "\n파랑: " + B );
                         imageOnFlag=false;
                     }
 
@@ -154,7 +155,7 @@ public class RemixerActivity extends BaseActivity {
                             int G = binToDec(argb[2]);
                             int B = binToDec(argb[3]);
                             remixerPreview.setBackgroundColor(Color.rgb(R, G, B));
-                            remixerRGBtext.setText("(빨강: " + R + ",초록: " + G + ",파랑: " + B + ")");
+                            remixerRGBtext.setText("빨강: " + R + "\n초록: " + G + "\n파랑: " + B );
                         }
                     }
                 }
@@ -166,11 +167,11 @@ public class RemixerActivity extends BaseActivity {
         remixerRGBtext=(TextView)findViewById(R.id.remixerRGBtext);
         remixerPreview.setImageResource(R.drawable.mask);
         //-------------------------계산하기 버튼 리스너 추가-------------------------------------------------
-        Button calcButton=(Button)findViewById(R.id.calcButton);
+        ImageView calcButton=(ImageView) findViewById(R.id.calcButton);
         calcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(remixerRGBtext.getText().equals("(빨강,초록,파랑)")){
+                if(remixerRGBtext.getText().equals("빨강:\n초록:\n파랑:")){
                     Toast.makeText(RemixerActivity.this,"색을 선택하세요",Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -180,6 +181,35 @@ public class RemixerActivity extends BaseActivity {
                 }
             }
         });
+        StartAnimations();
+    }
+    private void StartAnimations() {
+        Animation remixer_camera = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.remixer_camera);
+        remixer_camera.reset();
+        loadCamera.clearAnimation();
+        loadCamera.startAnimation(remixer_camera);
+
+        Animation remixer_gallery = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.remixer_gallery);
+        remixer_gallery.reset();
+        loadGallery.clearAnimation();
+        loadGallery.startAnimation(remixer_gallery);
+
+        Animation remixer_color = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.remixer_color);
+        remixer_color.reset();
+        loadColorTable.clearAnimation();
+        loadColorTable.startAnimation(remixer_color);
+
+        Animation remixer_view = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.remixer_view);
+        remixer_view.reset();
+        frameView=(FrameLayout)findViewById(R.id.framelayout_view);
+        frameView.clearAnimation();
+        frameView.startAnimation(remixer_view);
+
+        Animation remixer_preview = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.remixer_preview);
+        remixer_preview.reset();
+        framePreview=(FrameLayout)findViewById(R.id.framelayout_preview);
+        framePreview.clearAnimation();
+        framePreview.startAnimation(remixer_preview);
     }
     public static int binToDec(String color){
         int sum=0;

@@ -47,8 +47,7 @@ public class RemixerPopupActivity extends Activity {
         setContentView(R.layout.activity_remixer_popup);
         Intent intent = getIntent();
         String rgb = intent.getExtras().getString("rgb");
-        rgb=rgb.substring(1,rgb.length()-1);
-        String[] target=rgb.split(",");
+        String[] target=rgb.split("\n");
         float[] Y_data2= {
                 (float)Integer.parseInt(target[0].substring(4,target[0].length())),
                 (float)Integer.parseInt(target[1].substring(4,target[1].length())),
