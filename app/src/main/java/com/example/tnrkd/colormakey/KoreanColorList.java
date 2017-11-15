@@ -1,13 +1,7 @@
 package com.example.tnrkd.colormakey;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-/**
- * Created by tnrkd on 2017-11-02.
- */
 
 public class KoreanColorList {
     public static ArrayList<ko_color> ko_colorlist=new ArrayList<ko_color>();

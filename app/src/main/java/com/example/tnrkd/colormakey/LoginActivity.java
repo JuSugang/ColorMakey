@@ -1,24 +1,18 @@
 package com.example.tnrkd.colormakey;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +23,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
@@ -45,14 +38,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-/**
- * Created by XNOTE on 2017-09-24.
- */
 
 public class LoginActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener{
 
@@ -165,8 +152,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
 
         if(mAuth == null) {
             mAuth = FirebaseAuth.getInstance();
-        }else {
-
         }
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -262,7 +247,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
             loadingThread.start();
             Intent intent = new Intent(LoginActivity.this, HomeMenuActivity.class);
             startActivity(intent);
-        }else {
         }
     }
 
@@ -279,9 +263,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         final GoogleApiClient.ConnectionCallbacks gaccc = new GoogleApiClient.ConnectionCallbacks() {
             @Override
             public void onConnected(@Nullable Bundle bundle) {
-                if(!Global.logoutFlag) {
-
-                }else {
+                if(Global.logoutFlag) {
                     mAuth.signOut();
                     if(mGoogleApiClient.isConnected()) {
                         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
