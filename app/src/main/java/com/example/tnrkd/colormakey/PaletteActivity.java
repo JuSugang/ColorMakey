@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -22,7 +23,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -211,7 +211,8 @@ public class PaletteActivity extends BaseActivity {
 
                     // 색상을 선택했는지 검사
                     if(!isSelected) {
-                        Toast.makeText(PaletteActivity.this, "색상을 선택해 주세요", Toast.LENGTH_SHORT).show();
+
+                        Snackbar.make(v, "색상을 선택해 주세요", 2000).show();
                         break;
                     }
                     // 새로 등록할 색상의 이름 적을 다이얼로그 생성
@@ -326,7 +327,7 @@ public class PaletteActivity extends BaseActivity {
 //                    newColorNameDialog.dismiss();
 //                }
 //                galleryCameraDialog.startFlicker();
-                Toast.makeText(PaletteActivity.this, "새로운 색상이 추가되었습니다", Toast.LENGTH_SHORT).show();
+                Snackbar.make(galleryCameraDialog.getWindow().getDecorView(), "새로운 색상이 추가되었습니다", 2000).show();
                 newColorNameDialog.dismiss();
 
                 // 키보드 내리기
@@ -367,7 +368,7 @@ public class PaletteActivity extends BaseActivity {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 }else {
-                    Toast.makeText(this, "권한 사용을 동의해야 사용이 가능합니다", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(getWindow().getDecorView().getRootView(), "권한 사용을 동의해야 사용이 가능합니다", 2000).show();
                     finish();
                 }
                 break;
@@ -376,7 +377,7 @@ public class PaletteActivity extends BaseActivity {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 }else {
-                    Toast.makeText(this, "권한 사용을 동의해야 사용이 가능합니다", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(getWindow().getDecorView().getRootView(), "권한 사용을 동의해야 사용이 가능합니다", 2000).show();
                     finish();
                 }
                 break;
