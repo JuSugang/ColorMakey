@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -81,6 +82,19 @@ public class PaletteActivity extends BaseActivity {
 
         Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
         setToolbar(toolbar);
+
+        ImageView background=(ImageView)findViewById(R.id.palette_toolbar_round);
+        DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics();
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+        background.getLayoutParams().height=height*42/100;
+        background.getLayoutParams().width=width;
+        background.requestLayout();
+
+        ImageView bubble = (ImageView) findViewById(R.id.palette_bubble);
+        bubble.getLayoutParams().height=width*170/432;
+        bubble.getLayoutParams().width=width;
+        bubble.requestLayout();
 
         // 허가
         Global.requestExternalStoragePermission(this, MY_REQUEST);

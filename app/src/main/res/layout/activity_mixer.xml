@@ -7,58 +7,78 @@
     android:orientation="vertical"
     android:background="#FFFFFF"
     android:weightSum="450">
-    <android.support.v7.widget.Toolbar
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:titleTextColor="#fff"
-        android:id="@+id/toolbar"
-        android:background="@drawable/linear_gradient2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </android.support.v7.widget.Toolbar>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="260">
+        android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/color_texture"
+            android:id="@+id/mixer_toolbar_round"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#421523"
-            android:scaleType="fitXY"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ratioView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="#eeeeee"
-        android:layout_weight="50"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:padding="10dp"
-        android:layout_weight="140">
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/bubble" />
 
         <ImageView
-            android:id="@+id/addButton"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/add_button" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/color_horizontalView"
+            android:id="@+id/mixer_bubble"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_weight="1"
-            android:scrollbars="vertical">
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@drawable/background2" />
 
-        </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/linear_gradient2"
+            app:titleTextColor="#fff"></android.support.v7.widget.Toolbar>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="260">
+
+            <ImageView
+                android:id="@+id/color_texture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#421523"
+                android:scaleType="fitXY" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="140"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/addButton"
+                android:layout_width="120dp"
+                android:layout_height="60dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/add_button" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/color_horizontalView"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:scrollbars="vertical">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ratioView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="50"
+            android:background="#eeeeee" />
+
+    </FrameLayout>
 
 </LinearLayout>

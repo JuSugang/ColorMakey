@@ -18,7 +18,7 @@
             android:background="@drawable/bubble" />
 
         <ImageView
-            android:id="@+id/palette_toolbar_ground"
+            android:id="@+id/palette_toolbar_round"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"

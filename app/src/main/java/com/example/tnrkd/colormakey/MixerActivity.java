@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -103,7 +104,19 @@ public class MixerActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
         setToolbar(toolbar);
 
-        Log.e("Create","Create");
+        ImageView background=(ImageView)findViewById(R.id.mixer_toolbar_round);
+        DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics();
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+        background.getLayoutParams().height=height*42/100;
+        background.getLayoutParams().width=width;
+        background.requestLayout();
+
+        ImageView bubble = (ImageView) findViewById(R.id.mixer_bubble);
+        bubble.getLayoutParams().height=width*170/432;
+        bubble.getLayoutParams().width=width;
+        bubble.requestLayout();
+
 //-------------------------색 결과 표시-------------------------------------------------
         colorTexture = (ImageView) findViewById(R.id.color_texture);
         colorTexture.setImageResource(R.drawable.mixer_result);
