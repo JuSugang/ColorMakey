@@ -121,6 +121,8 @@ public class HomeMenuActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+        // 홈메뉴에서는 홈으로 가는 버튼 지우기
+        menu.getItem(0).setVisible(false);
         return true;
     }
 
