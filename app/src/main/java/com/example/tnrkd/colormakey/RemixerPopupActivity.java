@@ -33,7 +33,7 @@ public class RemixerPopupActivity extends Activity {
     TextView targetColor;
     Button confirmButton;
     float[] Y_data;
-    int epoch=2000;
+    int epoch=2500;
     @Override
     protected void onDestroy() {
         super.onDestroy();

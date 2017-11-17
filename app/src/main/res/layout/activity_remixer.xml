@@ -97,7 +97,7 @@
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="0dp"
                     android:text="빨강:\n초록:\n파랑:" />
 
                 <ImageView
@@ -124,7 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="-60dp">
+            android:layout_marginTop="-50dp">
 
             <ImageView
                 android:id="@+id/ResultViewBackground"
