@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -173,7 +172,7 @@ public class RemixerActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 if(remixerRGBtext.getText().equals("빨강:\n초록:\n파랑:")){
-                    Snackbar.make(view, "색을 선택하세요", 2000).show();
+                    Toast.makeText(RemixerActivity.this,"색을 선택하세요",Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Intent intent = new Intent(RemixerActivity.this, RemixerPopupActivity.class);
@@ -281,7 +280,7 @@ public class RemixerActivity extends BaseActivity {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 }else {
-                    Snackbar.make(getWindow().getDecorView().getRootView(), "권한 사용을 동의해야 사용이 가능합니다", 2000).show();
+                    Toast.makeText(this, "권한 사용을 동의해야 사용이 가능합니다", Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 break;
@@ -290,7 +289,7 @@ public class RemixerActivity extends BaseActivity {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 }else {
-                    Snackbar.make(getWindow().getDecorView().getRootView(), "권한 사용을 동의해야 사용이 가능합니다", 2000).show();
+                    Toast.makeText(this, "권한 사용을 동의해야 사용이 가능합니다", Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 break;

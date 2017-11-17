@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -154,7 +153,6 @@ public class RemixerPopupActivity extends Activity {
             });
             if(test.getPercent()<94) {
                 Toast.makeText(RemixerPopupActivity.this, "현재 가지고 있는 색으로는\n원하는 색상을 만들기 어렵습니다.", Toast.LENGTH_SHORT).show();
-//                Snackbar.make(getWindow().getDecorView().getRootView(), "현재 가지고 있는 색으로는\n원하는 색상을 만들기 어렵습니다",2000).show();
             }
             else if(test.getPercent()<95) {
                 Toast.makeText(RemixerPopupActivity.this, "현재 가지고 있는 색으로는\n비슷한 색만 만들 수 있습니다.", Toast.LENGTH_SHORT).show();

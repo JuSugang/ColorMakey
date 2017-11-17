@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.Menu;
@@ -144,7 +143,6 @@ public class HomeMenuActivity extends BaseActivity {
 
         this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, "뒤로가기 버튼을 한번 더 클릭하면 앱이 종료됩니다", Toast.LENGTH_SHORT).show();
-//        Snackbar.make(HomeMenuActivity.this.getWindow().getDecorView(), "뒤로가기 버튼을 한번 더 클릭하면 앱이 종료됩니다", 2000).show();
 
         new Handler().postDelayed(new Runnable() {
 
