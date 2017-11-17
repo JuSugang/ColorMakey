@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -172,7 +173,10 @@ public class RemixerActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 if(remixerRGBtext.getText().equals("빨강:\n초록:\n파랑:")){
-                    Toast.makeText(RemixerActivity.this,"색을 선택하세요",Toast.LENGTH_SHORT).show();
+                    Toast toastMessage = Toast.makeText(RemixerActivity.this,"색을 선택하세요",Toast.LENGTH_LONG);
+                    setToast(toastMessage.getView());
+                    toastMessage.setGravity(Gravity.BOTTOM, 0, 80);
+                    toastMessage.show();
                 }
                 else{
                     Intent intent = new Intent(RemixerActivity.this, RemixerPopupActivity.class);

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -226,7 +227,12 @@ public class MixerPopupActivity extends Activity {
             public void onClick(View view) {
                 CharSequence cs = rgbTextView.getText();
                 if(cs.equals("rgb")){
-                    Toast.makeText(MixerPopupActivity.this,"색을 선택하세요",Toast.LENGTH_SHORT).show();
+                    Toast toastMessage = Toast.makeText(MixerPopupActivity.this,"색을 선택하세요",Toast.LENGTH_LONG);
+                    View toastView = toastMessage.getView();
+                    toastView.setBackgroundResource(R.color.toastBackgroundColor);
+                    toastView.setPadding(60,20,60,20);
+                    toastMessage.setGravity(Gravity.BOTTOM, 0, 80);
+                    toastMessage.show();
                 }else{
                     String temp = cs.toString();
                     String[] RGBstring=temp.substring(1,temp.length()-1).split(",");
@@ -237,7 +243,13 @@ public class MixerPopupActivity extends Activity {
                         if(Global.list.get(i).G==Integer.parseInt(RGBstring[1])){flagCount++;}
                         if(Global.list.get(i).B==Integer.parseInt(RGBstring[2])){flagCount++;}
                         if(flagCount==3){
-                            Toast.makeText(MixerPopupActivity.this,"이미 등록된 색입니다",Toast.LENGTH_SHORT).show();
+                            Toast toastMessage = Toast.makeText(MixerPopupActivity.this,"이미 등록된 색입니다",Toast.LENGTH_LONG);
+                            
+                            View toastView = toastMessage.getView();
+                            toastView.setBackgroundResource(R.color.toastBackgroundColor);
+                            toastView.setPadding(60,20,60,20);
+                            toastMessage.setGravity(Gravity.BOTTOM, 0, 80);
+                            toastMessage.show();
                             flag=1;
                         }
                     }

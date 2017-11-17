@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -152,10 +153,21 @@ public class RemixerPopupActivity extends Activity {
                 }
             });
             if(test.getPercent()<94) {
-                Toast.makeText(RemixerPopupActivity.this, "현재 가지고 있는 색으로는\n원하는 색상을 만들기 어렵습니다.", Toast.LENGTH_SHORT).show();
+                Toast toastMessage = Toast.makeText(RemixerPopupActivity.this, "현재 가지고 있는 색으로는\n원하는 색상을 만들기 어렵습니다.", Toast.LENGTH_LONG);
+                View toastView = toastMessage.getView();
+                toastView.setBackgroundResource(R.color.toastBackgroundColor);
+                toastView.setPadding(60,20,60,20);
+                toastMessage.setGravity(Gravity.BOTTOM, 0, 80);
+                toastMessage.show();
             }
             else if(test.getPercent()<95) {
-                Toast.makeText(RemixerPopupActivity.this, "현재 가지고 있는 색으로는\n비슷한 색만 만들 수 있습니다.", Toast.LENGTH_SHORT).show();
+                Toast toastMessage = Toast.makeText(RemixerPopupActivity.this, "현재 가지고 있는 색으로는\n비슷한 색만 만들 수 있습니다.", Toast.LENGTH_LONG);
+
+                View toastView = toastMessage.getView();
+                toastView.setBackgroundResource(R.color.toastBackgroundColor);
+                toastView.setPadding(60,20,60,20);
+                toastMessage.setGravity(Gravity.BOTTOM, 0, 80);
+                toastMessage.show();
             }
         }
     }
