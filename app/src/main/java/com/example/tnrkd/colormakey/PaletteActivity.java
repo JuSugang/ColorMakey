@@ -62,6 +62,7 @@ public class PaletteActivity extends BaseActivity {
 
     private ImageView paletteImageView;
     private ImageView paletteImageView2;
+    private ImageView noColorImageView;
 
     boolean imageOnFlag = false;
     private Bitmap resultImage;
@@ -104,6 +105,7 @@ public class PaletteActivity extends BaseActivity {
                                     if(selectedColorName.equals(color.getColorname().toString())) {
                                         Global.colors.remove(color);
                                         mDatabase.child("palette").child(Global.userUID).setValue(Global.colors);
+                                        isColors();
                                         break;
                                     }
                                 }
@@ -124,6 +126,8 @@ public class PaletteActivity extends BaseActivity {
         mDatabase.addValueEventListener(postListener);
 
         alertDialogBuilder = new AlertDialog.Builder(PaletteActivity.this);
+        noColorImageView = (ImageView)findViewById(R.id.noColorImage);
+        isColors();
     }
 
     public void onClickView(View v) {
@@ -339,6 +343,8 @@ public class PaletteActivity extends BaseActivity {
                 // 키보드 내리기
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(newColorNameDialog.colorNameEdittext.getWindowToken(), 0);
+
+                isColors();
             }
         }
 
@@ -388,6 +394,16 @@ public class PaletteActivity extends BaseActivity {
                 }
                 break;
             }
+        }
+    }
+
+    public void isColors() {
+        if(Global.colors.size() == 0) {
+            gridView.setVisibility(View.GONE);
+            noColorImageView.setVisibility(View.VISIBLE);
+        }else {
+            gridView.setVisibility(View.VISIBLE);
+            noColorImageView.setVisibility(View.GONE);
         }
     }
 }
