@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,10 +58,17 @@ public class HomeMenuActivity extends BaseActivity {
         remixer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeMenuActivity.this,
-                        RemixerActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
+                if(Global.colors.size() == 0) {
+                    Toast toastMessage = Toast.makeText(HomeMenuActivity.this,"\t팔레트에 등록된 색상이 없습니다\t\n\t나만의 팔레트에서 색상을 등록해 주세요\t",Toast.LENGTH_LONG);
+                    setToast(toastMessage.getView());
+                    toastMessage.setGravity(Gravity.BOTTOM, 0, 80);
+                    toastMessage.show();
+                }else {
+                    Intent intent = new Intent(HomeMenuActivity.this,
+                            RemixerActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
+                }
             }
         });
         mixer.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +150,10 @@ public class HomeMenuActivity extends BaseActivity {
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "뒤로가기 버튼을 한번 더 클릭하면 앱이 종료됩니다", Toast.LENGTH_SHORT).show();
+        Toast toastMessage = Toast.makeText(this, "뒤로가기 버튼을 한번 더 클릭하면\n앱이 종료됩니다", Toast.LENGTH_LONG);
+        setToast(toastMessage.getView());
+        toastMessage.setGravity(Gravity.BOTTOM, 0, 80);
+        toastMessage.show();
 
         new Handler().postDelayed(new Runnable() {
 

@@ -6,4 +6,5 @@
     <color name="colorPrimaryDark">#f48304</color>
     <color name="colorAccent">#FF4081</color>
     <color name="orange">#fca84e</color>
+    <color name="toastBackgroundColor">#34495e</color>
 </resources>

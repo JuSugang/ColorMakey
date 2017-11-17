@@ -61,16 +61,6 @@
 
         </GridView>
 
-        <Button
-            android:id="@+id/color_add_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="250dp"
-            android:layout_weight="1"
-            android:onClick="onClickView"
-            android:text="색 추가" />
-
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
@@ -80,12 +70,13 @@
             app:srcCompat="@drawable/remixer_button_background" />
 
         <ImageButton
-            android:id="@+id/color_add_button2"
+            android:id="@+id/color_add_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="270dp"
-            android:background="@drawable/login_button_click" />
+            android:background="@drawable/login_button_click"
+            android:onClick="onClickView"/>
 
         <TextView
             android:id="@+id/textView8"

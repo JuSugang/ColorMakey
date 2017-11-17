@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 
 /**
@@ -27,5 +28,10 @@ public class BaseActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(Color.rgb(255,255,255));
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setPadding(0, Global.statusBar, 0, 0);
+    }
+
+    public void setToast(View toastView) {
+        toastView.setBackgroundResource(R.color.toastBackgroundColor);
+        toastView.setPadding(60,20,60,20);
     }
 }
