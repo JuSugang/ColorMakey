@@ -119,7 +119,6 @@ public class MixerActivity extends BaseActivity {
 
 //-------------------------색 결과 표시-------------------------------------------------
         colorTexture = (ImageView) findViewById(R.id.color_texture);
-        colorTexture.setImageResource(R.drawable.mixer_result);
 //-------------------------색 비율 표시-------------------------------------------------
         ratioView = (LinearLayout)findViewById(R.id.ratioView);
 
