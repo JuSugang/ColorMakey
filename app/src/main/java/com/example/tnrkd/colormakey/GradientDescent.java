@@ -106,7 +106,7 @@ public class GradientDescent {
 		ArrayList<Float> edited_W= W_standarize(W);
 		ArrayList<Integer> removeIndex=new ArrayList<Integer>();
 		for (int i = 0; i < wdiff.length; i++) {
-			if(edited_W.get(i)<0.09) {
+			if(edited_W.get(i)<0.05) {
 				removeIndex.add(i);
 			}
 		}
