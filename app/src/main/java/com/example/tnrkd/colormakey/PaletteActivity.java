@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -19,9 +20,13 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,7 +69,12 @@ public class PaletteActivity extends BaseActivity {
     private ImageView paletteImageView;
     private ImageView paletteImageView2;
     private ImageView noColorImageView;
-
+    private ImageView ResultViewBackground;
+    private ImageView paletteInstView;
+    private TextView paletteInst1;
+    private TextView paletteInst2;
+    private ImageButton paletteAddButton;
+    private TextView paletteAddText;
     boolean imageOnFlag = false;
     private Bitmap resultImage;
 
@@ -101,6 +111,13 @@ public class PaletteActivity extends BaseActivity {
         // 허가
         Global.requestExternalStoragePermission(this, MY_REQUEST);
         Global.requestCameraPermission(this, MY_REQUEST_2);
+
+        ResultViewBackground=(ImageView)findViewById(R.id.ResultViewBackground);
+        paletteInstView=(ImageView)findViewById(R.id.paletteInstView);
+        paletteInst1=(TextView)findViewById(R.id.paletteInst1);
+        paletteInst2=(TextView)findViewById(R.id.paletteInst2);
+        paletteAddButton=(ImageButton)findViewById(R.id.paletteAddButton);
+        paletteAddText=(TextView)findViewById(R.id.paletteAddText);
 
         gridView = (GridView)findViewById(R.id.palette_gridview);
         adapter = new ColorGridPaletteAdapter(PaletteActivity.this.getApplicationContext(), R.layout.row, Global.colors);
@@ -142,11 +159,39 @@ public class PaletteActivity extends BaseActivity {
         alertDialogBuilder = new AlertDialog.Builder(PaletteActivity.this);
         noColorImageView = (ImageView)findViewById(R.id.noColorImage);
         isColors();
+        StartAnimations();
     }
+    private void StartAnimations() {
+        Animation palette_view = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.palette_view);
+        palette_view.reset();
+        gridView.clearAnimation();
+        gridView.startAnimation(palette_view);
+        ResultViewBackground.clearAnimation();
+        ResultViewBackground.startAnimation(palette_view);
 
+        Animation palette_inst_view = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.palette_inst_view);
+        palette_inst_view.reset();
+        paletteInstView.clearAnimation();
+        paletteInstView.startAnimation(palette_inst_view);
+
+        Animation palette_inst_text = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.palette_inst_text);
+        palette_inst_text.reset();
+        paletteInst1.clearAnimation();
+        paletteInst2.clearAnimation();
+        paletteInst1.startAnimation(palette_inst_text);
+        paletteInst2.startAnimation(palette_inst_text);
+
+        Animation palette_add_button = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.palette_add_button);
+        palette_add_button.reset();
+        paletteAddButton.clearAnimation();
+        paletteAddButton.startAnimation(palette_add_button);
+        paletteAddText.clearAnimation();
+        paletteAddText.startAnimation(palette_add_button);
+
+    }
     public void onClickView(View v) {
         switch (v.getId()) {
-            case R.id.color_add_button:
+            case R.id.paletteAddButton:
                 selectGalleryCameraDialog = new SelectGalleryCameraDialog(this,
                         leftListener, // 왼쪽 버튼 이벤트
                         rightListener); // 오른쪽 버튼 이벤트

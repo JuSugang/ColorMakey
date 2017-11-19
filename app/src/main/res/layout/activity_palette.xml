@@ -71,7 +71,7 @@
             android:visibility="gone" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/paletteInstView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -79,7 +79,7 @@
             app:srcCompat="@drawable/remixer_button_background" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/paletteInst1"
             android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -88,8 +88,9 @@
             android:text="사진이나 갤러리를 통해 색을 추가해주세요"
             android:textColor="#606060"
             android:textSize="16sp" />
+
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/paletteInst2"
             android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -100,7 +101,7 @@
             android:textSize="16sp" />
 
         <ImageButton
-            android:id="@+id/color_add_button"
+            android:id="@+id/paletteAddButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -109,7 +110,7 @@
             android:onClick="onClickView" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/paletteAddText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
