@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,11 +58,12 @@ class colorGridAdapter extends BaseAdapter {
     int layout;
     LayoutInflater inf;
     ArrayList<colorInfo> colorIDs = null;
-
-    public colorGridAdapter(Context context, int layout, ArrayList<colorInfo> colorIDs) {
+    float resolution;
+    public colorGridAdapter(Context context, int layout, ArrayList<colorInfo> colorIDs,float resolution) {
         this.context = context;
         this.layout = layout;
         this.colorIDs = colorIDs;
+        this.resolution=resolution;
         inf = (LayoutInflater) context.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -90,8 +92,8 @@ class colorGridAdapter extends BaseAdapter {
         int G=colorIDs.get(position).getRGBarray()[1];
         int B=colorIDs.get(position).getRGBarray()[2];
         colorView.setImageResource(com.example.tnrkd.colormakey.R.drawable.mask);
-        colorView.getLayoutParams().height = 250;
-        colorView.getLayoutParams().width= 250;
+        colorView.getLayoutParams().height = (int) (60 * resolution);
+        colorView.getLayoutParams().width= (int) (60 * resolution);
         colorView.setBackgroundColor(Color.rgb(R,G,B));
 
         return convertView;
@@ -176,12 +178,12 @@ public class MixerPopupActivity extends Activity {
         final TextView rgbTextView = (TextView) findViewById(R.id.rgbTextView);
         final TextView nameTextView = (TextView) findViewById(R.id.nameTextView);
 
-
+        DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics();
         int[] gridarr={R.id.grid0,R.id.grid1,R.id.grid2,R.id.grid3,R.id.grid4,R.id.grid5,R.id.grid6,R.id.grid7,R.id.grid8};
         GridView[] colorArea = new GridView[9];
         for (int i=0;i<9;i++) {
             colorArea[i]=(GridView) findViewById(gridarr[i]);
-            colorArea[i].setAdapter(new colorGridAdapter(getApplicationContext(),R.layout.row, basicColor[i]));
+            colorArea[i].setAdapter(new colorGridAdapter(getApplicationContext(),R.layout.row, basicColor[i],dm.density));
             colorClickListener itemClickListener= new colorClickListener(basicColor[i],colorPreview,hexTextView,rgbTextView,nameTextView);
             colorArea[i].setOnItemClickListener(itemClickListener);
         }

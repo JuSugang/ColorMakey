@@ -120,7 +120,7 @@ public class PaletteActivity extends BaseActivity {
         paletteAddText=(TextView)findViewById(R.id.paletteAddText);
 
         gridView = (GridView)findViewById(R.id.palette_gridview);
-        adapter = new ColorGridPaletteAdapter(PaletteActivity.this.getApplicationContext(), R.layout.row, Global.colors);
+        adapter = new ColorGridPaletteAdapter(PaletteActivity.this.getApplicationContext(), R.layout.row, Global.colors,dm.density);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
