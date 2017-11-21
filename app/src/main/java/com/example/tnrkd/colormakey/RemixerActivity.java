@@ -65,6 +65,7 @@ public class RemixerActivity extends BaseActivity {
         DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics();
         int width = dm.widthPixels;
         int height = dm.heightPixels;
+        float resolution = dm.density;
         background.getLayoutParams().height=height*42/100;
         background.getLayoutParams().width=width;
         background.requestLayout();
@@ -165,6 +166,8 @@ public class RemixerActivity extends BaseActivity {
         });
         //-------------------------미리보기창-------------------------------------------------
         remixerPreview=(ImageView)findViewById(R.id.remixerPreview);
+        remixerPreview.getLayoutParams().height = (int) (60 * resolution);
+        remixerPreview.getLayoutParams().width= (int) (60 * resolution);
         remixerRGBtext=(TextView)findViewById(R.id.remixerRGBtext);
         remixerPreview.setImageResource(R.drawable.mask);
         //-------------------------계산하기 버튼 리스너 추가-------------------------------------------------

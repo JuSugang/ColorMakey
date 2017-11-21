@@ -120,7 +120,6 @@ class colorClickListener implements AdapterView.OnItemClickListener {
         int R=colorIDs.get(position).getRGBarray()[0];
         int G=colorIDs.get(position).getRGBarray()[1];
         int B=colorIDs.get(position).getRGBarray()[2];
-        colorPreview.setImageResource(com.example.tnrkd.colormakey.R.drawable.mask_preview);
         colorPreview.setBackgroundColor(Color.rgb(R,G,B));
         hexTextView.setText("#" + colorIDs.get(position).getHexcode());
         rgbTextView.setText("("+R+","+G+","+B+")");
@@ -173,12 +172,18 @@ public class MixerPopupActivity extends Activity {
             tabHost.addTab(tabHost.newTabSpec(tabkey[i]).setContent(tabID[i]).setIndicator(tabName[i]));  //tabSpec을 tabHost에 추가해준다.
         }
 //-------------------------컬러 그리드 생성-------------------------------------------------
+        DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics();
+        float resolution = dm.density;
         final ImageView colorPreview = (ImageView) findViewById(R.id.colorPreview);
+        colorPreview.setImageResource(com.example.tnrkd.colormakey.R.drawable.mask);
+        colorPreview.getLayoutParams().height = (int) (60 * resolution);
+        colorPreview.getLayoutParams().width= (int) (60 * resolution);
+
         final TextView hexTextView = (TextView) findViewById(R.id.hexTextView);
         final TextView rgbTextView = (TextView) findViewById(R.id.rgbTextView);
         final TextView nameTextView = (TextView) findViewById(R.id.nameTextView);
 
-        DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics();
+
         int[] gridarr={R.id.grid0,R.id.grid1,R.id.grid2,R.id.grid3,R.id.grid4,R.id.grid5,R.id.grid6,R.id.grid7,R.id.grid8};
         GridView[] colorArea = new GridView[9];
         for (int i=0;i<9;i++) {
@@ -202,7 +207,7 @@ public class MixerPopupActivity extends Activity {
                         int R=RemixerActivity.binToDec(argb[1]);
                         int G=RemixerActivity.binToDec(argb[2]);
                         int B=RemixerActivity.binToDec(argb[3]);
-                        colorPreview.setImageResource(com.example.tnrkd.colormakey.R.drawable.mask_preview);
+                        colorPreview.setImageResource(com.example.tnrkd.colormakey.R.drawable.mask);
                         colorPreview.setBackgroundColor(Color.rgb(R,G,B));
                         hexTextView.setText("#" + Integer.toHexString(R)+Integer.toHexString(G)+Integer.toHexString(B));
                         rgbTextView.setText("("+R+","+G+","+B+")");

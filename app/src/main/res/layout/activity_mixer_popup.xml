@@ -234,7 +234,8 @@
         <LinearLayout
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/colorPreview"
@@ -246,6 +247,7 @@
         <LinearLayout
             android:layout_width="40dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"
             android:orientation="vertical">
 
             <TextView
