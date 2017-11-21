@@ -37,7 +37,7 @@
         <ImageView
             android:id="@+id/mixer_colorlist_background"
             android:layout_width="330dp"
-            android:layout_height="130dp"
+            android:layout_height="134dp"
             android:layout_gravity="center"
             android:layout_marginTop="198dp"
             app:srcCompat="@drawable/mixer_colorlist_background" />
@@ -47,7 +47,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginRight="127dp"
+            android:layout_marginRight="125dp"
             android:layout_marginTop="168dp"
             app:srcCompat="@drawable/add_button" />
 
@@ -73,8 +73,8 @@
 
         <ImageView
             android:id="@+id/color_texture"
-            android:layout_width="312dp"
-            android:layout_height="298dp"
+            android:layout_width="310dp"
+            android:layout_height="294dp"
             android:layout_gravity="center"
             android:layout_marginBottom="73dp"
             android:background="#421523"
@@ -83,7 +83,7 @@
 
         <LinearLayout
             android:id="@+id/ratioView"
-            android:layout_width="312dp"
+            android:layout_width="310dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginRight="0dp"

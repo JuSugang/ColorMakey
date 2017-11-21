@@ -90,6 +90,8 @@ class colorGridAdapter extends BaseAdapter {
         int G=colorIDs.get(position).getRGBarray()[1];
         int B=colorIDs.get(position).getRGBarray()[2];
         colorView.setImageResource(com.example.tnrkd.colormakey.R.drawable.mask);
+        colorView.getLayoutParams().height = 250;
+        colorView.getLayoutParams().width= 250;
         colorView.setBackgroundColor(Color.rgb(R,G,B));
 
         return convertView;
