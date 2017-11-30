@@ -30,6 +30,8 @@
             android:background="@drawable/linear_gradient2"
             app:titleTextColor="#fff">
 
+
+
         </android.support.v7.widget.Toolbar>
 
         <ImageView
@@ -81,5 +83,17 @@
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="#aaaaaa"
             android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/toolbarTextView"
+            android:layout_width="200dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="환영합니다"
+            android:textColor="#ffffff"
+            android:textSize="10pt"
+            android:layout_marginTop="-190dip"
+            android:gravity="right"
+            android:layout_marginRight="-56dip"/>
     </FrameLayout>
 </LinearLayout>

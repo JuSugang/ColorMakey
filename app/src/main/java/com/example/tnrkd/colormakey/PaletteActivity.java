@@ -91,8 +91,8 @@ public class PaletteActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_palette);
 
-        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
-        setToolbar(toolbar);
+//        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
+//        setToolbar(toolbar);
 
         ImageView background=(ImageView)findViewById(R.id.palette_toolbar_round);
         DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics();

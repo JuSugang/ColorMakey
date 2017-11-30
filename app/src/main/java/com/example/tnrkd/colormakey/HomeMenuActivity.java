@@ -30,6 +30,8 @@ public class HomeMenuActivity extends BaseActivity {
 
         Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
         setToolbar(toolbar);
+        TextView toolbarTextView = (TextView)findViewById(R.id.toolbarTextView);
+        toolbarTextView.setText(Global.userName + "님 환영합니다");
 
 //        ImageView toolbar_round = (ImageView)findViewById(R.id.toolbar_round);
 //        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
