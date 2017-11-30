@@ -220,61 +220,65 @@
     </TabHost>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#dddddd" />
+        android:layout_height="2dp"
+        android:background="@drawable/linear_gradient2" />
+
     <LinearLayout
-        android:padding="10dp"
         android:id="@+id/preview0"
-        android:background="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:orientation="horizontal"
-        android:gravity="bottom">
+        android:background="#ffffff"
+        android:gravity="bottom"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/colorPreview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 app:srcCompat="@drawable/mask" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="40dp"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="hex 값"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="12sp" />
+                android:textColor="#1565c0"
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="rgb 값"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="12sp" />
+                android:textColor="#1565c0"
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="색 이름"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="12sp" />
+                android:textColor="#1565c0"
+                android:textSize="15sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="140dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="2dp"
             android:orientation="vertical">
 
             <TextView
@@ -282,46 +286,52 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="hex"
-                android:textSize="12sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/rgbTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="rgb"
-                android:textSize="12sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/nameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="name"
-                android:textSize="12sp" />
-        </LinearLayout>x
+                android:textSize="15sp" />
+        </LinearLayout>
+        x
 
     </LinearLayout>
-    <LinearLayout
-        android:paddingLeft="100dp"
-        android:id="@+id/dialogue0"
-        android:background="#e3f2fd"
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:gravity="bottom">
+        android:layout_height="2dp"
+        android:background="@drawable/linear_gradient2" />
 
-        <Button
+    <LinearLayout
+        android:id="@+id/dialogue0"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
             android:id="@+id/popupCancel"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="44dp"
             android:gravity="center"
-            android:text="취소" />
+            android:src="@drawable/mixerpupup_cancel_button" />
 
-        <Button
+        <ImageView
             android:id="@+id/popupConfirm"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="44dp"
             android:gravity="center"
-            android:text="확인" />
+            android:src="@drawable/mixerpupup_confirm_button" />
     </LinearLayout>
 
 </LinearLayout>

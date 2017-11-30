@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -223,8 +224,8 @@ public class MixerPopupActivity extends Activity {
             }
         });
 //-------------------------버튼 리스너 생성-------------------------------------------------
-        Button popupCancel=(Button)findViewById(R.id.popupCancel);
-        Button popupConfirm=(Button)findViewById(R.id.popupConfirm);
+        ImageView popupCancel=(ImageView)findViewById(R.id.popupCancel);
+        ImageView popupConfirm=(ImageView)findViewById(R.id.popupConfirm);
         popupCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
