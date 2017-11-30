@@ -303,7 +303,7 @@ public class PaletteActivity extends BaseActivity {
                         break;
                     }
                     // 새로 등록할 색상의 이름 적을 다이얼로그 생성
-                    newColorNameDialog = new NewColorNameDialog(PaletteActivity.this, this, rightListener);
+                    newColorNameDialog = new NewColorNameDialog(PaletteActivity.this, this, rightListener, hexcode);
                     newColorNameDialog.show();
 
                     // 키보드 올리기

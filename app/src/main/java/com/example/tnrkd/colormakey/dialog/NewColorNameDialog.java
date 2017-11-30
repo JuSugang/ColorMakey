@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.tnrkd.colormakey.KoreanColorList;
 import com.example.tnrkd.colormakey.R;
 
 /**
@@ -24,10 +25,13 @@ public class NewColorNameDialog extends Dialog {
     private View.OnClickListener mLeftClickListener;
     private View.OnClickListener mRightClickListener;
 
-    public NewColorNameDialog(Context context, View.OnClickListener leftListener, View.OnClickListener rightListener) {
+    private String hexcode;
+
+    public NewColorNameDialog(Context context, View.OnClickListener leftListener, View.OnClickListener rightListener, String hexcode) {
         super(context, android.R.style.Theme_Translucent_NoTitleBar);
         this.mLeftClickListener = leftListener;
         this.mRightClickListener = rightListener;
+        this.hexcode = hexcode;
     }
 
     @Override
@@ -47,6 +51,9 @@ public class NewColorNameDialog extends Dialog {
         cancelButton = findViewById(R.id.new_color_name_cancel_button);
         colorNameEdittext = findViewById(R.id.color_name_edittext);
 
+        int[] i = func(hexcode);
+        colorNameEdittext.setHint(KoreanColorList.getName(i));
+
         // 클릭 이벤트 셋팅
         if (mLeftClickListener != null && mRightClickListener != null) {
             registerButton.setOnClickListener(mRightClickListener);
@@ -54,5 +61,41 @@ public class NewColorNameDialog extends Dialog {
         }else {
 
         }
+    }
+
+    public static int[] func(String a) {
+        int[] result=new int[3];
+        result[0]=toint(a.charAt(0))*16+toint(a.charAt(1));
+        result[1]=toint(a.charAt(2))*16+toint(a.charAt(3));
+        result[2]=toint(a.charAt(4))*16+toint(a.charAt(5));
+
+        return result;
+    }
+    public static int toint(char a) {
+        switch(a) {
+            case '0':return 0;
+            case '1':return 1;
+            case '2':return 2;
+            case '3':return 3;
+            case '4':return 4;
+            case '5':return 5;
+            case '6':return 6;
+            case '7':return 7;
+            case '8':return 8;
+            case '9':return 9;
+            case 'a':
+            case 'A':return 10;
+            case 'b':
+            case 'B':return 11;
+            case 'c':
+            case 'C':return 12;
+            case 'd':
+            case 'D':return 13;
+            case 'e':
+            case 'E':return 14;
+            case 'f':
+            case 'F':return 15;
+        }
+        return 0;
     }
 }
