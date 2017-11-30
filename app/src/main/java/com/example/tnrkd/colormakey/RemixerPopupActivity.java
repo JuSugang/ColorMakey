@@ -181,9 +181,9 @@ public class RemixerPopupActivity extends Activity {
             float[] hsvArr = new float[3];
             Color.RGBToHSV((int)calcColor[0], (int)calcColor[1], (int)calcColor[2], hsvArr);
             if(hsvArr[2] > 0.6) {
-                targetColor.setTextColor(Color.DKGRAY);
+                pieChart.setCenterTextColor(Color.DKGRAY);
             }else {
-                targetColor.setTextColor(Color.WHITE);
+                pieChart.setCenterTextColor(Color.WHITE);
             }
             pieChart.setCenterText("정확도 : "+test.getPercent()+"%");
             pieChart.setCenterTextSize(20);
