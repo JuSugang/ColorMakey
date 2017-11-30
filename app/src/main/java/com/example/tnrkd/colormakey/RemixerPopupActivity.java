@@ -148,7 +148,7 @@ public class RemixerPopupActivity extends Activity {
             pieData.setValueFormatter(new ValueFormatter() {
                 @Override
                 public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-                    return new String(value + "%");
+                    return new String((int)value + "%");
                 }
             });
 
@@ -171,7 +171,7 @@ public class RemixerPopupActivity extends Activity {
             }
 
             pieData.setValueTextColors(listTextColor);
-            pieData.setValueTextSize((float)16.0);
+            pieData.setValueTextSize((float)13.0);
 
             pieDataSet.setColors(color);
 
@@ -186,8 +186,8 @@ public class RemixerPopupActivity extends Activity {
             }else {
                 pieChart.setCenterTextColor(Color.WHITE);
             }
-            pieChart.setCenterText("정확도 : "+test.getPercent()+"%");
-            pieChart.setCenterTextSize(20);
+            pieChart.setCenterText("이게 우리가\n계산한 색이에요!\n\n정확도 : "+test.getPercent()+"%");
+            pieChart.setCenterTextSize(17);
 
             confirmButton=(ImageView)findViewById(R.id.confirmButton);
             confirmButton.setOnClickListener(new View.OnClickListener() {

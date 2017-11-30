@@ -257,21 +257,21 @@
                 android:layout_height="wrap_content"
                 android:text="hex 값"
                 android:textColor="#1565c0"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="rgb 값"
                 android:textColor="#1565c0"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="색 이름"
                 android:textColor="#1565c0"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
