@@ -16,11 +16,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.utils.ViewPortHandler;
+
 /**
  * Created by tnrkd on 2017-10-12.
  */
@@ -56,6 +61,13 @@ public class RemixerPopupActivity extends Activity {
         int[] Y_data_int={(int)Y_data2[0],(int)Y_data2[1],(int)Y_data2[2]};
         Y_data=Y_data2;
         targetColor=(TextView)findViewById(R.id.targetColor);
+        float[] hsvArr = new float[3];
+        Color.RGBToHSV((int)Y_data[0], (int)Y_data[1], (int)Y_data[2], hsvArr);
+        if(hsvArr[2] > 0.6) {
+            targetColor.setTextColor(Color.DKGRAY);
+        }else {
+            targetColor.setTextColor(Color.WHITE);
+        }
         targetColor.setText("선택하신 색은 '" +KoreanColorList.getName(Y_data_int)+"'이에요!");
         targetColor.setBackgroundColor(Color.rgb((int)Y_data[0],(int)Y_data[1],(int)Y_data[2]));
     }
@@ -68,7 +80,8 @@ public class RemixerPopupActivity extends Activity {
 
     public void AddValuesToPIEENTRY(ArrayList<Float> result_W){
         for (int i=0;i<result_W.size();i++){
-            entries.add(new BarEntry(result_W.get(i), 0));
+            float a = (int)(result_W.get(i) * 100);
+            entries.add(new Entry(a, 0));
         }
     }
 
@@ -131,20 +144,50 @@ public class RemixerPopupActivity extends Activity {
 
             pieDataSet = new PieDataSet(entries, "");
             pieData = new PieData(PieEntryLabels, pieDataSet);
+            pieData.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                    return new String(value + "%");
+                }
+            });
 
             int[] color=new int[result_Color.size()];
+            List<Integer> listTextColor = new ArrayList<>();
             for (int i=0;i<result_Color.size();i++){
                 ArrayList<Float> tempRGB=result_Color.get(i).mGetRGBarray();
                 color[i]=Color.rgb((int)(float)tempRGB.get(0),(int)(float)tempRGB.get(1),(int)(float)tempRGB.get(2));
+                float[] hsvArr = new float[3];
+                Color.RGBToHSV((int)(float)tempRGB.get(0), (int)(float)tempRGB.get(1), (int)(float)tempRGB.get(2), hsvArr);
+                if(hsvArr[2] > 0.6) {
+                    listTextColor.add(Color.DKGRAY);
+                }else {
+                    listTextColor.add(Color.WHITE);
+                }
             }
+
+            for(int i = 0 ; i < pieData.getDataSetCount() ; i ++) {
+
+            }
+
+            pieData.setValueTextColors(listTextColor);
+            pieData.setValueTextSize((float)16.0);
+
             pieDataSet.setColors(color);
 
             pieChart.setData(pieData);
             pieChart.animateXY(1000,1000);
-            pieChart.setCenterText("정확도 : "+test.getPercent()+"%");
-            pieChart.setCenterTextSize(20);
             float[] calcColor=test.getRGBResult();
             pieChart.setHoleColor(Color.rgb((int)calcColor[0],(int)calcColor[1],(int)calcColor[2]));
+            float[] hsvArr = new float[3];
+            Color.RGBToHSV((int)calcColor[0], (int)calcColor[1], (int)calcColor[2], hsvArr);
+            if(hsvArr[2] > 0.6) {
+                targetColor.setTextColor(Color.DKGRAY);
+            }else {
+                targetColor.setTextColor(Color.WHITE);
+            }
+            pieChart.setCenterText("정확도 : "+test.getPercent()+"%");
+            pieChart.setCenterTextSize(20);
+
             confirmButton=(Button)findViewById(R.id.confirmButton);
             confirmButton.setOnClickListener(new View.OnClickListener() {
                 @Override
