@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.tnrkd.colormakey.R;
 
@@ -16,8 +17,8 @@ import com.example.tnrkd.colormakey.R;
 
 public class NewColorNameDialog extends Dialog {
 
-    private Button registerButton;
-    private Button cancelButton;
+    private ImageView registerButton;
+    private ImageView cancelButton;
     public EditText colorNameEdittext;
 
     private View.OnClickListener mLeftClickListener;
@@ -48,8 +49,8 @@ public class NewColorNameDialog extends Dialog {
 
         // 클릭 이벤트 셋팅
         if (mLeftClickListener != null && mRightClickListener != null) {
-            registerButton.setOnClickListener(mLeftClickListener);
-            cancelButton.setOnClickListener(mRightClickListener);
+            registerButton.setOnClickListener(mRightClickListener);
+            cancelButton.setOnClickListener(mLeftClickListener);
         }else {
 
         }

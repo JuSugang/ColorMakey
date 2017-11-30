@@ -268,6 +268,30 @@ public class PaletteActivity extends BaseActivity {
                     selectGalleryCameraDialog.dismiss();
                     break;
                 }
+                case R.id.cancel_button : {
+                    galleryCameraDialog.dismiss();
+                    break;
+                }
+                case R.id.new_color_name_cancel_button : {
+                    newColorNameDialog.dismiss();
+                    break;
+                }
+
+            }
+        }
+    };
+
+    private View.OnClickListener rightListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            switch(v.getId()) {
+                case R.id.gallery_button : {
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                    intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, GALLERY);
+                    selectGalleryCameraDialog.dismiss();
+                    break;
+                }
                 case R.id.register_button : {
 
                     // 색상을 선택했는지 검사
@@ -316,29 +340,6 @@ public class PaletteActivity extends BaseActivity {
                         mDatabase.child("palette").child(Global.userUID).setValue(Global.colors);
                         break;
                     }
-                }
-            }
-        }
-    };
-
-    private View.OnClickListener rightListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            switch(v.getId()) {
-                case R.id.gallery_button : {
-                    Intent intent = new Intent(Intent.ACTION_PICK);
-                    intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-                    intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, GALLERY);
-                    selectGalleryCameraDialog.dismiss();
-                    break;
-                }
-                case R.id.cancel_button : {
-                    galleryCameraDialog.dismiss();
-                    break;
-                }
-                case R.id.new_color_name_cancel_button : {
-                    newColorNameDialog.dismiss();
-                    break;
                 }
             }
         }

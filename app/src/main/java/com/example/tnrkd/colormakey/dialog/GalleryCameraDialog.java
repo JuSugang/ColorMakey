@@ -61,12 +61,11 @@ public class GalleryCameraDialog extends Dialog {
 
         // 제목과 내용을 생성자에서 셋팅한다.
         titleTextView.setText(title);
-        //contentTextView.setText(content);
 
         // 클릭 이벤트 셋팅
         if (mLeftClickListener != null && mRightClickListener != null) {
-            registerButton.setOnClickListener(mLeftClickListener);
-            cancelButton.setOnClickListener(mRightClickListener);
+            registerButton.setOnClickListener(mRightClickListener);
+            cancelButton.setOnClickListener(mLeftClickListener);
         }else {
 
         }
