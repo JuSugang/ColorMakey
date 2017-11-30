@@ -40,7 +40,7 @@ public class RemixerPopupActivity extends Activity {
     TextView targetColor;
     ImageView confirmButton;
     float[] Y_data;
-    int epoch=2500;
+    int epoch=3000;
     @Override
     protected void onDestroy() {
         super.onDestroy();
