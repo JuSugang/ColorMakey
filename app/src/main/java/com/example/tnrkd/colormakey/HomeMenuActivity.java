@@ -25,6 +25,7 @@ public class HomeMenuActivity extends BaseActivity {
     ImageView remixer;
     ImageView mixer;
     ImageView palette;
+    TextView toolbarTextView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +33,7 @@ public class HomeMenuActivity extends BaseActivity {
 
         Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
         setToolbar(toolbar);
-        TextView toolbarTextView = (TextView)findViewById(R.id.toolbarTextView);
+        toolbarTextView = (TextView)findViewById(R.id.toolbarTextView);
         toolbarTextView.setText(Global.userName + "님 환영합니다");
 
         ImageView background=(ImageView)findViewById(R.id.toolbar_round);
@@ -114,6 +115,11 @@ public class HomeMenuActivity extends BaseActivity {
         copyright2.clearAnimation();
         copyright1.startAnimation(copyright);
         copyright2.startAnimation(copyright);
+        Animation username = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.username);
+        username.reset();
+        toolbarTextView.clearAnimation();
+        toolbarTextView.startAnimation(username);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
