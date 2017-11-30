@@ -48,13 +48,20 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mTextView.setText(Integer.toString(mDataset.get(position).Ratio));
         final int index=position;
         holder.mImageView.setImageResource(com.example.tnrkd.colormakey.R.drawable.delete_button);
         int R=Global.list.get(position).R;
         int G=Global.list.get(position).G;
         int B=Global.list.get(position).B;
         holder.mback.setBackgroundColor(Color.rgb(R,G,B));
+        holder.mTextView.setText(Integer.toString(mDataset.get(position).Ratio));
+        float[] hsvArr = new float[3];
+        Color.RGBToHSV(R, G, B, hsvArr);
+        if(hsvArr[2] > 0.6) {
+            holder.mTextView.setTextColor(Color.DKGRAY);
+        }else {
+            holder.mTextView.setTextColor(Color.WHITE);
+        }
         holder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -178,8 +185,15 @@ public class MixerActivity extends BaseActivity {
             int percentText=Math.round(Global.list.get(i).Ratio*100/(float)sum);
             view1.setText(Integer.toString(percentText)+"%");
             view1.setTextSize(20);
-            view1.setTextColor(Color.DKGRAY);
-            view1.setBackgroundColor(Color.rgb(Global.list.get(i).R,Global.list.get(i).G,Global.list.get(i).B));
+            int backgroundColor = Color.rgb(Global.list.get(i).R,Global.list.get(i).G,Global.list.get(i).B);
+            float[] hsvArr = new float[3];
+            Color.RGBToHSV(Global.list.get(i).R, Global.list.get(i).G, Global.list.get(i).B, hsvArr);
+            if(hsvArr[2] > 0.6) {
+                view1.setTextColor(Color.DKGRAY);
+            }else {
+                view1.setTextColor(Color.WHITE);
+            }
+            view1.setBackgroundColor(backgroundColor);
             view1.setGravity(Gravity.CENTER);
 
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
