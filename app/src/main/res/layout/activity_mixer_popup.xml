@@ -303,7 +303,7 @@
     <LinearLayout
         android:paddingLeft="100dp"
         android:id="@+id/dialogue0"
-        android:background="#eff322"
+        android:background="#e3f2fd"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"

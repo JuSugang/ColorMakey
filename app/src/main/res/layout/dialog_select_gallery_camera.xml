@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="300dip"
-    android:layout_height="200dip"
+    android:orientation="vertical"
+    android:layout_width="300dp"
+    android:layout_height="200dp"
     android:gravity="center"
     android:layout_gravity="center">
 
     <LinearLayout
-        android:layout_width="300dip"
-        android:layout_height="200dip"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
         android:background="@null"
         android:gravity="center"
@@ -21,23 +22,19 @@
 
             <ImageButton
                 android:id="@+id/camera_button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_weight="1"
-                android:background="#FAE0D4"
-                android:src="@drawable/photo_camera" />
+                android:layout_width="140dp"
+                android:layout_height="160dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/palette_camera_click" />
 
             <ImageButton
                 android:id="@+id/gallery_button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_weight="1"
-                android:background="#FAE0D4"
-                android:src="@drawable/gallery" />
+                android:layout_width="140dp"
+                android:layout_height="160dp"
+                android:layout_marginLeft="10dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/palette_gallery_click" />
         </LinearLayout>
 
     </LinearLayout>
