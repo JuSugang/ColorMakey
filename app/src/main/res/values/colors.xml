@@ -2,8 +2,8 @@
 <resources>
     <!--<color name="colorPrimary">#3F51B5</color>-->
     <!--<color name="colorPrimaryDark">#303F9F</color>-->
-    <color name="colorPrimary">#fca84e</color>
-    <color name="colorPrimaryDark">#f48304</color>
+    <color name="colorPrimary">#42a5f5</color>
+    <color name="colorPrimaryDark">#42a5f5</color>
     <color name="colorAccent">#FF4081</color>
     <color name="orange">#fca84e</color>
     <color name="toastBackgroundColor">#34495e</color>
