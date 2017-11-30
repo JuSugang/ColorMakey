@@ -1,5 +1,7 @@
 package com.example.tnrkd.colormakey;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,13 +34,6 @@ public class HomeMenuActivity extends BaseActivity {
         setToolbar(toolbar);
         TextView toolbarTextView = (TextView)findViewById(R.id.toolbarTextView);
         toolbarTextView.setText(Global.userName + "님 환영합니다");
-
-//        ImageView toolbar_round = (ImageView)findViewById(R.id.toolbar_round);
-//        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        toolbar.setTitleTextColor(Color.rgb(255,255,255));
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        toolbar.setPadding(0, Global.statusBar, 0, 0);
 
         ImageView background=(ImageView)findViewById(R.id.toolbar_round);
         DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics();
@@ -132,7 +127,18 @@ public class HomeMenuActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_logout:
-                LoginActivity.logout(this);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HomeMenuActivity.this);
+                alertDialogBuilder.setMessage("로그아웃 하시겠습니까?").setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        LoginActivity.logout(HomeMenuActivity.this);
+                    }
+                }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }).show();
                 break;
         }
         return true;
