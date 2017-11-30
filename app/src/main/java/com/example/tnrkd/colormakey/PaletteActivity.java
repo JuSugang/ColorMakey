@@ -74,7 +74,6 @@ public class PaletteActivity extends BaseActivity {
     private TextView paletteInst1;
     private TextView paletteInst2;
     private ImageButton paletteAddButton;
-    private TextView paletteAddText;
     boolean imageOnFlag = false;
     private Bitmap resultImage;
 
@@ -117,7 +116,6 @@ public class PaletteActivity extends BaseActivity {
         paletteInst1=(TextView)findViewById(R.id.paletteInst1);
         paletteInst2=(TextView)findViewById(R.id.paletteInst2);
         paletteAddButton=(ImageButton)findViewById(R.id.paletteAddButton);
-        paletteAddText=(TextView)findViewById(R.id.paletteAddText);
 
         gridView = (GridView)findViewById(R.id.palette_gridview);
         adapter = new ColorGridPaletteAdapter(PaletteActivity.this.getApplicationContext(), R.layout.row, Global.colors,dm.density);
@@ -185,8 +183,7 @@ public class PaletteActivity extends BaseActivity {
         palette_add_button.reset();
         paletteAddButton.clearAnimation();
         paletteAddButton.startAnimation(palette_add_button);
-        paletteAddText.clearAnimation();
-        paletteAddText.startAnimation(palette_add_button);
+
 
     }
     public void onClickView(View v) {

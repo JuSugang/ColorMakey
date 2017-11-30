@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +38,7 @@ public class RemixerPopupActivity extends Activity {
     PieDataSet pieDataSet ;
     PieData pieData ;
     TextView targetColor;
-    Button confirmButton;
+    ImageView confirmButton;
     float[] Y_data;
     int epoch=2500;
     @Override
@@ -188,7 +189,7 @@ public class RemixerPopupActivity extends Activity {
             pieChart.setCenterText("정확도 : "+test.getPercent()+"%");
             pieChart.setCenterTextSize(20);
 
-            confirmButton=(Button)findViewById(R.id.confirmButton);
+            confirmButton=(ImageView)findViewById(R.id.confirmButton);
             confirmButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

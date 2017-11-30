@@ -39,11 +39,12 @@
         android:gravity="center_horizontal"
         android:text="조금씩 섞으면서 맞추세요" />
 
-    <Button
+    <ImageView
         android:id="@+id/confirmButton"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5"
+        android:background="@drawable/remixer_confirm_button_click"
         android:text="확인" />
 
 

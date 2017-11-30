@@ -286,21 +286,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="hex"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/rgbTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="rgb"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/nameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="name"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
         </LinearLayout>
         x
 
@@ -324,14 +324,14 @@
             android:layout_width="150dp"
             android:layout_height="44dp"
             android:gravity="center"
-            android:src="@drawable/mixerpupup_cancel_button" />
+            android:src="@drawable/mini_cancel_button_click" />
 
         <ImageView
             android:id="@+id/popupConfirm"
             android:layout_width="150dp"
             android:layout_height="44dp"
             android:gravity="center"
-            android:src="@drawable/mixerpupup_confirm_button" />
+            android:src="@drawable/mini_confirm_button_click" />
     </LinearLayout>
 
 </LinearLayout>
