@@ -222,7 +222,7 @@ public class PaletteActivity extends BaseActivity {
                     imageOnFlag = true;
                     paletteImageView = (ImageView)galleryCameraDialog.findViewById(R.id.palette_imageView);
                     paletteImageView2 = (ImageView)galleryCameraDialog.findViewById(R.id.palette_imageView2);
-                    Glide.with(this).load(data.getData()).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(paletteImageView);
+                    Glide.with(this).load(data.getData()).diskCacheStrategy(DiskCacheStrategy.SOURCE).centerCrop().into(paletteImageView);
 
                     paletteImageView.setOnTouchListener(onTouchListener);
                 }catch (Exception e) {
