@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,8 +21,8 @@ public class GalleryCameraDialog extends Dialog {
 
     private TextView titleTextView;
     private TextView contentTextView;
-    private Button registerButton;
-    private Button cancelButton;
+    private ImageView registerButton;
+    private ImageView cancelButton;
     private LinearLayout showColorLinearLayout;
 
     private String title;
@@ -54,8 +55,8 @@ public class GalleryCameraDialog extends Dialog {
 
         titleTextView = (TextView) findViewById(R.id.txt_title);
         contentTextView = (TextView) findViewById(R.id.txt_content);
-        registerButton = findViewById(R.id.register_button);
-        cancelButton = findViewById(R.id.cancel_button);
+        registerButton = (ImageView) findViewById(R.id.register_button);
+        cancelButton = (ImageView)findViewById(R.id.cancel_button);
         showColorLinearLayout = findViewById(R.id.showColorLinearLayout);
 
         // 제목과 내용을 생성자에서 셋팅한다.

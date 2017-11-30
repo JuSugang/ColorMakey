@@ -21,7 +21,7 @@
             android:textColor="@android:color/black"
             android:textSize="15sp"
             android:layout_weight="5"
-            android:background="@drawable/linear_gradient"/>
+            android:background="@drawable/linear_gradient2"/>
         
         <ImageView
             android:layout_width="match_parent"
@@ -68,26 +68,20 @@
             android:orientation="horizontal"
             android:layout_weight="5">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="50dip"
-                android:layout_weight="1"
-                android:background="#FAE0D4"
-                android:layout_marginRight="2dp"
-                android:layout_marginLeft="2dp"
+            <ImageView
                 android:id="@+id/register_button"
-                android:text="등록"
+                android:layout_width="150dp"
+                android:layout_height="44dp"
+                android:background="@drawable/mini_register_button_click"
                 />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="50dip"
-                android:layout_weight="1"
-                android:background="#FAE0D4"
-                android:layout_marginRight="2dp"
-                android:layout_marginLeft="2dp"
+            <ImageView
                 android:id="@+id/cancel_button"
-                android:text="취소"/>
+                android:layout_width="150dp"
+                android:layout_height="44dp"
+                android:background="@drawable/mini_cancel_button_click"
+                />
+
         </LinearLayout>
 
     </LinearLayout>
