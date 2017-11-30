@@ -108,8 +108,8 @@ public class MixerActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mixer);
 
-        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
-        setToolbar(toolbar);
+//        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
+//        setToolbar(toolbar);
 
         ImageView background=(ImageView)findViewById(R.id.mixer_toolbar_round);
         DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics();
