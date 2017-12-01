@@ -8,13 +8,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.media.Image;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -24,7 +23,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -273,6 +271,9 @@ public class PaletteActivity extends BaseActivity {
                     break;
                 }
                 case R.id.new_color_name_cancel_button : {
+                    // 키보드 내리기
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(newColorNameDialog.colorNameEdittext.getWindowToken(), 0);
                     newColorNameDialog.dismiss();
                     break;
                 }
@@ -303,7 +304,7 @@ public class PaletteActivity extends BaseActivity {
                         break;
                     }
                     // 새로 등록할 색상의 이름 적을 다이얼로그 생성
-                    newColorNameDialog = new NewColorNameDialog(PaletteActivity.this, this, rightListener, hexcode);
+                    newColorNameDialog = new NewColorNameDialog(PaletteActivity.this, leftListener, rightListener, hexcode);
                     newColorNameDialog.show();
 
                     // 키보드 올리기
@@ -318,21 +319,21 @@ public class PaletteActivity extends BaseActivity {
                     String newColorName = newColorNameDialog.colorNameEdittext.getText().toString();
                     // 색상이름 중복 검사
                     boolean validCheck = false;
-                    for(com.example.tnrkd.colormakey.dto.Color color : Global.colors) {
-                        if(newColorName.equals(color.getColorname())) {
-                            validCheck = true;
-                            alertDialogBuilder.setMessage("같은 이름의 색상이 존재합니다").setPositiveButton("확인",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            return;
-                                        }
-                                    });
-                            AlertDialog alert = alertDialogBuilder.create();
-                            alert.show();
+                    if(newColorName.equals("")) {
+//                        Toast toastMessage = Toast.makeText(PaletteActivity.this, "이름을 입력해 주세요", Toast.LENGTH_LONG);
+//                        PaletteActivity.this.setToast(toastMessage.getView());
+//                        toastMessage.setGravity(Gravity.BOTTOM, 0, 80);
+//                        toastMessage.show();
+
+                        newColorName = newColorNameDialog.colorNameEdittext.getHint().toString();
+
+                        // 함수 넣을 곳
+                        if(!valid(newColorName, validCheck)) {
                             break;
                         }
                     }
+
+
                     // Color 객체 만들어서 DB에 insert
                     if(!validCheck) {
                         com.example.tnrkd.colormakey.dto.Color color = new com.example.tnrkd.colormakey.dto.Color(hexcode, rgbcode, newColorName);
@@ -374,7 +375,11 @@ public class PaletteActivity extends BaseActivity {
 
                         rgbcode = String.format("%03d", R) + String.format("%03d", G) + String.format("%03d", B);
                         hexcode = String.format("%02X", R) + String.format("%02X", G) + String.format("%02X", B);
-                        paletteImageView2.setBackgroundColor(Color.rgb(R, G, B));
+
+                        OvalShape o = new OvalShape();
+                        ShapeDrawable sd = new ShapeDrawable(o);
+                        sd.getPaint().setColor(sourceColor);
+                        paletteImageView2.setBackground(sd);
                     }
                 }
             }
@@ -387,19 +392,16 @@ public class PaletteActivity extends BaseActivity {
         public void onDataChange(DataSnapshot dataSnapshot) {
             if(galleryCameraDialog != null && galleryCameraDialog.isShowing()) {
                 adapter.notifyDataSetChanged();
-//                if(newColorNameDialog!=null){
-//                    newColorNameDialog.dismiss();
-//                }
-//                galleryCameraDialog.startFlicker();
                 Toast toastMessage = Toast.makeText(PaletteActivity.this, "새로운 색상이 추가되었습니다", Toast.LENGTH_LONG);
                 PaletteActivity.this.setToast(toastMessage.getView());
                 toastMessage.setGravity(Gravity.BOTTOM, 0, 80);
                 toastMessage.show();
-                newColorNameDialog.dismiss();
 
                 // 키보드 내리기
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(newColorNameDialog.colorNameEdittext.getWindowToken(), 0);
+
+                newColorNameDialog.dismiss();
 
                 isColors();
             }
@@ -462,5 +464,24 @@ public class PaletteActivity extends BaseActivity {
             gridView.setVisibility(View.VISIBLE);
             noColorImageView.setVisibility(View.GONE);
         }
+    }
+
+    private boolean valid(String newColorName, boolean validCheck) {
+        for(com.example.tnrkd.colormakey.dto.Color color : Global.colors) {
+            if(newColorName.equals(color.getColorname())) {
+                validCheck = true;
+                alertDialogBuilder.setMessage("같은 이름의 색상이 존재합니다").setPositiveButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                return;
+                            }
+                        });
+                AlertDialog alert = alertDialogBuilder.create();
+                alert.show();
+                return false;
+            }
+        }
+        return true;
     }
 }

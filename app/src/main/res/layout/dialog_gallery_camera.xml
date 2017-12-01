@@ -19,7 +19,7 @@
             android:layout_height="0dip"
             android:gravity="center"
             android:textColor="@android:color/white"
-            android:textSize="15sp"
+            android:textSize="20sp"
             android:layout_weight="5"
             android:background="@drawable/linear_gradient2"/>
         
