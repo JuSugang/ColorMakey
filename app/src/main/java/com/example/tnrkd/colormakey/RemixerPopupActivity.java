@@ -132,6 +132,9 @@ public class RemixerPopupActivity extends Activity {
             dialog=null;
             ArrayList<com.example.tnrkd.colormakey.dto.Color> result_Color=test.getColor();
             ArrayList<Float> result_W=test.getW();
+            for(int i=0;i<result_W.size();i++) {
+                result_W.set(i, (float)Math.round(result_W.get(i)*100)/100);
+            }
             float[] result_hypo=test.getRGBResult();
             float percent=test.getPercent();
 
