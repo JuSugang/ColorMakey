@@ -8,18 +8,34 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:616317794241:android:fd32d1c5bdf2d414",
+        "mobilesdk_app_id": "1:616317794241:android:d510183c727572cb",
         "android_client_info": {
-          "package_name": "com.example.tnrkd.colormakey"
+          "package_name": "com.appproject.tnrkd.colormakey"
         }
       },
       "oauth_client": [
         {
-          "client_id": "616317794241-b3stqvjpsuc9jmfb8r4ntu0bniaeaaqj.apps.googleusercontent.com",
+          "client_id": "616317794241-rhjn5op2gqin4hk7pb2886452jljnqef.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.tnrkd.colormakey",
+            "package_name": "com.appproject.tnrkd.colormakey",
             "certificate_hash": "982818164794b20151e4ad2702543e0316a332db"
+          }
+        },
+        {
+          "client_id": "616317794241-5mg2jka3603pvg0l2419ok0hib7iuiom.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appproject.tnrkd.colormakey",
+            "certificate_hash": "5474b14b8ffbabe829a18eee43606cc33c4ae73c"
+          }
+        },
+        {
+          "client_id": "616317794241-f90o71emvn7m382raen64g5ofe8u0pd2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appproject.tnrkd.colormakey",
+            "certificate_hash": "1b9f72195d8fc41feeb0900e7968d224c82562e7"
           }
         },
         {
